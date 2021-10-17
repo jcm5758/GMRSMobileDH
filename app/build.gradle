@@ -5,7 +5,7 @@ android {
     compileSdkVersion 30
 
     defaultConfig {
-        applicationId "com.geurimsoft.bokangnew"
+        applicationId "com.geurimsoft.grmsmobiledh"
         minSdkVersion 14
         targetSdkVersion 30
         versionCode 111

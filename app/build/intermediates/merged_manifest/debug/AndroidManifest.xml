@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.geurimsoft.bokangnew"
+    package="com.geurimsoft.grmsmobiledh"
     android:versionCode="111"
     android:versionName="1.1.1" >
 
@@ -22,7 +22,7 @@
         android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
         android:usesCleartextTraffic="true" >
         <activity
-            android:name="com.geurimsoft.bokangnew.AppMain"
+            android:name="com.geurimsoft.grmsmobiledh.AppMain"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,10 +31,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.geurimsoft.bokangnew.view.joomyung.ActivityMain"
+            android:name="com.geurimsoft.grmsmobiledh.view.fragments.ActivityMain"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
         <activity
-            android:name="com.geurimsoft.bokangnew.view.kwangju.ActivityMain"
+            android:name="com.geurimsoft.grmsmobiledh.view.kwangju.ActivityMain"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
         <activity android:name="org.achartengine.GraphicalActivity" />
     </application>
