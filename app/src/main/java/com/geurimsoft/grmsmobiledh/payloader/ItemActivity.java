@@ -2,6 +2,7 @@ package com.geurimsoft.grmsmobiledh.payloader;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.geurimsoft.grmsmobiledh.R;
 import com.geurimsoft.grmsmobiledh.data.GSConfig;
-import com.geurimsoft.grmsmobiledh.data.GSPayloaderServiceDataDetail;
 
 /**
  * 1개의 데이터를 상세보기
@@ -25,15 +25,15 @@ import com.geurimsoft.grmsmobiledh.data.GSPayloaderServiceDataDetail;
 public class ItemActivity extends AppCompatActivity
 {
 
-    TextView vehicleNum, product, unit, content;
-    Button cancel, accept;
-    ImageView left, right;
+    private TextView vehicleNum, product, unit, content;
+    private Button cancel, accept;
+    private ImageView left, right;
 
     // 선택된 데이터의 ID값을 받아와 해당 데이터가 몇번째 데이터인지 알아내기 위해 선언
-    String ID;
+    private int id;
 
     // 현재 Datalist의 몇번째 값인지 나타내는 정수형 데이터 (초기값 = 0 으로 설정)
-    int value_num = 0;
+    private int value_num = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
@@ -44,16 +44,20 @@ public class ItemActivity extends AppCompatActivity
 
         getSupportActionBar().setTitle("상세 정보");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         GSConfig.last_item_activity_use = false;
 
         // 다른 액티비티에서 넘어온 intent와 같이 넘어온 값을 불러오기 위해 선언
         Intent intent = getIntent();
 
-        // 선택된 데이터가 몇번째 값인지 알아내기 위해 intent로 이전에 선택된 ID 의 값을 받아옴
-        ID = intent.getStringExtra("ID");
+        Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), "onCreate()") + "id : " + intent.getStringExtra("ID") );
+
+        id = intent.getIntExtra("ID", 0);
+
+        Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), "onCreate()") + "id : " + id);
 
         // ID값을 받아와 사용하여 몇번째 데이터인지 알아내는 함수 (value_num 에 저장)
-        value_num = find_value_num( Integer.parseInt(ID) );
+        value_num = find_value_num( id );
 
         vehicleNum = findViewById(R.id.textView_vehicleNum_detail);
         product = findViewById(R.id.textView_product_detail);
@@ -135,7 +139,7 @@ public class ItemActivity extends AppCompatActivity
 
                 }
 
-                // 데이터를 처리한 후, 소켓통신으로 최신화된 데이터를 수신하여 setDatalist()로 저장
+//                // 데이터를 처리한 후, 소켓통신으로 최신화된 데이터를 수신하여 setDatalist()로 저장
                 Payloader.loadPayloader(1, GSConfig.product_pick_use, 0);
 
             }

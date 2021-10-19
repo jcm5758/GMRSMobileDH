@@ -2,7 +2,6 @@ package com.geurimsoft.grmsmobiledh.payloader;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,11 +32,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.geurimsoft.grmsmobiledh.R;
 import com.geurimsoft.grmsmobiledh.data.GSConfig;
-import com.geurimsoft.grmsmobiledh.data.GSPayloaderList;
-import com.geurimsoft.grmsmobiledh.data.GSPayloaderProductTime;
-import com.geurimsoft.grmsmobiledh.data.GSPayloaderServiceDataTop;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +50,7 @@ public class Payloader extends AppCompatActivity
     public static Context CONTEXT;
 
     ImageView check, TD, listv, card, one;
-    TextView vehicleNum,product,unit,content;
+    TextView vehicleNum, product, unit, content;
     public RecyclerAdapter adapter;
 
     // 품목과 새로고침 시간 나타내는 목록
@@ -199,6 +196,7 @@ public class Payloader extends AppCompatActivity
         // 1열로 나열
         listv.setOnClickListener(new View.OnClickListener()
         {
+
             @Override
             public void onClick(View v)
             {
@@ -253,7 +251,6 @@ public class Payloader extends AppCompatActivity
                 {
                     Toast.makeText(CONTEXT,"품목 선택",Toast.LENGTH_SHORT).show();
                 }
-
                 else
                 {
 
@@ -272,7 +269,8 @@ public class Payloader extends AppCompatActivity
 
                         // 클릭했을때, Data와 품목 모두 있을경우, 해당 품목의 첫번째 vehicleNum를 넘겨주며 ItemActivity 활성화
                         intent = new Intent(getBaseContext(), ItemActivity.class);
-                        intent.putExtra("VehicleNum", GSConfig.vehicleList.get(0).VehicleNum);
+//                        intent.putExtra("VehicleNum", GSConfig.vehicleList.get(0).VehicleNum);
+                        intent.putExtra("ID", GSConfig.vehicleList.get(0).ID);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
 
                         startActivity(intent);
