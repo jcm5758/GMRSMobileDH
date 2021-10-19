@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.geurimsoft.grmsmobiledh.apiserver.data.UserInfo;
-import com.geurimsoft.grmsmobiledh.payloader.VehicleDataList;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -110,7 +109,7 @@ public class GSConfig
     public static Date time = new Date();
     public static String date = format.format(time);
 
-    public static VehicleDataList vehicleList = new VehicleDataList();
+    public static GSPayloaderServiceDataTop vehicleList;
 
     // Last_Item의 액티비티가 활성화 되어 있는지 나타내는 변수
     public static boolean last_item_activity_use = false;

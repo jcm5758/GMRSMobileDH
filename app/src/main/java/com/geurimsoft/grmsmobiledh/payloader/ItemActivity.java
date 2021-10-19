@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.geurimsoft.grmsmobiledh.R;
 import com.geurimsoft.grmsmobiledh.data.GSConfig;
+import com.geurimsoft.grmsmobiledh.data.GSPayloaderServiceDataDetail;
 
 /**
  * 1개의 데이터를 상세보기
@@ -52,7 +53,7 @@ public class ItemActivity extends AppCompatActivity
         ID = intent.getStringExtra("ID");
 
         // ID값을 받아와 사용하여 몇번째 데이터인지 알아내는 함수 (value_num 에 저장)
-        value_num = find_value_num(ID);
+        value_num = find_value_num( Integer.parseInt(ID) );
 
         vehicleNum = findViewById(R.id.textView_vehicleNum_detail);
         product = findViewById(R.id.textView_product_detail);
@@ -91,20 +92,18 @@ public class ItemActivity extends AppCompatActivity
             {
 
                 // 현재 완료 처리할 Data의 id값을 소켓에 보내 처리
-                String msg = SocketNetwork.getAccept(GSConfig.vehicleList.get(value_num).ID);
+                //String msg = SocketNetwork.getAccept(GSConfig.vehicleList.get(value_num).ID);
 
                 if((Payloader)Payloader.CONTEXT!=null)
                 {
 
                     if (GSConfig.all_view == true)
                     {
-                        String json = SocketNetwork.getDatalist();
-                        GSConfig.vehicleList.setList(json);
+                        Payloader.loadPayloader(1, GSConfig.product_pick_use, 0);
                     }
                     else
                     {
-                        String json = SocketNetwork.getDatalist_check();
-                        GSConfig.vehicleList.setList(json);
+                        Payloader.loadPayloader(1, GSConfig.product_pick_use, 1);
                     }
 
                 }
@@ -137,8 +136,7 @@ public class ItemActivity extends AppCompatActivity
                 }
 
                 // 데이터를 처리한 후, 소켓통신으로 최신화된 데이터를 수신하여 setDatalist()로 저장
-                String json = SocketNetwork.getDatalist();
-                GSConfig.vehicleList.setList(json);
+                Payloader.loadPayloader(1, GSConfig.product_pick_use, 0);
 
             }
 
@@ -223,41 +221,28 @@ public class ItemActivity extends AppCompatActivity
     public void setText(int num)
     {
 
-        String content_text;
+        GSPayloaderServiceDataDetail data = GSConfig.vehicleList.get(num);
 
-        VehicleData data = GSConfig.vehicleList.get(num);
-
-        // LogisticCompany 값이 비어있는 경우가 많은데, 그 경우 아예 생략(,, 로 칸이 비어있지 않게)
-        if(data.LogisticCompany.equals(""))
-        {
-            content_text = data.CustomerName + ", " + data.CustomerSiteName + ", " + data.ServiceHour.substring(0,2) + ":" +
-                    data.ServiceHour.substring(2,4) + ":" + data.ServiceHour.substring(4);
-        }
-        // LogisticCompany 값이 비어있지 않은 경우, 전체 출력
-        else
-        {
-            content_text = data.CustomerName + ", " + data.CustomerSiteName + ", " + data.LogisticCompany + ", " + data.ServiceHour.substring(0,2) +
-                    ":" + data.ServiceHour.substring(2,4) + ":" + data.ServiceHour.substring(4);
-        }
+        String content_text = data.getText();
 
         vehicleNum.setText(data.VehicleNum);
         product.setText(data.Product);
-        unit.setText(data.Unit);
+        unit.setText( String.valueOf(data.Unit) );
         content.setText(content_text);
 
     }
 
     /**
      * 현재 넘어온 ID 값을 전체데이터와 비교하여 index값을 찾아내는 함수
-     * @param ID
+     * @param id
      * @return 선택된 데이터의 index값
      */
-    public int find_value_num(String ID)
+    public int find_value_num(int id)
     {
 
         for(int i = 0; i < GSConfig.vehicleList.size(); i++)
         {
-            if(GSConfig.vehicleList.get(i).ID.equals(ID))
+            if(GSConfig.vehicleList.get(i).ID == id)
             {
                 return i;
             }

@@ -64,19 +64,15 @@ public class LastItem extends AppCompatActivity
                 if((Payloader)Payloader.CONTEXT!=null)
                 {
 
-                    String json = null;
-
                     // 서버에서 데이터를 받아와 최신화
                     if (GSConfig.all_view == true)
                     {
-                        json = SocketNetwork.getDatalist();
+                        Payloader.loadPayloader(1, GSConfig.product_pick_use, 0);
                     }
                     else
                     {
-                        json = SocketNetwork.getDatalist_check();
+                        Payloader.loadPayloader(1, GSConfig.product_pick_use, 1);
                     }
-
-                    GSConfig.vehicleList.setList(json);
 
                     // 새로운 데이터가 존재할 경우
                     if(GSConfig.vehicleList.size() !=0 )
@@ -110,21 +106,16 @@ public class LastItem extends AppCompatActivity
 
         GSConfig.last_item_activity_use = false;
 
-        String json;
-
         // 준비 데이터 수신
         if(GSConfig.all_view == true)
         {
-            json = SocketNetwork.getDatalist();
+            Payloader.loadPayloader(1, GSConfig.product_pick_use, 0);
         }
         // 완료 데이터 수신
         else
         {
-            json = SocketNetwork.getDatalist_check();
+            Payloader.loadPayloader(1, GSConfig.product_pick_use, 1);
         }
-
-        // Datalist에 수신한 json정보를 jsonParsing 하여 입력
-        GSConfig.vehicleList.setList(json);
 
         finish();
 

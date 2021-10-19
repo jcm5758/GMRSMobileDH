@@ -14,13 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.geurimsoft.grmsmobiledh.R;
 import com.geurimsoft.grmsmobiledh.data.GSConfig;
+import com.geurimsoft.grmsmobiledh.data.GSPayloaderServiceDataDetail;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemViewHolder>
 {
 
     public Context context;
     public Intent intent;
-    public VehicleDataList dataList = new VehicleDataList();
 
     @NonNull
     @Override
@@ -38,7 +38,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position)
     {
-        holder.onBind(dataList.get(position));
+        holder.onBind(GSConfig.vehicleList.get(position));
     }
 
     /**
@@ -48,12 +48,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
     @Override
     public int getItemCount()
     {
-        return dataList.size();
+
+        if ( GSConfig.vehicleList == null)
+            return 0;
+
+        return GSConfig.vehicleList.size();
+
     }
 
-    public void addItem(VehicleData data)
+    public void addItem(GSPayloaderServiceDataDetail data)
     {
-        this.dataList.add(data);
+        GSConfig.vehicleList.add(data);
     }
 
     // RecyclerView의 핵심인 ViewHolder 입니다.
@@ -67,7 +72,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
         private TextView textView_product;
         private TextView textView_content;
         private TextView textView_unit;
-        private VehicleData data;
+        private GSPayloaderServiceDataDetail data;
 
         ItemViewHolder(View itemView)
         {
@@ -83,27 +88,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
 
         }
 
-        public void onBind(VehicleData data)
+        public void onBind(GSPayloaderServiceDataDetail data)
         {
 
             this.data = data;
-            String content_text;
 
-            if(data.LogisticCompany.equals(""))
-            {
-                content_text = data.CustomerName + ", " + data.CustomerSiteName + ", " + data.ServiceHour.substring(0,2) + ":" +
-                        data.ServiceHour.substring(2,4) + ":" + data.ServiceHour.substring(4);
-            }
-            else
-            {
-                content_text = data.CustomerName + ", " + data.CustomerSiteName + ", " + data.LogisticCompany + ", " + data.ServiceHour.substring(0,2) +
-                        ":" + data.ServiceHour.substring(2,4) + ":" + data.ServiceHour.substring(4);
-            }
+            String content_text = data.getText();
 
             textView_vehicleNum.setText(data.VehicleNum);
             textView_product.setText(data.Product);
             textView_content.setText(content_text);
-            textView_unit.setText(data.Unit);
+            textView_unit.setText( String.valueOf(data.Unit) );
 
             itemView.setOnClickListener(new View.OnClickListener()
             {

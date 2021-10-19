@@ -35,6 +35,7 @@ import com.geurimsoft.grmsmobiledh.R;
 import com.geurimsoft.grmsmobiledh.data.GSConfig;
 import com.geurimsoft.grmsmobiledh.data.GSPayloaderList;
 import com.geurimsoft.grmsmobiledh.data.GSPayloaderProductTime;
+import com.geurimsoft.grmsmobiledh.data.GSPayloaderServiceDataTop;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -131,8 +132,51 @@ public class Payloader extends AppCompatActivity
                 {
 
                     // 완료데이터 소켓통신으로 불러와 저장
-                    String json = SocketNetwork.getDatalist_check();
-                    GSConfig.vehicleList.setList(json);
+                    loadPayloader(1, GSConfig.product_pick_use, 1);
+
+                    // 1열 / 2열 보기 값에 따라 각각 지정
+                    if(GSConfig.list_view)
+                    {
+                        init();
+                        adapter.notifyDataSetChanged();
+                    }
+                    else
+                    {
+                        init2();
+                        adapter.notifyDataSetChanged();
+                    }
+
+                }
+
+            }
+
+        });
+
+        // 준비 데이터를 볼 때 클릭 이벤트
+        TD.setOnClickListener(new View.OnClickListener()
+        {
+
+            @Override
+            public void onClick(View v)
+            {
+
+                getSupportActionBar().setTitle("준비 목록");
+
+                check.setImageResource(R.drawable.check_2);
+                TD.setImageResource(R.drawable.ready_1);
+
+                // 준비데이터로 변경
+                GSConfig.all_view = true;
+
+                if(GSConfig.product_pick_use.equals(""))
+                {
+                    Toast.makeText(CONTEXT,"품목 선택",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+
+                    // 완료데이터 소켓통신으로 불러와 저장
+                    loadPayloader(1, GSConfig.product_pick_use, 0);
 
                     // 1열 / 2열 보기 값에 따라 각각 지정
                     if(GSConfig.list_view == true)
@@ -152,278 +196,230 @@ public class Payloader extends AppCompatActivity
 
         });
 
-//        // 준비 데이터를 볼 때 클릭 이벤트
-//        TD.setOnClickListener(new View.OnClickListener()
-//        {
-//
-//            @Override
-//            public void onClick(View v)
-//            {
-//
-//                getSupportActionBar().setTitle("준비 목록");
-//
-//                check.setImageResource(R.drawable.check_2);
-//                TD.setImageResource(R.drawable.ready_1);
-//
-//                // 준비데이터로 변경
-//                GSConfig.all_view = true;
-//
-//                if(GSConfig.product_pick_use.equals(""))
-//                {
-//                    Toast.makeText(CONTEXT,"품목 선택",Toast.LENGTH_SHORT).show();
-//                }
-//                else
-//                {
-//
-//                    // 완료데이터 소켓통신으로 불러와 저장
-//                    String json = SocketNetwork.getDatalist();
-//                    GSConfig.vehicleList.setList(json);
-//
-//                    // 1열 / 2열 보기 값에 따라 각각 지정
-//                    if(GSConfig.list_view == true)
-//                    {
-//                        init();
-//                        adapter.notifyDataSetChanged();
-//                    }
-//                    else
-//                    {
-//                        init2();
-//                        adapter.notifyDataSetChanged();
-//                    }
-//
-//                }
-//
-//            }
-//
-//        });
+        // 1열로 나열
+        listv.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
 
-//        // 1열로 나열
-//        listv.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View v)
-//            {
-//
-//                listv.setImageResource(R.drawable.list_1);
-//                card.setImageResource(R.drawable.card_2);
-//                one.setImageResource(R.drawable.one_2);
-//
-//                // 1열로 보기 전환
-//                GSConfig.list_view = true;
-//
-//                init();
-//                adapter.notifyDataSetChanged();
-//
-//            }
-//        });
+                listv.setImageResource(R.drawable.list_1);
+                card.setImageResource(R.drawable.card_2);
+                one.setImageResource(R.drawable.one_2);
 
-//        // 2열로 나열
-//        card.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View v)
-//            {
-//
-//                listv.setImageResource(R.drawable.list_2);
-//                card.setImageResource(R.drawable.card_1);
-//                one.setImageResource(R.drawable.one_2);
-//
-//                // 2열로 보기 전환
-//                GSConfig.list_view = false;
-//
-//                init2();
-//                adapter.notifyDataSetChanged();
-//            }
-//        });
+                // 1열로 보기 전환
+                GSConfig.list_view = true;
 
-//        // 1개씩 보기 클릭 이벤트
-//        one.setOnClickListener(new View.OnClickListener()
-//        {
-//
-//            @Override
-//            public void onClick(View v)
-//            {
-//
-//                // 클릭했을때, 품목 선택이 안되어있을경우
-//                if(GSConfig.product_pick_use.equals(""))
-//                {
-//                    Toast.makeText(CONTEXT,"품목 선택",Toast.LENGTH_SHORT).show();
-//                }
-//
-//                else
-//                {
-//
-//                    // 클릭했을때, 품목이 있으나, Data가 없을경우 Last_Item 액티비티 활성화
-//                    if(GSConfig.vehicleList.size() == 0)
-//                    {
-//
-//                        intent = new Intent(getBaseContext(), LastItem.class);
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
-//
-//                        startActivity(intent);
-//
-//                    }
-//                    else
-//                    {
-//
-//                        // 클릭했을때, Data와 품목 모두 있을경우, 해당 품목의 첫번째 vehicleNum를 넘겨주며 ItemActivity 활성화
-//                        intent = new Intent(getBaseContext(), ItemActivity.class);
-//                        intent.putExtra("VehicleNum", GSConfig.vehicleList.get(0).VehicleNum);
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
-//
-//                        startActivity(intent);
-//
-//                    }
-//
-//                }
-//
-//            }
-//
-//        });
+                init();
+
+                adapter.notifyDataSetChanged();
+
+            }
+
+        });
+
+        // 2열로 나열
+        card.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+
+                listv.setImageResource(R.drawable.list_2);
+                card.setImageResource(R.drawable.card_1);
+                one.setImageResource(R.drawable.one_2);
+
+                // 2열로 보기 전환
+                GSConfig.list_view = false;
+
+                init2();
+
+                adapter.notifyDataSetChanged();
+
+            }
+
+        });
+
+        // 1개씩 보기 클릭 이벤트
+        one.setOnClickListener(new View.OnClickListener()
+        {
+
+            @Override
+            public void onClick(View v)
+            {
+
+                // 클릭했을때, 품목 선택이 안되어있을경우
+                if(GSConfig.product_pick_use.equals(""))
+                {
+                    Toast.makeText(CONTEXT,"품목 선택",Toast.LENGTH_SHORT).show();
+                }
+
+                else
+                {
+
+                    // 클릭했을때, 품목이 있으나, Data가 없을경우 Last_Item 액티비티 활성화
+                    if(GSConfig.vehicleList.size() == 0)
+                    {
+
+                        intent = new Intent(getBaseContext(), LastItem.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
+
+                        startActivity(intent);
+
+                    }
+                    else
+                    {
+
+                        // 클릭했을때, Data와 품목 모두 있을경우, 해당 품목의 첫번째 vehicleNum를 넘겨주며 ItemActivity 활성화
+                        intent = new Intent(getBaseContext(), ItemActivity.class);
+                        intent.putExtra("VehicleNum", GSConfig.vehicleList.get(0).VehicleNum);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
+
+                        startActivity(intent);
+
+                    }
+
+                }
+
+            }
+
+        });
 
         // 품목 조회
         this.loadProuctList();
 
-//        if(!GSConfig.product_pick_use.equals(""))
-//        {
-//
-//            String json;
-//
-//            // getDatalist() = 준비 데이터 / getDatalist_check() = 완료 데이터
-//            if(GSConfig.all_view == true)
-//            {
-//                // 준비 데이터 수신
-//                json = SocketNetwork.getDatalist();
-//            }
-//            else
-//            {
-//                // 완료 데이터 수신
-//                json = SocketNetwork.getDatalist_check();
-//            }
-//
-//            // Datalist에 수신한 json정보를 jsonParsing 하여 입력
-//            GSConfig.vehicleList.setList(json);
-//
-//            if(GSConfig.list_view)
-//            {
-//                // 1열로 나열
-//                init();
-//            }
-//            else
-//            {
-//                // 2열로 나열
-//                init2();
-//            }
-//
-//            adapter.notifyDataSetChanged();
-//
-//        }
+        if(!GSConfig.product_pick_use.equals(""))
+        {
 
-//        // 핸들러로 전달할 runnable 객체, 수신 스레드 실행
-//        final Runnable runnable = new Runnable()
-//        {
-//
-//            @Override
-//            public void run()
-//            {
-//
-//                // 사용자가 품목을 선택하면 최신화
-//                if(!GSConfig.product_pick_use.equals(""))
-//                {
-//
-//                    String json;
-//
-//                    // getDatalist() = 준비 데이터 / getDatalist_check() = 완료 데이터
-//                    if(GSConfig.all_view)
-//                    {
-//                        // 준비 데이터 수신
-//                        json = SocketNetwork.getDatalist();
-//                    }
-//                    else
-//                    {
-//                        // 완료 데이터 수신
-//                        json = SocketNetwork.getDatalist_check();
-//                    }
-//
-//                    // Datalist에 수신한 json정보를 jsonParsing 하여 입력
-//                    GSConfig.vehicleList.setList(json);
-//
-//                    if(GSConfig.list_view==true)
-//                    {
-//                        // 1열로 나열
-//                        init();
-//                    }
-//                    else
-//                    {
-//                        // 2열로 나열
-//                        init2();
-//                    }
-//
-//                    adapter.notifyDataSetChanged();
-//
-//                }
-//
-//                // 현재 Last_item 실행중 여부
-//                if(GSConfig.last_item_activity_use)
-//                {
-//
-//                    // 최신화로 Datalist의 개수가 0개에서 늘어났을 경우
-//                    if(GSConfig.vehicleList.size()!=0)
-//                    {
-//
-//                        // last_item 액티비티 종료
-//                        LastItem last = (LastItem)LastItem.Last_item_activity;
-//                        last.finish();
-//
-//                        // ItemActivity 활성화 시작
-//                        intent = new Intent(getBaseContext(), ItemActivity.class);
-//                        intent.putExtra("ID", GSConfig.vehicleList.get(0).ID);
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
-//
-//                        startActivity(intent);
-//
-//                    }
-//
-//                }
-//
-//            }
-//
-//        };
+            String json;
 
-//        /**
-//         * 사용자가 정의한 새로고침 시간만큼 대기하는 함수
-//         */
-//        class NewRunnable implements Runnable
-//        {
-//
-//            @Override
-//            public void run()
-//            {
-//
-//                while(true)
-//                {
-//
-//                    try
-//                    {
-//                        // 기본 설정된 1분마다 최신화 시행, 이후 액션바에서 선택한 주기로 설정값(time_pick_use) 변경 가능
-//                        Thread.sleep(GSConfig.time_pick_use);
-//                    }
-//                    catch (InterruptedException e)
-//                    {
-//                        e.printStackTrace();
-//                    }
-//
-//                    mHandler.post(runnable);
-//
-//                }
-//
-//            }
-//
-//        }
-//
-//        NewRunnable nr = new NewRunnable();
-//        Thread t = new Thread(nr);
-//        t.start();
+            // getDatalist() = 준비 데이터 / getDatalist_check() = 완료 데이터
+            if(GSConfig.all_view == true)
+            {
+                // 준비 데이터 수신
+                loadPayloader(1, GSConfig.product_pick_use, 0);
+            }
+            else
+            {
+                // 완료 데이터 수신
+                loadPayloader(1, GSConfig.product_pick_use, 1);
+            }
+
+            if(GSConfig.list_view)
+            {
+                // 1열로 나열
+                init();
+            }
+            else
+            {
+                // 2열로 나열
+                init2();
+            }
+
+            adapter.notifyDataSetChanged();
+
+        }
+
+        // 핸들러로 전달할 runnable 객체, 수신 스레드 실행
+        final Runnable runnable = new Runnable()
+        {
+
+            @Override
+            public void run()
+            {
+
+                // 사용자가 품목을 선택하면 최신화
+                if(!GSConfig.product_pick_use.equals(""))
+                {
+
+                    // getDatalist() = 준비 데이터 / getDatalist_check() = 완료 데이터
+                    if(GSConfig.all_view)
+                    {
+                        // 준비 데이터 수신
+                        loadPayloader(1, GSConfig.product_pick_use, 0);
+                    }
+                    else
+                    {
+                        // 완료 데이터 수신
+                        loadPayloader(1, GSConfig.product_pick_use, 1);
+                    }
+
+                    if(GSConfig.list_view==true)
+                    {
+                        // 1열로 나열
+                        init();
+                    }
+                    else
+                    {
+                        // 2열로 나열
+                        init2();
+                    }
+
+                    adapter.notifyDataSetChanged();
+
+                }
+
+                // 현재 Last_item 실행중 여부
+                if(GSConfig.last_item_activity_use)
+                {
+
+                    // 최신화로 Datalist의 개수가 0개에서 늘어났을 경우
+                    if(GSConfig.vehicleList.size()!=0)
+                    {
+
+                        // last_item 액티비티 종료
+                        LastItem last = (LastItem)LastItem.Last_item_activity;
+                        last.finish();
+
+                        // ItemActivity 활성화 시작
+                        intent = new Intent(getBaseContext(), ItemActivity.class);
+                        intent.putExtra("ID", GSConfig.vehicleList.get(0).ID);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
+
+                        startActivity(intent);
+
+                    }
+
+                }
+
+            }
+
+        };
+
+        /**
+         * 사용자가 정의한 새로고침 시간만큼 대기하는 함수
+         */
+        class NewRunnable implements Runnable
+        {
+
+            @Override
+            public void run()
+            {
+
+                while(true)
+                {
+
+                    try
+                    {
+                        // 기본 설정된 1분마다 최신화 시행, 이후 액션바에서 선택한 주기로 설정값(time_pick_use) 변경 가능
+                        Thread.sleep(GSConfig.time_pick_use);
+                    }
+                    catch (InterruptedException e)
+                    {
+                        e.printStackTrace();
+                    }
+
+                    mHandler.post(runnable);
+
+                }
+
+            }
+
+        }
+
+        NewRunnable nr = new NewRunnable();
+        Thread t = new Thread(nr);
+        t.start();
 
     }
 
@@ -592,15 +588,12 @@ public class Payloader extends AppCompatActivity
                     // 적용 버튼 클릭시, 품목, 시간 설정된 값으로 최신화
                     if(GSConfig.all_view)
                     {
-//                        json = SocketNetwork.getDatalist();
                         this.loadPayloader(1, GSConfig.product_pick_use, 0);
                     }
                     else
                     {
-                        json = SocketNetwork.getDatalist_check();
+                        this.loadPayloader(1, GSConfig.product_pick_use, 1);
                     }
-
-//                    GSConfig.vehicleList.setList(json);
 
                     if(GSConfig.list_view)
                     {
@@ -721,13 +714,13 @@ public class Payloader extends AppCompatActivity
      * 리스트 받아오기
      * @return
      */
-    private boolean loadPayloader(int serviceType, String product, int isLoaded)
+    public static void loadPayloader(int serviceType, String product, int isLoaded)
     {
 
         String functionName = "loadPayloader()";
 
         String date = GSConfig.date;
-        Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + date);
+        Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG("Palyloader", functionName) + date);
 
         String url = GSConfig.API_SERVER_ADDR;
         RequestQueue requestQueue = Volley.newRequestQueue(GSConfig.context);
@@ -744,19 +737,12 @@ public class Payloader extends AppCompatActivity
                         Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "응답 -> " + response);
 
                         Gson gson = new Gson();
-                        GSPayloaderList loader = gson.fromJson(response, GSPayloaderList.class);
+                        GSPayloaderServiceDataTop top = gson.fromJson(response, GSPayloaderServiceDataTop.class);
 
-                        if (loader != null && loader.getData() != null)
+                        if (top != null)
                         {
-
-                            GSPayloaderProductTime pt = loader.getData();
-
-                            if (pt != null && pt.getProductArray() != null && pt.getProductArray().size() > 0)
-                                setProductSpinner(pt.getProductArray());
-
-                            if (pt != null && pt.getTimeArray() != null && pt.getTimeArray().size() > 0)
-                                setTimeSpinner(pt.getTimeArray());
-
+                            GSConfig.vehicleList = top;
+//                            GSConfig.vehicleList.print();
                         }
 
                     }
@@ -787,8 +773,6 @@ public class Payloader extends AppCompatActivity
         requestQueue.add(request);
 
 //		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "요청 보냄.");
-
-        return true;
 
     }
 
