@@ -41,6 +41,7 @@ import com.geurimsoft.grmsmobiledh.apiserver.data.UserInfo;
 import com.geurimsoft.grmsmobiledh.apiserver.data.UserRightData;
 import com.geurimsoft.grmsmobiledh.data.GSBranch;
 import com.geurimsoft.grmsmobiledh.data.GSConfig;
+import com.geurimsoft.grmsmobiledh.payloader.Payloader;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -248,7 +249,7 @@ public class AppMain extends Activity
 				new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "에러 -> " + error.getMessage());
+						Log.e(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "에러 -> " + error.getMessage());
 					}
 				}
 		) {
@@ -275,7 +276,7 @@ public class AppMain extends Activity
 
 		String functionName = "parseData()";
 
-		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + ": msg : " + msg);
+//		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + ": msg : " + msg);
 
 		Gson gson = new Gson();
 
@@ -315,7 +316,7 @@ public class AppMain extends Activity
 		if (GSConfig.CURRENT_USER == null || GSConfig.CURRENT_USER.isUserInfoNull() || GSConfig.CURRENT_USER.isUserRightNull())
 			return;
 
-		String functionName = "showBranch()";
+		String fn = "showBranch()";
 
 		ArrayList<UserRightData> urData = GSConfig.CURRENT_USER.getUserright();
 
@@ -336,7 +337,7 @@ public class AppMain extends Activity
 			public void onClick(DialogInterface dialog, int which)
 			{
 
-//				Log.d(GSConfig.APP_DEBUG, this.getClass().getName() + "." + functionName + " : which : " + which);
+//				Log.d(GSConfig.APP_DEBUG, this.getClass().getName() + "." + fn + " : which : " + which);
 
 				if (GSConfig.CURRENT_USER.getUserRightData(which).getUr01() != 1)
 				{
@@ -346,7 +347,8 @@ public class AppMain extends Activity
 
 				GSConfig.CURRENT_BRANCH = new GSBranch(urData.get(which).getBranID(), urData.get(which).getBranName(), urData.get(which).getBranShortName());
 
-				Intent intent = new Intent(AppMain.this, GSConfig.Activity_LIST[0]);
+//				Intent intent = new Intent(AppMain.this, GSConfig.Activity_LIST[0]);
+				Intent intent = new Intent(AppMain.this, GSConfig.Activity_LIST[1]);
 				intent.putExtra("branName", GSConfig.CURRENT_BRANCH.getBranchShortName());
 				intent.putExtra("branID", GSConfig.CURRENT_BRANCH.getBranchID());
 
@@ -444,7 +446,7 @@ public class AppMain extends Activity
 			{
 
 				URL url = new URL(GSConfig.WEB_SERVER_ADDR);
-				Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), "doInBackground") + " url : " + url.toString());
+//				Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), "doInBackground") + " url : " + url.toString());
 
 				HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 				

@@ -1,49 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-     <string-array name="spinneritem_01">
-        <item>CCTV1</item>
-        <item>CCTV2</item>
-        <item>CCTV3</item>
-        <item>CCTV4</item>
-        <item>CCTV5</item>
-        <item>CCTV6</item>
-        <item>CCTV7</item>
-        <item>CCTV8</item>
-    </string-array>
-       
-    <string-array name="spinneritem_1">
-        <item>선택</item>
-        <item>빨</item>
-        <item>주</item>
-        <item>노</item>
-        <item>초</item>
-        <item>파</item>
-        <item>남</item>
-        <item>보</item>
-    </string-array>
-    
-    <string-array name="spinneritem_2">
-        <item>선택</item>
-        <item>빨</item>
-        <item>주</item>
-        <item>노</item>
-        <item>초</item>
-        <item>파</item>
-        <item>남</item>
-        <item>보</item>
-    </string-array> 
-    <string-array name="spinneritem_3">
-        <item>선택</item>
-        <item>빨</item>
-        <item>주</item>
-        <item>노</item>
-        <item>초</item>
-        <item>파</item>
-        <item>남</item>
-        <item>보</item>
-    </string-array> 
-    
-
 
     <array name="rainbow">
         <item>@color/blue</item>
@@ -60,4 +16,27 @@
         <item>@color/yellow</item>
         <item>@color/bright_pink</item>
     </array>
+
+    <string-array name="시간">
+        <item>1분</item>
+        <item>2분</item>
+        <item>3분</item>
+        <item>4분</item>
+        <item>5분</item>
+        <item>6분</item>
+        <item>7분</item>
+        <item>8분</item>
+        <item>9분</item>
+        <item>10분</item>
+    </string-array>
+
+    <string-array name="품목">
+        <item>10mm</item>
+        <item>13mm</item>
+        <item>19mm</item>
+        <item>25mm</item>
+        <item>대석</item>
+        <item>부순모래</item>
+    </string-array>
+
 </resources>

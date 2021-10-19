@@ -81,32 +81,20 @@ public class JoomyungTabActivity extends FragmentActivity
 		{
 			finish();
 		}
-		else if(id == R.id.yongin_site_change)
-		{
+//		else if(id == R.id.yongin_site_change)
+//		{
+//
+//			SharedPreferences.Editor editor = preferences.edit();
+//			editor.putInt("branch_id", 2);
+//			editor.commit();
+//
+//			finish();
+//
+//			Intent intent = new Intent(JoomyungTabActivity.this, GwangjuTabActivity.class);
+//			startActivity(intent);
+//
+//		}
 
-			SharedPreferences.Editor editor = preferences.edit();
-			editor.putInt("branch_id", 2);
-			editor.commit();
-			
-			finish();
-			
-			Intent intent = new Intent(JoomyungTabActivity.this, GwangjuTabActivity.class);
-			startActivity(intent);
-			
-		}
-		else if(id == R.id.total_site_change)
-		{
-
-			SharedPreferences.Editor editor = preferences.edit();
-			editor.putInt("branch_id", 4);
-			editor.commit();
-			
-			finish();
-			
-			Intent intent = new Intent(JoomyungTabActivity.this, TotalTabActivity.class);
-			startActivity(intent);
-			
-		}
 
 		return super.onOptionsItemSelected(item);
 

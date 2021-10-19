@@ -22,10 +22,12 @@ import com.geurimsoft.grmsmobiledh.R;
 import com.geurimsoft.grmsmobiledh.data.GSConfig;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class ActivityMain extends AppCompatActivity {
+public class ActivityMain extends AppCompatActivity
+{
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.branch_main);

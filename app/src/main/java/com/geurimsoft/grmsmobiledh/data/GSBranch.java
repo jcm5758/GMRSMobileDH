@@ -17,25 +17,18 @@ public class GSBranch
     public int getBranchID() {
         return branchID;
     }
-
     public void setBranchID(int branchID) {
         this.branchID = branchID;
     }
-
     public String getBranchName() {
         return branchName;
     }
-
     public void setBranchName(String branchName) {
         this.branchName = branchName;
     }
-
     public String getBranchShortName() {
         return branchShortName;
     }
-
-    public void setBranchShortName(String branchShortName) {
-        this.branchShortName = branchShortName;
-    }
+    public void setBranchShortName(String branchShortName) { this.branchShortName = branchShortName; }
 
 }

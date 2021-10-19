@@ -23,7 +23,8 @@
         </activity>
         <activity android:name="com.geurimsoft.grmsmobiledh.view.fragments.ActivityMain"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"/>
-        <activity android:name="com.geurimsoft.grmsmobiledh.view.kwangju.ActivityMain"
+
+        <activity android:name="com.geurimsoft.grmsmobiledh.payloader.Payloader"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"/>
 
         <activity android:name="org.achartengine.GraphicalActivity" />
