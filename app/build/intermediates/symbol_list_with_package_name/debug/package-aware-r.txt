@@ -50,6 +50,8 @@ animator mtrl_fab_hide_motion_spec
 animator mtrl_fab_show_motion_spec
 animator mtrl_fab_transformation_sheet_collapse_spec
 animator mtrl_fab_transformation_sheet_expand_spec
+array Product
+array Time
 array etc_tab_array
 array general_grade_site_array
 array rainbow
@@ -63,8 +65,6 @@ array stats_year_tab_array2
 array super_grade_site_array
 array total_month_tab_array
 array total_year_tab_array
-array 시간
-array 품목
 attr actionBarDivider
 attr actionBarItemBackground
 attr actionBarPopupTheme

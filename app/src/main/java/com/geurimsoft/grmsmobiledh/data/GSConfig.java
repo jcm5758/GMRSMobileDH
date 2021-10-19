@@ -106,7 +106,7 @@ public class GSConfig
     public static String PW;
 
     // 현재 날짜에 관한 정의 및 형식 선언
-    public static SimpleDateFormat format = new SimpleDateFormat("yyyy,MM,dd,");
+    public static SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
     public static Date time = new Date();
     public static String date = format.format(time);
 

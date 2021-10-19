@@ -6401,7 +6401,7 @@
         <item>@color/magenta</item>
         <item>@color/yellow</item>
         <item>@color/bright_pink</item>
-    </array><string-array name="시간">
+    </array><string-array name="Time">
         <item>1분</item>
         <item>2분</item>
         <item>3분</item>
@@ -6412,7 +6412,7 @@
         <item>8분</item>
         <item>9분</item>
         <item>10분</item>
-    </string-array><string-array name="품목">
+    </string-array><string-array name="Product">
         <item>10mm</item>
         <item>13mm</item>
         <item>19mm</item>

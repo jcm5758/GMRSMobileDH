@@ -49,6 +49,8 @@ int animator mtrl_fab_hide_motion_spec 0x7f020010
 int animator mtrl_fab_show_motion_spec 0x7f020011
 int animator mtrl_fab_transformation_sheet_collapse_spec 0x7f020012
 int animator mtrl_fab_transformation_sheet_expand_spec 0x7f020013
+int array Product 0x7f03000f
+int array Time 0x7f030010
 int array etc_tab_array 0x7f030000
 int array general_grade_site_array 0x7f030001
 int array rainbow 0x7f030002
@@ -62,8 +64,6 @@ int array stats_year_tab_array2 0x7f030009
 int array super_grade_site_array 0x7f03000a
 int array total_month_tab_array 0x7f03000b
 int array total_year_tab_array 0x7f03000c
-int array 시간 0x7f03000d
-int array 품목 0x7f03000e
 int attr actionBarDivider 0x7f040000
 int attr actionBarItemBackground 0x7f040001
 int attr actionBarPopupTheme 0x7f040002
