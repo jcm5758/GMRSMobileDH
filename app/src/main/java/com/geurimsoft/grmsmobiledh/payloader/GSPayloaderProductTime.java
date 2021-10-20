@@ -12,6 +12,7 @@ public class GSPayloaderProductTime
 
     private String[] TimeTable;
     private String[] ProductTable;
+    public int[] FontSize;
 
     public List<String> getProductArray()
     {

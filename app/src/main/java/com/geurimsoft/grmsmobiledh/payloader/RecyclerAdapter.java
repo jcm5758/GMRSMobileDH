@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Dimension;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +21,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
 
     public Context context;
     public Intent intent;
+    public ItemViewHolder viewHolder;
 
     @NonNull
     @Override
@@ -30,7 +32,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.payloader_item, parent, false);
 
-        return new ItemViewHolder(view);
+        viewHolder = new ItemViewHolder(view);
+
+        return viewHolder;
 
     }
 
@@ -67,10 +71,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
 
         private LinearLayout linearitem;
 
-        private TextView textView_vehicleNum;
-        private TextView textView_product;
-        private TextView textView_content;
-        private TextView textView_unit;
+        private TextView tvVehicleNum;
+        private TextView tvProduct;
+        private TextView tvContent;
+        private TextView tvUnit;
         private GSVehicleData data;
 
         ItemViewHolder(View itemView)
@@ -80,10 +84,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
 
             linearitem = itemView.findViewById(R.id.linearitem);
 
-            textView_vehicleNum = itemView.findViewById(R.id.textView_vehicleNum);
-            textView_product = itemView.findViewById(R.id.textView_product);
-            textView_unit = itemView.findViewById(R.id.textView_unit);
-            textView_content = itemView.findViewById(R.id.textView_content);
+            tvVehicleNum = itemView.findViewById(R.id.textView_vehicleNum);
+            tvProduct = itemView.findViewById(R.id.textView_product);
+            tvUnit = itemView.findViewById(R.id.textView_unit);
+            tvContent = itemView.findViewById(R.id.textView_content);
+
+            tvVehicleNum.setTextSize(Dimension.DP, GSConfig.FontSizeVehicle);
+            tvProduct.setTextSize(Dimension.DP, GSConfig.FontSizeProduct);
+            tvUnit.setTextSize(Dimension.DP, GSConfig.FontSizeUnit);
+            tvContent.setTextSize(Dimension.DP, GSConfig.FontSizeContent);
 
         }
 
@@ -94,10 +103,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
 
             String content_text = data.getText();
 
-            textView_vehicleNum.setText(data.VehicleNum);
-            textView_product.setText(data.Product);
-            textView_content.setText(content_text);
-            textView_unit.setText( String.valueOf(data.Unit) );
+            tvVehicleNum.setText(data.VehicleNum);
+            tvProduct.setText(data.Product);
+            tvContent.setText(content_text);
+            tvUnit.setText( String.valueOf(data.Unit) );
 
             itemView.setOnClickListener(new View.OnClickListener()
             {

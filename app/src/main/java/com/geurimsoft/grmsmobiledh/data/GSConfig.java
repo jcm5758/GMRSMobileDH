@@ -54,6 +54,9 @@ public class GSConfig
 
     public static Context context;
 
+    // Global preference
+    public static SharedPreferences gPreference;
+
     // 현재의 연월일
     public static int DAY_STATS_YEAR = 0;
     public static int DAY_STATS_MONTH = 0;
@@ -100,14 +103,12 @@ public class GSConfig
 
     // 현재 사용자의 setting 을 저장하는데 필요한 SharedPreferences 선언
     // 로그인시 로그인 ID,PW와 해당 ID에 맞는 product_pick_use 값을 저장 및 해제
-    public static SharedPreferences setting;
-    public static SharedPreferences.Editor editor;
+//    public static SharedPreferences setting;
+//    public static SharedPreferences.Editor editor;
 
     // 현재 사용자가 입력한 ID와 PW값
     public static String ID;
     public static String PW;
-
-
 
     public static GSPayloaderServiceDataTop vehicleList;
 
@@ -124,10 +125,16 @@ public class GSConfig
 
     // 사용자가 선택한 품목 및 새로고침 시간을 나타내는 변수
     // 초기값이 없이 나타나 적용하지 않는다면 데이터가 처음에 나타나지 않음
-    public static String product_pick_use = "전체";
+    public static String gProduct = "전체";
 
     // 초기값으로 매 1분 데이터를 최신화 할 수 있도록 설정 (이후 사용자가 변경 가능)
-    public static int time_pick_use = 60000;
+    public static int gTime = 60000;
+
+    // 페이로더 폰트 사이즈
+    public static int FontSizeVehicle = 50;
+    public static int FontSizeProduct = 50;
+    public static int FontSizeUnit = 50;
+    public static int FontSizeContent = 50;
 
     // 현재 날짜에 관한 정의 및 형식 선언
     public static String getCurrentDate()

@@ -28,11 +28,11 @@
                 android:layout_height="180dp"
                 android:layout_weight="4"
                 android:includeFontPadding="false"
-                android:text="Vehicle"
                 android:textColor="#FF0000"
                 android:textSize="35dp"
                 android:textStyle="bold"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="경기06가1234"/>
 
             <TextView
                 android:id="@+id/textView_product"
@@ -40,11 +40,11 @@
                 android:layout_height="180dp"
                 android:layout_weight="2"
                 android:includeFontPadding="false"
-                android:text="Product"
                 android:textColor="#0000FF"
                 android:textSize="30dp"
                 android:textStyle="bold"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="쇄석25mm"/>
 
             <TextView
                 android:id="@+id/textView_unit"
@@ -52,11 +52,11 @@
                 android:layout_height="180dp"
                 android:layout_weight="2"
                 android:includeFontPadding="false"
-                android:text="Unit"
                 android:textColor="#000000"
                 android:textSize="40dp"
                 android:textStyle="bold"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="17"/>
 
         </LinearLayout>
 
@@ -66,9 +66,9 @@
             android:layout_height="90dp"
             android:layout_gravity="center_vertical"
             android:includeFontPadding="false"
-            android:text="content"
             android:textColor="@android:color/darker_gray"
-            android:textSize="30dp" />
+            android:textSize="30dp"
+            android:text="대한시멘트, 일산, 그림운송, 08:31:41"/>
 
     </LinearLayout>
 

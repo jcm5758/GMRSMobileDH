@@ -79,11 +79,11 @@ public class LastItem extends AppCompatActivity
                     // 서버에서 데이터를 받아와 최신화
                     if (GSConfig.all_view == true)
                     {
-                        loadPayloader(1, GSConfig.product_pick_use, 0);
+                        loadPayloader(1, GSConfig.gProduct, 0);
                     }
                     else
                     {
-                        loadPayloader(1, GSConfig.product_pick_use, 1);
+                        loadPayloader(1, GSConfig.gProduct, 1);
                     }
 
                     // 새로운 데이터가 존재할 경우
@@ -121,12 +121,12 @@ public class LastItem extends AppCompatActivity
         // 준비 데이터 수신
         if(GSConfig.all_view == true)
         {
-            loadPayloader(1, GSConfig.product_pick_use, 0);
+            loadPayloader(1, GSConfig.gProduct, 0);
         }
         // 완료 데이터 수신
         else
         {
-            loadPayloader(1, GSConfig.product_pick_use, 1);
+            loadPayloader(1, GSConfig.gProduct, 1);
         }
 
         finish();

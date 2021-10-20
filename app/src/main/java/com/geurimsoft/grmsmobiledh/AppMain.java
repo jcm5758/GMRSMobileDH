@@ -60,8 +60,6 @@ public class AppMain extends Activity
 	CheckBox chkAutoLogin;
 	Button btnlogin;
 
-	private SharedPreferences pref;
-	
 	private long backKeyPressedTime = 0;
 	private Toast appFinishedToast;
 	
@@ -96,7 +94,7 @@ public class AppMain extends Activity
 	public void setUserInterface()
 	{
 
-		pref = getSharedPreferences("user_account", Context.MODE_PRIVATE);
+		GSConfig.gPreference = getSharedPreferences("user_account", Context.MODE_PRIVATE);
 
 		// 아이디
 		edtLogin = (EditText) this.findViewById(R.id.edtlogin);
@@ -137,26 +135,31 @@ public class AppMain extends Activity
 	private void autoCheck()
 	{
 
-		pref = getSharedPreferences("user_account", Context.MODE_PRIVATE);
+		// 기본 정보 가져오기
+		GSConfig.gPreference = getSharedPreferences("GRMS_DH", Context.MODE_PRIVATE);
 
-		String sId = pref.getString("userID", null);
-		String sPass = pref.getString("userPWD", null);
+		// ID
+		String sId = GSConfig.gPreference.getString("userID", null);
 
-		boolean auto_chcek = pref.getBoolean("outo_chcek", false);
+		// Password
+		String sPass = GSConfig.gPreference.getString("userPWD", null);
+
+		// 자동 저장
+		boolean auto_chcek = GSConfig.gPreference.getBoolean("outo_chcek", false);
 
 		chkAutoLogin.setChecked(auto_chcek);
 		
-		if (auto_chcek == true)
+		if (auto_chcek)
 		{
 			edtLogin.setText(sId);
 			edtPasswd.setText(sPass);
 		}
 		else
 		{
-			SharedPreferences.Editor removeEditor = pref.edit();
+			SharedPreferences.Editor removeEditor = GSConfig.gPreference.edit();
 			removeEditor.remove("userID");
 			removeEditor.remove("userPWD");
-			removeEditor.remove("outo_chcek");
+			removeEditor.remove("auto_chcek");
 			removeEditor.commit();
 		}
 
@@ -293,7 +296,7 @@ public class AppMain extends Activity
 		if (GSConfig.CURRENT_USER.isUserInfoNull() || GSConfig.CURRENT_USER.isUserRightNull())
 			return;
 
-		SharedPreferences.Editor editor = pref.edit();
+		SharedPreferences.Editor editor = GSConfig.gPreference.edit();
 		editor.putString("userID", userID);
 		editor.putString("userPWD", userPWD);
 		editor.putBoolean("outo_chcek", chkAutoLogin.isChecked());
