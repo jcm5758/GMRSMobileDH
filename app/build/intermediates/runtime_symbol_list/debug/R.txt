@@ -2304,7 +2304,6 @@ int id search_mag_icon 0x7f0901e0
 int id search_plate 0x7f0901e1
 int id search_src_text 0x7f0901e2
 int id search_voice_btn 0x7f0901e3
-int id select 0x7f0901e4
 int id select_dialog_listview 0x7f0901e5
 int id selected 0x7f0901e6
 int id selection_type 0x7f0901e7
@@ -2412,13 +2411,10 @@ int id textStart 0x7f09024c
 int id textTop 0x7f09024d
 int id textView2 0x7f09024e
 int id textView_content 0x7f09024f
-int id textView_content_detail 0x7f090250
 int id textView_product 0x7f090251
 int id textView_product_detail 0x7f090252
 int id textView_unit 0x7f090253
-int id textView_unit_detail 0x7f090254
 int id textView_vehicleNum 0x7f090255
-int id textView_vehicleNum_detail 0x7f090256
 int id text_input_end_icon 0x7f090257
 int id text_input_error_icon 0x7f090258
 int id text_input_start_icon 0x7f090259
@@ -2429,7 +2425,6 @@ int id textinput_placeholder 0x7f09025d
 int id textinput_prefix_text 0x7f09025e
 int id textinput_suffix_text 0x7f09025f
 int id time 0x7f090260
-int id time_pick 0x7f090261
 int id title 0x7f090262
 int id titleDividerNoCustom 0x7f090263
 int id title_template 0x7f090264
@@ -2495,6 +2490,13 @@ int id tt_year_price_header_container 0x7f09029f
 int id tt_year_price_listview 0x7f0902a0
 int id tt_year_price_loading_fail 0x7f0902a1
 int id tt_year_price_loading_indicator 0x7f0902a2
+int id tvDetailCustomer 0x7f0902e7
+int id tvDetailLogisticCompany 0x7f0902e8
+int id tvDetailProduct 0x7f0902e9
+int id tvDetailServiceTime 0x7f0902ea
+int id tvDetailUnit 0x7f0902eb
+int id tvDetailUnit2 0x7f0902ec
+int id tvDetailVehicleNum 0x7f0902ed
 int id tvListCustomer 0x7f0902a3
 int id tvListId 0x7f0902a4
 int id tvLoading 0x7f0902a5

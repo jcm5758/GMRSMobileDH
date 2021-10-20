@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Dimension;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -45,8 +46,17 @@ public class ItemActivity extends AppCompatActivity
     // 수량 텍스트 뷰
     private TextView tvUnit;
 
+    // m3 텍스트 뷰
+    private TextView tvUnit2;
+
     // 콘텐츠 텍스트 뷰
-    private TextView tvContent;
+    private TextView tvCustomer;
+
+    // 콘텐츠 텍스트 뷰
+    private TextView tvLogisticCompany;
+
+    // 콘텐츠 텍스트 뷰
+    private TextView tvServiceTime;
 
     // 취소 버튼
     private Button btCancel;
@@ -93,10 +103,13 @@ public class ItemActivity extends AppCompatActivity
         Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), "onCreate()") + "id : " + vehicleID);
 
         // Text view
-        tvVehicleNum = findViewById(R.id.textView_vehicleNum_detail);
-        tvProduct = findViewById(R.id.textView_product_detail);
-        tvUnit = findViewById(R.id.textView_unit_detail);
-        tvContent = findViewById(R.id.textView_content_detail);
+        tvVehicleNum = findViewById(R.id.tvDetailVehicleNum);
+        tvProduct = findViewById(R.id.tvDetailProduct);
+        tvUnit = findViewById(R.id.tvDetailUnit);
+        tvUnit2 = findViewById(R.id.tvDetailUnit2);
+        tvCustomer = findViewById(R.id.tvDetailCustomer);
+        tvLogisticCompany = findViewById(R.id.tvDetailLogisticCompany);
+        tvServiceTime = findViewById(R.id.tvDetailServiceTime);
 
         // Button
         btCancel = findViewById(R.id.button_cancel);
@@ -105,6 +118,17 @@ public class ItemActivity extends AppCompatActivity
         // Image View
         ivLeft = findViewById(R.id.left);
         ivRight = findViewById(R.id.right);
+
+        tvVehicleNum.setTextSize(Dimension.DP, GSConfig.FontSizeDetailVehicle);
+        tvProduct.setTextSize(Dimension.DP, GSConfig.FontSizeDetailProduct);
+        tvUnit.setTextSize(Dimension.DP, GSConfig.FontSizeDetailUnit);
+        tvUnit2.setTextSize(Dimension.DP, GSConfig.FontSizeDetailUnit);
+        tvCustomer.setTextSize(Dimension.DP, GSConfig.FontSizeDetailCustomer);
+        tvLogisticCompany.setTextSize(Dimension.DP, GSConfig.FontSizeDetailLogisticCompany);
+        tvServiceTime.setTextSize(Dimension.DP, GSConfig.FontSizeDetailServiceTime);
+
+        btCancel.setTextSize(Dimension.DP, GSConfig.FontSizeDetailButton);
+        btAccept.setTextSize(Dimension.DP, GSConfig.FontSizeDetailButton);
 
         // 현재 데이터 화면 표출
         setText();
@@ -222,7 +246,9 @@ public class ItemActivity extends AppCompatActivity
         tvVehicleNum.setText( vehicleData.VehicleNum );
         tvProduct.setText( vehicleData.Product );
         tvUnit.setText( String.valueOf(vehicleData.Unit) );
-        tvContent.setText( vehicleData.getText() );
+        tvCustomer.setText( vehicleData.CustomerName + "(" + vehicleData.CustomerSiteName + ")" );
+        tvLogisticCompany.setText( vehicleData.LogisticCompany );
+        tvServiceTime.setText( vehicleData.getServiceHour() );
 
     }
 

@@ -114,7 +114,7 @@ public class Payloader extends AppCompatActivity
         this.initBasic();
 
         // 품목 조회
-        this.loadProuctList();
+        this.loadBasicInfo();
 
     }
 
@@ -210,41 +210,16 @@ public class Payloader extends AppCompatActivity
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
                     {
+
                         GSConfig.gProduct = (String) parent.getItemAtPosition(position);
-                    }
 
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent)
-                    {
-                        return;
-                    }
+                        SharedPreferences.Editor editor = GSConfig.gPreference.edit();
+                        editor.putString("product", GSConfig.gProduct);
+                        editor.commit();
 
-                });
+                        spinner_product.setVisibility(View.GONE);
 
-                return true;
-
-            // 새로고침 시간 선택
-            case R.id.time_pick:
-
-                spinner_time.performClick();
-                spinner_time.setVisibility(View.VISIBLE);
-                spinner_product.setVisibility(View.GONE);
-
-                // 선택된 품목으로 GSConfig time_pick_use 변경
-                spinner_time.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-                {
-
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-                    {
-
-                        String cTime = (String)parent.getItemAtPosition(position);
-                        cTime = cTime.replace("분", "");
-
-                        int time = Integer.parseInt(cTime);
-
-                        GSConfig.gTime = time * 60000;
-
+                        loadData();
 
                     }
 
@@ -258,30 +233,63 @@ public class Payloader extends AppCompatActivity
 
                 return true;
 
-            // 적용 선택
-            case R.id.select:
+//            // 새로고침 시간 선택
+//            case R.id.time_pick:
+//
+//                spinner_time.performClick();
+//                spinner_time.setVisibility(View.VISIBLE);
+//                spinner_product.setVisibility(View.GONE);
+//
+//                // 선택된 품목으로 GSConfig time_pick_use 변경
+//                spinner_time.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+//                {
+//
+//                    @Override
+//                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+//                    {
+//
+//                        String cTime = (String)parent.getItemAtPosition(position);
+//                        cTime = cTime.replace("분", "");
+//
+//                        int time = Integer.parseInt(cTime);
+//
+//                        GSConfig.RefreshTime = time * 60000;
+//
+//                    }
+//
+//                    @Override
+//                    public void onNothingSelected(AdapterView<?> parent)
+//                    {
+//                        return;
+//                    }
+//
+//                });
+//
+//                return true;
 
-                // 품목, 새로고침 시간 시야에서 제거
-                spinner_product.setVisibility(View.GONE);
-                spinner_time.setVisibility(View.GONE);
-
-                // 선택된 품목이 없으면 메시지 출력
-                if(GSConfig.gProduct.equals(""))
-                {
-                    Toast.makeText(CONTEXT,"품목 선택",Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-
-                Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), "onOptionsItemSelected()")
-                        + "gProduct : " + GSConfig.gProduct + ", gTime : " + GSConfig.gTime);
-
-                editor = GSConfig.gPreference.edit();
-                editor.putString("product", GSConfig.gProduct);
-                editor.putInt("time", GSConfig.gTime);
-                editor.commit();
-
-                // 데이터 조회
-                this.loadData();
+//            // 적용 선택
+//            case R.id.select:
+//
+//                // 품목, 새로고침 시간 시야에서 제거
+//                spinner_product.setVisibility(View.GONE);
+//                spinner_time.setVisibility(View.GONE);
+//
+//                // 선택된 품목이 없으면 메시지 출력
+//                if(GSConfig.gProduct.equals(""))
+//                {
+//                    Toast.makeText(CONTEXT,"품목 선택",Toast.LENGTH_SHORT).show();
+//                    return false;
+//                }
+//
+//                Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), "onOptionsItemSelected()")
+//                        + "gProduct : " + GSConfig.gProduct + ", gTime : " + GSConfig.RefreshTime);
+//
+//                editor = GSConfig.gPreference.edit();
+//                editor.putString("product", GSConfig.gProduct);
+//                editor.commit();
+//
+//                // 데이터 조회
+//                this.loadData();
 
         }
 
@@ -342,10 +350,10 @@ public class Payloader extends AppCompatActivity
      * 품목 리스트 받아오기
      * @return
      */
-    private boolean loadProuctList()
+    private boolean loadBasicInfo()
     {
 
-        String functionName = "loadProuctList()";
+        String functionName = "loadBasicInfo()";
 
         String url = GSConfig.API_SERVER_ADDR;
         RequestQueue requestQueue = Volley.newRequestQueue(GSConfig.context);
@@ -377,13 +385,35 @@ public class Payloader extends AppCompatActivity
                             if ( pt != null && pt.getTimeArray() != null && pt.getTimeArray().size() > 0 )
                                 setTimeSpinner(pt.getTimeArray());
 
-                            //
+                            // 폰트 사이즈 저장
                             if ( pt != null && pt.FontSize != null && pt.FontSize.length > 0 )
                             {
+
                                 GSConfig.FontSizeVehicle = pt.FontSize[0];
                                 GSConfig.FontSizeProduct = pt.FontSize[1];
                                 GSConfig.FontSizeUnit = pt.FontSize[2];
                                 GSConfig.FontSizeContent = pt.FontSize[3];
+
+                            }
+
+                            // 폰트 디테일 사이즈 저장
+                            if ( pt != null && pt.FontSizeDetail != null && pt.FontSizeDetail.length > 0 )
+                            {
+
+                                GSConfig.FontSizeDetailVehicle = pt.FontSizeDetail[0];
+                                GSConfig.FontSizeDetailProduct = pt.FontSizeDetail[1];
+                                GSConfig.FontSizeDetailUnit = pt.FontSizeDetail[2];
+                                GSConfig.FontSizeDetailCustomer = pt.FontSizeDetail[3];
+                                GSConfig.FontSizeDetailLogisticCompany = pt.FontSizeDetail[4];
+                                GSConfig.FontSizeDetailServiceTime = pt.FontSizeDetail[5];
+                                GSConfig.FontSizeDetailButton = pt.FontSizeDetail[6];
+
+                            }
+
+                            // 새로고침 주기 저장
+                            if ( pt != null && pt.RefreshTime > 0 )
+                            {
+                                GSConfig.RefreshTime = pt.RefreshTime;
                             }
 
                         }
@@ -698,7 +728,7 @@ public class Payloader extends AppCompatActivity
                     {
                         // 기본 설정된 1분마다 최신화 시행,
                         // 이후 액션바에서 선택한 주기로 설정값(time_pick_use) 변경
-                        Thread.sleep(GSConfig.gTime);
+                        Thread.sleep(GSConfig.RefreshTime);
                     }
                     catch (InterruptedException e)
                     {

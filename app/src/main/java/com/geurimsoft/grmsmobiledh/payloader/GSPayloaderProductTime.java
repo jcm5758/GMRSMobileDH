@@ -13,6 +13,8 @@ public class GSPayloaderProductTime
     private String[] TimeTable;
     private String[] ProductTable;
     public int[] FontSize;
+    public int[] FontSizeDetail;
+    public int RefreshTime;
 
     public List<String> getProductArray()
     {

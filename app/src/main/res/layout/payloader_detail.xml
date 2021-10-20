@@ -20,7 +20,7 @@
             android:gravity="center">
 
             <TextView
-                android:id="@+id/textView_vehicleNum_detail"
+                android:id="@+id/tvDetailVehicleNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="VehicleNum"
@@ -53,57 +53,79 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="3"
-                    android:orientation="horizontal"
+                    android:layout_weight="2"
+                    android:orientation="vertical"
                     android:gravity="center">
 
                     <TextView
-                        android:id="@+id/textView_product_detail"
+                        android:id="@+id/tvDetailProduct"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="Product"
                         android:textColor="#0000FF"
-                        android:textSize="80dp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="2"
-                    android:orientation="horizontal"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/textView_unit_detail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Unit"
-                        android:textColor="#000000"
                         android:textSize="60dp"
                         android:textStyle="bold" />
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tvDetailUnit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Unit"
+                            android:textColor="#000000"
+                            android:textSize="60dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvDetailUnit2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="m\u00B3"
+                            android:textColor="#000000"
+                            android:textSize="50dp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
                     <TextView
+                        android:id="@+id/tvDetailCustomer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="m\u00B3"
-                        android:textColor="#000000"
-                        android:textSize="50dp"
-                        android:textStyle="bold" />
+                        android:layout_weight="1"
+                        android:text="세부사항"
+                        android:textSize="40dp"
+                        android:textStyle="bold"
+                        android:gravity="center_vertical" />
+
+                    <TextView
+                        android:id="@+id/tvDetailLogisticCompany"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="세부사항2"
+                        android:textSize="40dp"
+                        android:textStyle="bold"
+                        android:gravity="center_vertical" />
+
+                    <TextView
+                        android:id="@+id/tvDetailServiceTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="세부사항2"
+                        android:textSize="40dp"
+                        android:textStyle="bold"
+                        android:gravity="center_vertical" />
 
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/textView_content_detail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:text="세부사항"
-                    android:textSize="40dp"
-                    android:textStyle="bold"
-                    android:gravity="center_vertical" />
 
             </LinearLayout>
 
@@ -127,7 +149,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:orientation="horizontal"
         android:gravity="center">
 

@@ -8,14 +8,14 @@
         android:title="품목"
         app:showAsAction="ifRoom"/>
 
-    <item
-        android:id="@+id/time_pick"
-        android:title="새로고침 시간"
-        app:showAsAction="ifRoom"/>
+<!--    <item-->
+<!--        android:id="@+id/time_pick"-->
+<!--        android:title="새로고침 시간"-->
+<!--        app:showAsAction="ifRoom"/>-->
 
-    <item
-        android:id="@+id/select"
-        android:title="적용"
-        app:showAsAction="always|withText"/>
+<!--    <item-->
+<!--        android:id="@+id/select"-->
+<!--        android:title="적용"-->
+<!--        app:showAsAction="always|withText"/>-->
 
 </menu>

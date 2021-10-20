@@ -128,13 +128,21 @@ public class GSConfig
     public static String gProduct = "전체";
 
     // 초기값으로 매 1분 데이터를 최신화 할 수 있도록 설정 (이후 사용자가 변경 가능)
-    public static int gTime = 60000;
+    public static int RefreshTime = 60000;
 
     // 페이로더 폰트 사이즈
     public static int FontSizeVehicle = 50;
     public static int FontSizeProduct = 50;
     public static int FontSizeUnit = 50;
     public static int FontSizeContent = 50;
+
+    public static int FontSizeDetailVehicle = 80;
+    public static int FontSizeDetailProduct = 80;
+    public static int FontSizeDetailUnit = 80;
+    public static int FontSizeDetailCustomer = 80;
+    public static int FontSizeDetailLogisticCompany = 80;
+    public static int FontSizeDetailServiceTime = 80;
+    public static int FontSizeDetailButton = 80;
 
     // 현재 날짜에 관한 정의 및 형식 선언
     public static String getCurrentDate()
