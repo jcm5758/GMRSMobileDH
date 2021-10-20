@@ -13,8 +13,19 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.geurimsoft.grmsmobiledh.R;
 import com.geurimsoft.grmsmobiledh.data.GSConfig;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 1개의 데이터를 상세보기
@@ -50,7 +61,7 @@ public class ItemActivity extends AppCompatActivity
         // 다른 액티비티에서 넘어온 intent와 같이 넘어온 값을 불러오기 위해 선언
         Intent intent = getIntent();
 
-        Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), "onCreate()") + "id : " + intent.getStringExtra("ID") );
+        Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), "onCreate()") + "id : " + intent.getIntExtra("ID", 0) );
 
         id = intent.getIntExtra("ID", 0);
 
@@ -96,51 +107,7 @@ public class ItemActivity extends AppCompatActivity
             {
 
                 // 현재 완료 처리할 Data의 id값을 소켓에 보내 처리
-                //String msg = SocketNetwork.getAccept(GSConfig.vehicleList.get(value_num).ID);
-
-                if((Payloader)Payloader.CONTEXT!=null)
-                {
-
-                    if (GSConfig.all_view == true)
-                    {
-                        Payloader.loadPayloader(1, GSConfig.product_pick_use, 0);
-                    }
-                    else
-                    {
-                        Payloader.loadPayloader(1, GSConfig.product_pick_use, 1);
-                    }
-
-                }
-
-                // 처리가 되었다면 총 개수가 1개씩 줄고 다음 데이터의 번호도 줄어있기때문에 value_num 값을 -1하여 다음 데이터값을 나타냄
-                value_num -= 1;
-
-                // 처리 후, 현재 Data가 마지막이 아닐경우 다음 Data를 setText(해당 데이터가 처리되었으면 그 다음데이터가 해당번호로 나옴)
-                if(value_num != (GSConfig.vehicleList.size()-1))
-                {
-                    value_num += 1;
-                    setText(value_num);
-                }
-                // 처리 후, 현재 데이터가 마지막이었고, 이전 데이터가 있을경우 이전테이터를 setText
-                else if(value_num == (GSConfig.vehicleList.size()-1) && GSConfig.vehicleList.size()!=0)
-                {
-                    setText(value_num);
-                }
-                // 마지막 Data를 완료하였을 경우 새로운 창을 띄워 알림
-                else
-                {
-
-                    Intent intent1 = new Intent(getApplication(), LastItem.class);
-                    intent1.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
-
-                    startActivity(intent1);
-
-                    finish();
-
-                }
-
-//                // 데이터를 처리한 후, 소켓통신으로 최신화된 데이터를 수신하여 setDatalist()로 저장
-                Payloader.loadPayloader(1, GSConfig.product_pick_use, 0);
+                payloaderMakeDone(1, GSConfig.vehicleList.get(value_num).ID);
 
             }
 
@@ -264,6 +231,117 @@ public class ItemActivity extends AppCompatActivity
         GSConfig.last_item_activity_use = false;
 
         finish();
+
+    }
+
+    /**
+     * 완료 처리
+     * @return
+     */
+    public void payloaderMakeDone(int serviceType, int id)
+    {
+
+        String functionName = "payloaderMakeDone()";
+
+        Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG("Palyloader", functionName) + "ServiceType : " + serviceType + ", id : " + id);
+
+        String url = GSConfig.API_SERVER_ADDR;
+        RequestQueue requestQueue = Volley.newRequestQueue(GSConfig.context);
+
+        StringRequest request = new StringRequest(
+                Request.Method.POST,
+                url,
+                //응답을 잘 받았을 때 이 메소드가 자동으로 호출
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response)
+                    {
+
+                        Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "응답 -> " + response);
+
+                        Gson gson = new Gson();
+                        GSPayloaderStatus result = gson.fromJson(response, GSPayloaderStatus.class);
+
+                        if (result.status.equals("OK"))
+                        {
+
+                            if((Payloader)Payloader.CONTEXT!=null)
+                            {
+
+//                                if (GSConfig.all_view == true)
+//                                {
+//                                    Payloader.loadPayloader(1, GSConfig.product_pick_use, 0);
+//                                }
+//                                else
+//                                {
+//                                    Payloader.loadPayloader(1, GSConfig.product_pick_use, 1);
+//                                }
+
+                            }
+                            else
+                            {
+                                Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "CONTEXT is null");
+                            }
+
+                            // 처리가 되었다면 총 개수가 1개씩 줄고 다음 데이터의 번호도 줄어있기때문에 value_num 값을 -1하여 다음 데이터값을 나타냄
+                            value_num -= 1;
+                            Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "value_num : " + value_num);
+
+                            // 처리 후, 현재 Data가 마지막이 아닐경우 다음 Data를 setText(해당 데이터가 처리되었으면 그 다음데이터가 해당번호로 나옴)
+                            if(value_num != (GSConfig.vehicleList.size()-1))
+                            {
+                                value_num += 1;
+                                setText(value_num);
+                            }
+                            // 처리 후, 현재 데이터가 마지막이었고, 이전 데이터가 있을경우 이전테이터를 setText
+                            else if(value_num == (GSConfig.vehicleList.size()-1) && GSConfig.vehicleList.size()!=0)
+                            {
+                                setText(value_num);
+                            }
+                            // 마지막 Data를 완료하였을 경우 새로운 창을 띄워 알림
+                            else
+                            {
+
+                                Intent intent1 = new Intent(getApplication(), LastItem.class);
+                                intent1.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
+
+                                startActivity(intent1);
+
+                                finish();
+
+                            }
+
+//                            데이터를 처리한 후, 소켓통신으로 최신화된 데이터를 수신하여 setDatalist()로 저장
+//                            Payloader.loadPayloader(1, GSConfig.product_pick_use, 0);
+
+                        }
+
+                    }
+
+                },
+                //에러 발생시 호출될 리스너 객체
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "에러 -> " + error.getMessage());
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String,String>();
+                params.put("GSType", "PAYLOADER_PROCESSING_FINISH");
+                params.put("GSQuery", "{ \"BranchID\" : \"" + GSConfig.CURRENT_BRANCH.getBranchID()
+                        + "\", \"ServiceType\" : \"" + serviceType
+                        + "\", \"ServiceID\" : \"" + id + "\" }");
+                return params;
+            }
+        };
+
+        request.setShouldCache(false);
+        requestQueue.add(request);
+
+//		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "요청 보냄.");
 
     }
 

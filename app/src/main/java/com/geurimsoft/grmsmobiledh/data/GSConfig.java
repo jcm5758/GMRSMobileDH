@@ -10,7 +10,10 @@ import com.geurimsoft.grmsmobiledh.payloader.GSPayloaderServiceDataTop;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class GSConfig
 {
@@ -21,8 +24,8 @@ public class GSConfig
     public static final String WEB_SERVER_ADDR = "http://211.253.8.254/dh/app_version.txt";
 
 //    public static final String SERVER_ADDR = "211.253.8.254";
-//    public static final String SERVER_ADDR = "192.168.0.20";
-    public static final String SERVER_ADDR = "211.221.92.226";
+    public static final String SERVER_ADDR = "192.168.0.20";
+//    public static final String SERVER_ADDR = "211.221.92.226";
 
     // API 서버 포트
     public static final int API_SERVER_PORT = 8404;
@@ -77,9 +80,7 @@ public class GSConfig
 
     public static String changeToCommanString(double value)
     {
-        //DecimalFormat formatter = new DecimalFormat("#,###.0");
         DecimalFormat formatter = new DecimalFormat("#,###");
-//        DecimalFormat formatter = new DecimalFormat("0");
         return formatter.format(value);
     }
 
@@ -106,10 +107,7 @@ public class GSConfig
     public static String ID;
     public static String PW;
 
-    // 현재 날짜에 관한 정의 및 형식 선언
-    public static SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-    public static Date time = new Date();
-    public static String date = format.format(time);
+
 
     public static GSPayloaderServiceDataTop vehicleList;
 
@@ -125,7 +123,23 @@ public class GSConfig
     public static boolean list_view = true;
 
     // 사용자가 선택한 품목 및 새로고침 시간을 나타내는 변수
-    public static String product_pick_use = "";         // 초기값이 없이 나타나 적용하지 않는다면 데이터가 처음에 나타나지 않음
-    public static int time_pick_use = 60000;            // 초기값으로 매 1분 데이터를 최신화 할 수 있도록 설정 (이후 사용자가 변경 가능)
+    // 초기값이 없이 나타나 적용하지 않는다면 데이터가 처음에 나타나지 않음
+    public static String product_pick_use = "전체";
+
+    // 초기값으로 매 1분 데이터를 최신화 할 수 있도록 설정 (이후 사용자가 변경 가능)
+    public static int time_pick_use = 60000;
+
+    // 현재 날짜에 관한 정의 및 형식 선언
+    public static String getCurrentDate()
+    {
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
+        Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        format.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+
+        return format.format(date);
+
+    }
 
 }

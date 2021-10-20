@@ -1741,7 +1741,6 @@ int drawable ic_clock_black_24dp 0x7f080091
 int drawable ic_keyboard_black_24dp 0x7f080092
 int drawable ic_launcher 0x7f080093
 int drawable ic_launcher_background 0x7f080094
-int drawable ic_launcher_foreground 0x7f0800e5
 int drawable ic_mtrl_checked_circle 0x7f080095
 int drawable ic_mtrl_chip_checked_black 0x7f080096
 int drawable ic_mtrl_chip_checked_circle 0x7f080097

@@ -3,6 +3,7 @@ package com.geurimsoft.grmsmobiledh.payloader;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -10,8 +11,19 @@ import android.widget.Button;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.geurimsoft.grmsmobiledh.R;
 import com.geurimsoft.grmsmobiledh.data.GSConfig;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 마지막 데이터에서 처리가 되어 남은 데이터가 없거나, 마지막 데이터의 다음데이터를 열람하려는 경우 발생하는 액티비티
@@ -67,11 +79,11 @@ public class LastItem extends AppCompatActivity
                     // 서버에서 데이터를 받아와 최신화
                     if (GSConfig.all_view == true)
                     {
-                        Payloader.loadPayloader(1, GSConfig.product_pick_use, 0);
+                        loadPayloader(1, GSConfig.product_pick_use, 0);
                     }
                     else
                     {
-                        Payloader.loadPayloader(1, GSConfig.product_pick_use, 1);
+                        loadPayloader(1, GSConfig.product_pick_use, 1);
                     }
 
                     // 새로운 데이터가 존재할 경우
@@ -109,12 +121,12 @@ public class LastItem extends AppCompatActivity
         // 준비 데이터 수신
         if(GSConfig.all_view == true)
         {
-            Payloader.loadPayloader(1, GSConfig.product_pick_use, 0);
+            loadPayloader(1, GSConfig.product_pick_use, 0);
         }
         // 완료 데이터 수신
         else
         {
-            Payloader.loadPayloader(1, GSConfig.product_pick_use, 1);
+            loadPayloader(1, GSConfig.product_pick_use, 1);
         }
 
         finish();
@@ -134,6 +146,71 @@ public class LastItem extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
+
+    }
+
+    /**
+     * 리스트 받아오기
+     * @return
+     */
+    public void loadPayloader(int serviceType, String product, int isLoaded)
+    {
+
+        String functionName = "loadPayloader()";
+
+        String date = GSConfig.getCurrentDate();
+//        Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG("Palyloader", functionName) + date);
+
+        String url = GSConfig.API_SERVER_ADDR;
+        RequestQueue requestQueue = Volley.newRequestQueue(GSConfig.context);
+
+        StringRequest request = new StringRequest(
+                Request.Method.POST,
+                url,
+                //응답을 잘 받았을 때 이 메소드가 자동으로 호출
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response)
+                    {
+
+                        Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "응답 -> " + response);
+
+                        Gson gson = new Gson();
+                        GSPayloaderServiceDataTop top = gson.fromJson(response, GSPayloaderServiceDataTop.class);
+
+                        if (top != null)
+                        {
+                            GSConfig.vehicleList = top;
+                        }
+
+                    }
+
+                },
+                //에러 발생시 호출될 리스너 객체
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "에러 -> " + error.getMessage());
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String,String>();
+                params.put("GSType", "PAYLOADER_DAILY");
+                params.put("GSQuery", "{ \"BranchID\" : \"" + GSConfig.CURRENT_BRANCH.getBranchID()
+                        + "\", \"ServiceType\" : \"" + serviceType
+                        + "\", \"ServiceDate\" : \"" + date
+                        + "\", \"Product\" : \"" + product
+                        + "\", \"IsLoaded\" : \"" + isLoaded + "\" }");
+                return params;
+            }
+        };
+
+        request.setShouldCache(false);
+        requestQueue.add(request);
+
+//		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "요청 보냄.");
 
     }
 
