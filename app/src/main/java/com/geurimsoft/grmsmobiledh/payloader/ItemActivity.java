@@ -318,7 +318,7 @@ public class ItemActivity extends AppCompatActivity
                             if ( GSConfig.vehicleList.size() == 0 )
                             {
 
-                                Intent intent1 = new Intent(getApplication(), LastItem.class);
+                                Intent intent1 = new Intent(getApplication(), Payloader.class);
                                 intent1.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
 
                                 startActivity(intent1);
@@ -328,6 +328,7 @@ public class ItemActivity extends AppCompatActivity
                             }
 
                             vehicleData = GSConfig.vehicleList.get(currentIter);
+                            setText();
 
                         }
 
