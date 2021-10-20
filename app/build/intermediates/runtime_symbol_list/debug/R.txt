@@ -1912,6 +1912,8 @@ int id blocking 0x7f090058
 int id bottom 0x7f090059
 int id bottom_navigation 0x7f09005a
 int id bounce 0x7f09005b
+int id btPayload 0x7f0902f5
+int id btStat 0x7f0902f6
 int id bt_oneFragment 0x7f09005c
 int id bt_threeFragment 0x7f09005d
 int id bt_twoFragment 0x7f09005e
@@ -2162,6 +2164,7 @@ int id list_loading_indicator 0x7f090152
 int id ll_fragment 0x7f090153
 int id loading_fail 0x7f090154
 int id loading_indicator 0x7f090155
+int id lvBranch 0x7f0902f7
 int id masked 0x7f090156
 int id material_clock_display 0x7f090157
 int id material_clock_face 0x7f090158
@@ -2621,6 +2624,7 @@ int layout abc_search_dropdown_item_icons_2line 0x7f0c0018
 int layout abc_search_view 0x7f0c0019
 int layout abc_select_dialog_material 0x7f0c001a
 int layout abc_tooltip 0x7f0c001b
+int layout branch_layout 0x7f0c00bc
 int layout branch_main 0x7f0c001c
 int layout custom_dialog 0x7f0c001d
 int layout custom_progress_dialog 0x7f0c001e

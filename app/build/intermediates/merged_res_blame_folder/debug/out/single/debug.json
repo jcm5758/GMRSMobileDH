@@ -484,6 +484,10 @@
         "source": "C:\\Users\\jcm5758Main\\source\\repos\\GRMSMobile\\GMRSMobileDH\\app\\src\\main\\res\\drawable-hdpi\\listbar.png"
     },
     {
+        "merged": "C:\\Users\\jcm5758Main\\source\\repos\\GRMSMobile\\GMRSMobileDH\\app\\build\\intermediates\\res\\merged\\debug\\layout_branch_layout.xml.flat",
+        "source": "C:\\Users\\jcm5758Main\\source\\repos\\GRMSMobile\\GMRSMobileDH\\app\\src\\main\\res\\layout\\branch_layout.xml"
+    },
+    {
         "merged": "C:\\Users\\jcm5758Main\\source\\repos\\GRMSMobile\\GMRSMobileDH\\app\\build\\intermediates\\res\\merged\\debug\\layout_stats_foot.xml.flat",
         "source": "C:\\Users\\jcm5758Main\\source\\repos\\GRMSMobile\\GMRSMobileDH\\app\\src\\main\\res\\layout\\stats_foot.xml"
     },

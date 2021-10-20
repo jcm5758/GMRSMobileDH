@@ -25,9 +25,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -59,6 +62,8 @@ public class AppMain extends Activity
 	EditText edtLogin, edtPasswd;
 	CheckBox chkAutoLogin;
 	Button btnlogin;
+
+	public View dialogView;
 
 	private long backKeyPressedTime = 0;
 	private Toast appFinishedToast;
@@ -310,6 +315,64 @@ public class AppMain extends Activity
 	}
 
 
+//	/**
+//	 * 현장 선택
+//	 */
+//	private void showBranch()
+//	{
+//
+//		if (GSConfig.CURRENT_USER == null || GSConfig.CURRENT_USER.isUserInfoNull() || GSConfig.CURRENT_USER.isUserRightNull())
+//			return;
+//
+//		String fn = "showBranch()";
+//
+//		ArrayList<UserRightData> urData = GSConfig.CURRENT_USER.getUserright();
+//
+//		String[] commandArray = new String[ urData.size() ];
+//
+//		for(int i = 0; i < urData.size(); i++)
+//		{
+//			commandArray[i] = urData.get(i).getBranName();
+//		}
+//
+//		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//		builder.setCancelable(false);
+//		builder.setTitle(getString(R.string.site_msg));
+//		builder.setItems(commandArray, new DialogInterface.OnClickListener()
+//		{
+//
+//			@Override
+//			public void onClick(DialogInterface dialog, int which)
+//			{
+//
+////				Log.d(GSConfig.APP_DEBUG, this.getClass().getName() + "." + fn + " : which : " + which);
+//
+//				if (GSConfig.CURRENT_USER.getUserRightData(which).getUr01() != 1)
+//				{
+//					Toast.makeText(getApplicationContext(),"지점에 로그인 권한이 없습니다.", Toast.LENGTH_SHORT).show();
+//					return;
+//				}
+//
+//				GSConfig.CURRENT_BRANCH = new GSBranch(urData.get(which).getBranID(), urData.get(which).getBranName(), urData.get(which).getBranShortName());
+//
+////				Intent intent = new Intent(AppMain.this, GSConfig.Activity_LIST[0]);
+//				Intent intent = new Intent(AppMain.this, GSConfig.Activity_LIST[1]);
+//				intent.putExtra("branName", GSConfig.CURRENT_BRANCH.getBranchShortName());
+//				intent.putExtra("branID", GSConfig.CURRENT_BRANCH.getBranchID());
+//
+//				startActivity(intent);
+//
+//				dialog.dismiss();
+//
+//			}
+//
+//		});
+//
+//		AlertDialog alert = builder.create();
+//		alert.show();
+//
+//	}
+
 	/**
 	 * 현장 선택
 	 */
@@ -321,50 +384,110 @@ public class AppMain extends Activity
 
 		String fn = "showBranch()";
 
+		// 뷰 레이아웃 생성
+		dialogView = (View) View.inflate(getApplicationContext(), R.layout.branch_layout, null);
+
+		// 리스트 뷰
+		ListView listView = (ListView)dialogView.findViewById(R.id.lvBranch);
+
+		// 상차 버튼
+		Button btPayload = (Button)dialogView.findViewById(R.id.btPayload);
+
+		// 통계 버튼
+		Button btStat = (Button)dialogView.findViewById(R.id.btStat);
+
+		// 사용자 권한
 		ArrayList<UserRightData> urData = GSConfig.CURRENT_USER.getUserright();
 
-		String[] commandArray = new String[ urData.size() ];
+		//---------------------------------------------------------------------------
+		// 지점 배열 만들기
+		//---------------------------------------------------------------------------
+
+		String[] branchArray = new String[ urData.size() ];
 
 		for(int i = 0; i < urData.size(); i++)
 		{
-			commandArray[i] = urData.get(i).getBranName();
+			branchArray[i] = urData.get(i).getBranName();
 		}
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setCancelable(false);
-		builder.setTitle(getString(R.string.site_msg));
-		builder.setItems(commandArray, new DialogInterface.OnClickListener()
+		//---------------------------------------------------------------------------
+		// 리스트 어댑터 생성
+		//---------------------------------------------------------------------------
+
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, branchArray);
+		listView.setAdapter(adapter);
+
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
 		{
 
 			@Override
-			public void onClick(DialogInterface dialog, int which)
+			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
 			{
 
-//				Log.d(GSConfig.APP_DEBUG, this.getClass().getName() + "." + fn + " : which : " + which);
-
-				if (GSConfig.CURRENT_USER.getUserRightData(which).getUr01() != 1)
+				if (GSConfig.CURRENT_USER.getUserRightData(i).getUr01() != 1)
 				{
 					Toast.makeText(getApplicationContext(),"지점에 로그인 권한이 없습니다.", Toast.LENGTH_SHORT).show();
 					return;
 				}
 
-				GSConfig.CURRENT_BRANCH = new GSBranch(urData.get(which).getBranID(), urData.get(which).getBranName(), urData.get(which).getBranShortName());
+				GSConfig.CURRENT_BRANCH = new GSBranch(urData.get(i).getBranID(), urData.get(i).getBranName(), urData.get(i).getBranShortName());
 
-//				Intent intent = new Intent(AppMain.this, GSConfig.Activity_LIST[0]);
+			}
+
+		});
+
+		//---------------------------------------------------------------------------
+		// 상차 버튼 이벤트
+		//---------------------------------------------------------------------------
+
+		btPayload.setOnClickListener(new View.OnClickListener()
+		{
+
+			@Override
+			public void onClick(View view)
+			{
+
 				Intent intent = new Intent(AppMain.this, GSConfig.Activity_LIST[1]);
 				intent.putExtra("branName", GSConfig.CURRENT_BRANCH.getBranchShortName());
 				intent.putExtra("branID", GSConfig.CURRENT_BRANCH.getBranchID());
 
 				startActivity(intent);
 
-				dialog.dismiss();
+				finish();
 
 			}
 
 		});
 
-		AlertDialog alert = builder.create();
-		alert.show();
+		//---------------------------------------------------------------------------
+		// 통계 버튼 이벤트
+		//---------------------------------------------------------------------------
+
+		btStat.setOnClickListener(new View.OnClickListener()
+		{
+
+			@Override
+			public void onClick(View view)
+			{
+
+				Intent intent = new Intent(AppMain.this, GSConfig.Activity_LIST[0]);
+
+				startActivity(intent);
+
+				finish();
+
+			}
+
+		});
+
+		//---------------------------------------------------------------------------
+		// 다이얼로그 생성
+		//---------------------------------------------------------------------------
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(getString(R.string.site_msg));
+		builder.setView(dialogView);
+		builder.show();
 
 	}
 	
