@@ -2411,11 +2411,7 @@ id textSpacerNoTitle
 id textStart
 id textTop
 id textView2
-id textView_content
-id textView_product
 id textView_product_detail
-id textView_unit
-id textView_vehicleNum
 id text_input_end_icon
 id text_input_error_icon
 id text_input_start_icon
@@ -2491,6 +2487,7 @@ id tt_year_price_header_container
 id tt_year_price_listview
 id tt_year_price_loading_fail
 id tt_year_price_loading_indicator
+id tvCustomer
 id tvDetailCustomer
 id tvDetailLogisticCompany
 id tvDetailProduct
@@ -2501,9 +2498,11 @@ id tvDetailVehicleNum
 id tvListCustomer
 id tvListId
 id tvLoading
+id tvLogisticCompany
 id tvProduct
 id tvReconnect
 id tvServiceDate
+id tvServiceTime
 id tvStatisticDetailDailyDate
 id tvTitle01
 id tvUnit

@@ -13,62 +13,98 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="270dp"
+        android:layout_height="180dp"
         android:orientation="vertical"
         android:layout_gravity="center_vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="100dp"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView_vehicleNum"
+                android:id="@+id/tvVehicleNum"
                 android:layout_width="0dp"
-                android:layout_height="180dp"
-                android:layout_weight="4"
-                android:includeFontPadding="false"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:textColor="#FF0000"
                 android:textSize="35dp"
                 android:textStyle="bold"
+                android:textAlignment="center"
                 android:gravity="center"
                 android:text="경기06가1234"/>
 
             <TextView
-                android:id="@+id/textView_product"
+                android:id="@+id/tvProduct"
                 android:layout_width="0dp"
-                android:layout_height="180dp"
-                android:layout_weight="2"
-                android:includeFontPadding="false"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:textColor="#0000FF"
                 android:textSize="30dp"
                 android:textStyle="bold"
+                android:textAlignment="center"
                 android:gravity="center"
                 android:text="쇄석25mm"/>
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
             <TextView
-                android:id="@+id/textView_unit"
-                android:layout_width="0dp"
-                android:layout_height="180dp"
-                android:layout_weight="2"
-                android:includeFontPadding="false"
-                android:textColor="#000000"
-                android:textSize="40dp"
-                android:textStyle="bold"
+                android:id="@+id/tvCustomer"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textAlignment="center"
                 android:gravity="center"
-                android:text="17"/>
+                android:textColor="#FF00FF"
+                android:textSize="30dp"
+                android:text="대한시멘트(일산)"/>
+
+            <TextView
+                android:id="@+id/tvLogisticCompany"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="30dp"
+                android:text="그림운송"/>
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/textView_content"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_gravity="center_vertical"
-            android:includeFontPadding="false"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="30dp"
-            android:text="대한시멘트, 일산, 그림운송, 08:31:41"/>
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvUnit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="#000000"
+                android:textSize="40dp"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:text="17"/>
+
+            <TextView
+                android:id="@+id/tvServiceTime"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="30dp"
+                android:text="08:31:41"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

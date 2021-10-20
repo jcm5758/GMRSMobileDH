@@ -73,8 +73,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
 
         private TextView tvVehicleNum;
         private TextView tvProduct;
-        private TextView tvContent;
         private TextView tvUnit;
+        private TextView tvUnit2;
+        private TextView tvCustomer;
+        private TextView tvLogisticCompany;
+        private TextView tvServiceTime;
+
         private GSVehicleData data;
 
         ItemViewHolder(View itemView)
@@ -84,15 +88,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
 
             linearitem = itemView.findViewById(R.id.linearitem);
 
-            tvVehicleNum = itemView.findViewById(R.id.textView_vehicleNum);
-            tvProduct = itemView.findViewById(R.id.textView_product);
-            tvUnit = itemView.findViewById(R.id.textView_unit);
-            tvContent = itemView.findViewById(R.id.textView_content);
+            tvVehicleNum = itemView.findViewById(R.id.tvVehicleNum);
+            tvProduct = itemView.findViewById(R.id.tvProduct);
+            tvUnit = itemView.findViewById(R.id.tvUnit);
+            tvCustomer = itemView.findViewById(R.id.tvCustomer);
+            tvLogisticCompany = itemView.findViewById(R.id.tvLogisticCompany);
+            tvServiceTime = itemView.findViewById(R.id.tvServiceTime);
 
             tvVehicleNum.setTextSize(Dimension.DP, GSConfig.FontSizeVehicle);
             tvProduct.setTextSize(Dimension.DP, GSConfig.FontSizeProduct);
             tvUnit.setTextSize(Dimension.DP, GSConfig.FontSizeUnit);
-            tvContent.setTextSize(Dimension.DP, GSConfig.FontSizeContent);
+            tvUnit.setTextSize(Dimension.DP, GSConfig.FontSizeUnit);
+            tvCustomer.setTextSize(Dimension.DP, GSConfig.FontSizeUnit);
+            tvLogisticCompany.setTextSize(Dimension.DP, GSConfig.FontSizeUnit);
+            tvServiceTime.setTextSize(Dimension.DP, GSConfig.FontSizeUnit);
 
         }
 
@@ -103,10 +112,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
 
             String content_text = data.getText();
 
-            tvVehicleNum.setText(data.VehicleNum);
-            tvProduct.setText(data.Product);
-            tvContent.setText(content_text);
+            tvVehicleNum.setText( data.VehicleNum );
+            tvProduct.setText( data.Product );
             tvUnit.setText( String.valueOf(data.Unit) );
+            tvCustomer.setText( data.CustomerName + "(" + data.CustomerSiteName + ")" );
+            tvLogisticCompany.setText( data.LogisticCompany );
+            tvServiceTime.setText( data.getServiceHour() );
+
 
             itemView.setOnClickListener(new View.OnClickListener()
             {

@@ -134,7 +134,9 @@ public class GSConfig
     public static int FontSizeVehicle = 50;
     public static int FontSizeProduct = 50;
     public static int FontSizeUnit = 50;
-    public static int FontSizeContent = 50;
+    public static int FontSizeCustomer = 50;
+    public static int FontSizeLogisticCompany = 50;
+    public static int FontSizeServiceTime = 50;
 
     public static int FontSizeDetailVehicle = 80;
     public static int FontSizeDetailProduct = 80;

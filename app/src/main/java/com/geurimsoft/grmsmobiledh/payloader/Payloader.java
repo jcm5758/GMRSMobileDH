@@ -392,7 +392,9 @@ public class Payloader extends AppCompatActivity
                                 GSConfig.FontSizeVehicle = pt.FontSize[0];
                                 GSConfig.FontSizeProduct = pt.FontSize[1];
                                 GSConfig.FontSizeUnit = pt.FontSize[2];
-                                GSConfig.FontSizeContent = pt.FontSize[3];
+                                GSConfig.FontSizeCustomer = pt.FontSize[3];
+                                GSConfig.FontSizeLogisticCompany = pt.FontSize[4];
+                                GSConfig.FontSizeServiceTime = pt.FontSize[5];
 
                             }
 
