@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.geurimsoft.bokangnew"
-    android:versionCode="111"
-    android:versionName="1.1.1" >
+    package="com.geurimsoft.grmsmobiledh"
+    android:versionCode="100"
+    android:versionName="1.0.0" >
 
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="16"
         android:targetSdkVersion="30" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -15,12 +15,12 @@
         android:allowBackup="true"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:icon="@drawable/ic_launcher"
-        android:label="GRMS(주명)"
+        android:label="GRMS(풍년가)"
         android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
         android:usesCleartextTraffic="true" >
         <activity
-            android:name="com.geurimsoft.bokangnew.AppMain"
+            android:name="com.geurimsoft.grmsmobiledh.AppMain"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,10 +29,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.geurimsoft.bokangnew.view.joomyung.ActivityMain"
+            android:name="com.geurimsoft.grmsmobiledh.view.fragments.ActivityMain"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
         <activity
-            android:name="com.geurimsoft.bokangnew.view.kwangju.ActivityMain"
+            android:name="com.geurimsoft.grmsmobiledh.payloader.Payloader"
+            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
+        <activity
+            android:name="com.geurimsoft.grmsmobiledh.payloader.ItemActivity"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
         <activity android:name="org.achartengine.GraphicalActivity" />
     </application>

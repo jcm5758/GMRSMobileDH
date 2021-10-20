@@ -640,33 +640,26 @@ public class Payloader extends AppCompatActivity
                 if(GSConfig.gProduct.equals(""))
                 {
                     Toast.makeText(CONTEXT,"품목 선택",Toast.LENGTH_SHORT).show();
+                    return;
                 }
-                else
+
+                // 클릭했을때, 품목이 있으나,
+                // Data가 없을 경우
+                // Last_Item 액티비티 활성화
+                if(GSConfig.vehicleList == null || GSConfig.vehicleList.size() == 0)
                 {
-
-                    Intent intent = null;
-
-                    // 클릭했을때, 품목이 있으나,
-                    // Data가 없을 경우
-                    // Last_Item 액티비티 활성화
-                    if(GSConfig.vehicleList.size() == 0)
-                    {
-                        intent = new Intent(getBaseContext(), LastItem.class);
-                    }
-                    // 클릭했을때, Data와 품목 모두 있을경우,
-                    // 해당 품목의 첫번째 ID를 넘겨주며
-                    // ItemActivity 활성화
-                    else
-                    {
-                        intent = new Intent(getBaseContext(), ItemActivity.class);
-                        intent.putExtra("ID", GSConfig.vehicleList.get(0).ID);
-                    }
-
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
-
-                    startActivity(intent);
-
+                    Toast.makeText(CONTEXT,"데이터가 없습니다.",Toast.LENGTH_SHORT).show();
+                    return;
                 }
+
+                // 클릭했을때, Data와 품목 모두 있을경우,
+                // 해당 품목의 첫번째 ID를 넘겨주며
+                // ItemActivity 활성화
+                Intent intent = new Intent(getBaseContext(), ItemActivity.class);
+                intent.putExtra("ID", GSConfig.vehicleList.get(0).ID);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
+
+                startActivity(intent);
 
             }
 

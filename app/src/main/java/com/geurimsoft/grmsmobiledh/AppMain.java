@@ -67,6 +67,8 @@ public class AppMain extends Activity
 
 	private long backKeyPressedTime = 0;
 	private Toast appFinishedToast;
+
+	private AlertDialog alertDialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -453,7 +455,7 @@ public class AppMain extends Activity
 
 				startActivity(intent);
 
-				finish();
+				alertDialog.dismiss();
 
 			}
 
@@ -474,7 +476,7 @@ public class AppMain extends Activity
 
 				startActivity(intent);
 
-				finish();
+				alertDialog.dismiss();
 
 			}
 
@@ -487,7 +489,10 @@ public class AppMain extends Activity
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(getString(R.string.site_msg));
 		builder.setView(dialogView);
-		builder.show();
+
+		alertDialog = builder.create();
+		alertDialog.show();
+
 
 	}
 	
