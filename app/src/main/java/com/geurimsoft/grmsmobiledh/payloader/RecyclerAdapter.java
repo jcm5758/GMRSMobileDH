@@ -55,7 +55,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
 
     }
 
-    public void addItem(GSPayloaderServiceDataDetail data)
+    public void addItem(GSVehicleData data)
     {
         GSConfig.vehicleList.add(data);
     }
@@ -71,7 +71,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
         private TextView textView_product;
         private TextView textView_content;
         private TextView textView_unit;
-        private GSPayloaderServiceDataDetail data;
+        private GSVehicleData data;
 
         ItemViewHolder(View itemView)
         {
@@ -87,7 +87,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
 
         }
 
-        public void onBind(GSPayloaderServiceDataDetail data)
+        public void onBind(GSVehicleData data)
         {
 
             this.data = data;

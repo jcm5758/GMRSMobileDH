@@ -119,11 +119,10 @@ com/geurimsoft/grmsmobiledh/view/fragments/FragmentDailyPrice.java
  com.geurimsoft.grmsmobiledh.view.fragments.FragmentDailyPrice$1
  com.geurimsoft.grmsmobiledh.view.fragments.FragmentDailyPrice$2
  com.geurimsoft.grmsmobiledh.view.fragments.FragmentDailyPrice$3
-com/geurimsoft/grmsmobiledh/view/fragments/FragmentMonthPrice.java
- com.geurimsoft.grmsmobiledh.view.fragments.FragmentMonthPrice
- com.geurimsoft.grmsmobiledh.view.fragments.FragmentMonthPrice$1
- com.geurimsoft.grmsmobiledh.view.fragments.FragmentMonthPrice$2
- com.geurimsoft.grmsmobiledh.view.fragments.FragmentMonthPrice$3
+com/geurimsoft/grmsmobiledh/widget/OnWheelChangedListener.java
+ com.geurimsoft.grmsmobiledh.widget.OnWheelChangedListener
+com/geurimsoft/grmsmobiledh/payloader/GSVehicleData.java
+ com.geurimsoft.grmsmobiledh.payloader.GSVehicleData
 com/geurimsoft/grmsmobiledh/data/toDay.java
  com.geurimsoft.grmsmobiledh.data.toDay
 com/geurimsoft/grmsmobiledh/payloader/GSPayloaderServiceDataTop.java
@@ -196,8 +195,6 @@ com/geurimsoft/grmsmobiledh/view/etc/TestStatistic.java
  com.geurimsoft.grmsmobiledh.view.etc.TestStatistic
 com/geurimsoft/grmsmobiledh/widget/WheelRecycle.java
  com.geurimsoft.grmsmobiledh.widget.WheelRecycle
-com/geurimsoft/grmsmobiledh/payloader/GSPayloaderServiceDataDetail.java
- com.geurimsoft.grmsmobiledh.payloader.GSPayloaderServiceDataDetail
 com/geurimsoft/grmsmobiledh/widget/adapter/DayNumericWheelAdapter.java
  com.geurimsoft.grmsmobiledh.widget.adapter.DayNumericWheelAdapter
 com/geurimsoft/grmsmobiledh/view/fragments/FragmentMonthGraph.java
@@ -251,10 +248,11 @@ com/geurimsoft/grmsmobiledh/chart/GChart02.java
  com.geurimsoft.grmsmobiledh.chart.GChart02
 com/geurimsoft/grmsmobiledh/payloader/GSPayloaderList.java
  com.geurimsoft.grmsmobiledh.payloader.GSPayloaderList
-com/geurimsoft/grmsmobiledh/payloader/RecyclerAdapter.java
- com.geurimsoft.grmsmobiledh.payloader.RecyclerAdapter
- com.geurimsoft.grmsmobiledh.payloader.RecyclerAdapter$ItemViewHolder
- com.geurimsoft.grmsmobiledh.payloader.RecyclerAdapter$ItemViewHolder$1
+com/geurimsoft/grmsmobiledh/view/fragments/FragmentMonthPrice.java
+ com.geurimsoft.grmsmobiledh.view.fragments.FragmentMonthPrice
+ com.geurimsoft.grmsmobiledh.view.fragments.FragmentMonthPrice$1
+ com.geurimsoft.grmsmobiledh.view.fragments.FragmentMonthPrice$2
+ com.geurimsoft.grmsmobiledh.view.fragments.FragmentMonthPrice$3
 com/geurimsoft/grmsmobiledh/data/GSBranch.java
  com.geurimsoft.grmsmobiledh.data.GSBranch
 com/geurimsoft/grmsmobiledh/data/Product.java
@@ -305,8 +303,6 @@ com/geurimsoft/grmsmobiledh/data/StAdapter.java
  com.geurimsoft.grmsmobiledh.data.StAdapter$ViewHolder
 com/geurimsoft/grmsmobiledh/widget/adapter/AdapterWheel.java
  com.geurimsoft.grmsmobiledh.widget.adapter.AdapterWheel
-com/geurimsoft/grmsmobiledh/widget/OnWheelChangedListener.java
- com.geurimsoft.grmsmobiledh.widget.OnWheelChangedListener
 com/geurimsoft/grmsmobiledh/payloader/ItemActivity.java
  com.geurimsoft.grmsmobiledh.payloader.ItemActivity
  com.geurimsoft.grmsmobiledh.payloader.ItemActivity$1
@@ -322,6 +318,10 @@ com/geurimsoft/grmsmobiledh/payloader/LastItem.java
  com.geurimsoft.grmsmobiledh.payloader.LastItem$2
  com.geurimsoft.grmsmobiledh.payloader.LastItem$3
  com.geurimsoft.grmsmobiledh.payloader.LastItem$4
+com/geurimsoft/grmsmobiledh/payloader/RecyclerAdapter.java
+ com.geurimsoft.grmsmobiledh.payloader.RecyclerAdapter
+ com.geurimsoft.grmsmobiledh.payloader.RecyclerAdapter$ItemViewHolder
+ com.geurimsoft.grmsmobiledh.payloader.RecyclerAdapter$ItemViewHolder$1
 com/geurimsoft/grmsmobiledh/payloader/Payloader.java
  com.geurimsoft.grmsmobiledh.payloader.Payloader
  com.geurimsoft.grmsmobiledh.payloader.Payloader$1

@@ -16,7 +16,7 @@ public class GSPayloaderServiceDataTop
 
     }
 
-    public void add(GSPayloaderServiceDataDetail dd)
+    public void add(GSVehicleData dd)
     {
 
         if ( data == null || data.size() == 0 )
@@ -26,7 +26,7 @@ public class GSPayloaderServiceDataTop
 
     }
 
-    public GSPayloaderServiceDataDetail get(int ind)
+    public GSVehicleData get(int ind)
     {
 
         if ( data == null || data.size() == 0 )
@@ -36,13 +36,23 @@ public class GSPayloaderServiceDataTop
 
     }
 
+    public void remove(int ind)
+    {
+
+        if ( data == null || data.size() == 0 )
+            return;
+
+        data.remove(ind);
+
+    }
+
     public void print()
     {
 
         if ( data == null || data.size() == 0 )
             return;
 
-        for(GSPayloaderServiceDataDetail dd : data.record)
+        for(GSVehicleData dd : data.record)
         {
             dd.print();
         }

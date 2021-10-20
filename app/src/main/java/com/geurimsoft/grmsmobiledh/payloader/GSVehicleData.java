@@ -5,7 +5,7 @@ import android.util.Log;
 import com.geurimsoft.grmsmobiledh.data.GSConfig;
 import com.geurimsoft.grmsmobiledh.util.GSUtil;
 
-public class GSPayloaderServiceDataDetail
+public class GSVehicleData
 {
 
     public int ID;

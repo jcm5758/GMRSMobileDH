@@ -8,7 +8,7 @@ public class GSPayloaderServiceData
     public String[] header;
     public int headerCount;
     public int recordCount;
-    public ArrayList<GSPayloaderServiceDataDetail> record;
+    public ArrayList<GSVehicleData> record;
 
     public int size()
     {
@@ -20,13 +20,23 @@ public class GSPayloaderServiceData
 
     }
 
-    public GSPayloaderServiceDataDetail get(int ind)
+    public GSVehicleData get(int ind)
     {
 
         if ( record == null )
             return null;
 
         return record.get(ind);
+
+    }
+
+    public void remove(int ind)
+    {
+
+        if ( record == null )
+            return;
+
+        record.remove(ind);
 
     }
 

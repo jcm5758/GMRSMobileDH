@@ -410,7 +410,7 @@ public class Payloader extends AppCompatActivity
         String functionName = "loadPayloader()";
 
         String date = GSConfig.getCurrentDate();
-        Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG("Palyloader", functionName) + date);
+//        Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG("Palyloader", functionName) + date);
 
         String url = GSConfig.API_SERVER_ADDR;
         RequestQueue requestQueue = Volley.newRequestQueue(GSConfig.context);
