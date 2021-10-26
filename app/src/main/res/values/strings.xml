@@ -57,7 +57,7 @@
     <string-array name="stats_month_tab_array2">
         <item>수량</item>
         <item>수량(업체별)</item>
-        <item>그래프</item>
+<!--        <item>그래프</item>-->
     </string-array>
     <string-array name="stats_year_tab_array1">
         <item>수량</item>

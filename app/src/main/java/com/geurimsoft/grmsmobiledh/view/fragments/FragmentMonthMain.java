@@ -34,6 +34,7 @@ import com.geurimsoft.grmsmobiledh.R;
 import com.geurimsoft.grmsmobiledh.apiserver.data.UserRightData;
 import com.geurimsoft.grmsmobiledh.data.GSBranch;
 import com.geurimsoft.grmsmobiledh.data.GSConfig;
+import com.geurimsoft.grmsmobiledh.view.util.DayDatePickerDialog;
 import com.geurimsoft.grmsmobiledh.view.util.MonthDatePickerDialog;
 
 import java.util.ArrayList;
@@ -116,13 +117,27 @@ public class FragmentMonthMain extends Fragment
 	private void makeFragmentList()
 	{
 		
+		String fn = "makeFragmentList()";
+
 		fragments = new ArrayList<Fragment>();
-		
-		fragments.add(new FragmentMonthAmount());
-		fragments.add(new FragmentMonthPrice());
-		fragments.add(new FragmentMonthCustomerAmount());
-		fragments.add(new FragmentMonthCustomerPrice());
-//		fragments.add(new FragmentMonthGraph());
+
+		UserRightData urData = GSConfig.CURRENT_USER.getCurrentUserRight(GSConfig.CURRENT_BRANCH.branchID);
+
+		if (urData == null) return;
+
+//		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(getActivity().getClass().getName(), fn) + " branchID : " + GSConfig.CURRENT_BRANCH.branchID + ", ur02 : " + urData.ur02 + ", ur03 : " + urData.ur03 );
+
+		if (urData.ur04 == 1 || urData.ur05 == 1)
+			fragments.add(new FragmentMonthAmount());
+
+		if (urData.ur05 == 1)
+			fragments.add(new FragmentMonthPrice());
+
+		if (urData.ur06 == 1 || urData.ur07 == 1)
+			fragments.add(new FragmentMonthCustomerAmount());
+
+		if (urData.ur07 == 1)
+			fragments.add(new FragmentMonthCustomerPrice());
 
 	}
 	
@@ -160,90 +175,108 @@ public class FragmentMonthMain extends Fragment
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 
-		 switch (item.getItemId())
-		 {
+		String fn = "onOptionsItemSelected()";
 
-//			 case R.id.stats_change_branchkwangju:
-//
-//				 int which = 0;
-//
-//				 if (GSConfig.CURRENT_USER.getUserRightData(which).getUr01() != 1)
-//				 {
-//					 Toast.makeText(context, "지점에 로그인 권한이 없습니다.", Toast.LENGTH_SHORT).show();
-//					 return false;
-//				 }
-//
-//				 ArrayList<UserRightData> urData = GSConfig.CURRENT_USER.getUserright();
-//
-//				 GSConfig.CURRENT_BRANCH = new GSBranch(urData.get(which).getBranID(), urData.get(which).getBranName(), urData.get(which).getBranShortName());
-//
-//				 Intent intent = new Intent(context, GSConfig.Activity_LIST[which]);
-//				 intent.putExtra("branName", GSConfig.CURRENT_BRANCH.getBranchShortName());
-//
-//				 startActivity(intent);
-//
-//				 return true;
+//		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), fn) + " : item.getItemId() : " + item.getItemId());
 
-			 case R.id.stats_change_date_menu:
-		    	   
-		 		MonthDatePickerDialog monthDatePickerDialog = new MonthDatePickerDialog(getActivity(), GSConfig.DAY_STATS_YEAR, GSConfig.DAY_STATS_YEAR+10,  GSConfig.DAY_STATS_MONTH, new MonthDatePickerDialog.DialogListner() {
-					
-					@Override
-					public void OnConfirmButton(Dialog dialog, int selectYear, int selectMonth) {
+		// 날짜 변경
+		if (item.getItemId() == 1)
+		{
 
-						if(GSConfig.LIMIT_YEAR > selectYear || selectYear > currentYear)
-						{
-							Toast.makeText(getActivity(), getString(R.string.change_date_year_error), Toast.LENGTH_SHORT).show();
-							return;
-						} 
-						
-						if(GSConfig.LIMIT_YEAR == selectYear && GSConfig.LIMIT_MONTH > selectMonth )
-						{
-							Toast.makeText(getActivity(), getString(R.string.change_date_month_error), Toast.LENGTH_SHORT).show();
-							return;
-						}
-						
-						if( currentYear == selectYear  && selectMonth > currentMonth )
-						{
-							Toast.makeText(getActivity(), getString(R.string.change_date_month_error), Toast.LENGTH_SHORT).show();
-							return;
-						}
+			MonthDatePickerDialog monthDatePickerDialog = new MonthDatePickerDialog(getActivity(), GSConfig.DAY_STATS_YEAR, GSConfig.DAY_STATS_YEAR+10,  GSConfig.DAY_STATS_MONTH, new MonthDatePickerDialog.DialogListner() {
 
-						if(GSConfig.DAY_STATS_YEAR != selectYear || GSConfig.DAY_STATS_MONTH != selectMonth)
-						{
+				@Override
+				public void OnConfirmButton(Dialog dialog, int selectYear, int selectMonth) {
 
-							GSConfig.DAY_STATS_YEAR = selectYear;
-							GSConfig.DAY_STATS_MONTH = selectMonth;
+					if(GSConfig.LIMIT_YEAR > selectYear || selectYear > currentYear)
+					{
+						Toast.makeText(getActivity(), getString(R.string.change_date_year_error), Toast.LENGTH_SHORT).show();
+						return;
+					}
 
-							statsPagerAdapter.notifyDataSetChanged();
+					if(GSConfig.LIMIT_YEAR == selectYear && GSConfig.LIMIT_MONTH > selectMonth )
+					{
+						Toast.makeText(getActivity(), getString(R.string.change_date_month_error), Toast.LENGTH_SHORT).show();
+						return;
+					}
 
-						}
-						
-						dialog.dismiss();
+					if( currentYear == selectYear  && selectMonth > currentMonth )
+					{
+						Toast.makeText(getActivity(), getString(R.string.change_date_month_error), Toast.LENGTH_SHORT).show();
+						return;
+					}
+
+					if(GSConfig.DAY_STATS_YEAR != selectYear || GSConfig.DAY_STATS_MONTH != selectMonth)
+					{
+
+						GSConfig.DAY_STATS_YEAR = selectYear;
+						GSConfig.DAY_STATS_MONTH = selectMonth;
+
+						statsPagerAdapter.notifyDataSetChanged();
 
 					}
-				});
 
-		 		monthDatePickerDialog.show();
-		 		
-		 		return true;
+					dialog.dismiss();
 
-		 	default:
-		 		return super.onOptionsItemSelected(item);
+				}
+			});
 
-		 }
+			monthDatePickerDialog.show();
+
+		}
+		else
+		{
+
+			int orderNum = item.getOrder();
+
+			ArrayList<UserRightData> urDatas = GSConfig.CURRENT_USER.getUserRightOthers();
+
+			UserRightData urData = urDatas.get(orderNum);
+
+			GSConfig.CURRENT_BRANCH = new GSBranch(urData.branID, urData.branName, urData.branShortName);
+
+			Intent intent = new Intent(context, GSConfig.Activity_LIST[0]);
+			intent.putExtra("branID", GSConfig.CURRENT_BRANCH.branchID);
+			intent.putExtra("branName", GSConfig.CURRENT_BRANCH.branchShortName);
+
+			startActivity(intent);
+
+		}
+
+		return true;
 
 	}
 	
 	public class StatsPagerAdapter extends FragmentPagerAdapter
 	{
 
-		private final String[] TITLES;
+		private String[] TITLES;
 		
 		public StatsPagerAdapter(FragmentManager fm)
 		{
+
 			super(fm);
-			TITLES = getResources().getStringArray(R.array.stats_month_tab_array1);
+
+			ArrayList<String> titleList = new ArrayList<String>();
+
+			UserRightData urData = GSConfig.CURRENT_USER.getCurrentUserRight(GSConfig.CURRENT_BRANCH.branchID);
+
+			if (urData == null) return;
+
+			if (urData.ur04 == 1 || urData.ur05 == 1)
+				titleList.add("수량");
+
+			if (urData.ur05 == 1)
+				titleList.add("금액");
+
+			if (urData.ur06 == 1 || urData.ur07 == 1)
+				titleList.add("수량(업체별)");
+
+			if (urData.ur07 == 1)
+				titleList.add("금액(업체별)");
+
+			TITLES = titleList.toArray(new String[titleList.size()]);
+
 		}
 
 		@Override

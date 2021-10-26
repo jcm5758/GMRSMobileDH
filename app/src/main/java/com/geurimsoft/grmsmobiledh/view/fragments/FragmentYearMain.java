@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import com.geurimsoft.grmsmobiledh.R;
 import com.geurimsoft.grmsmobiledh.apiserver.data.UserRightData;
 import com.geurimsoft.grmsmobiledh.data.GSBranch;
 import com.geurimsoft.grmsmobiledh.data.GSConfig;
+import com.geurimsoft.grmsmobiledh.view.util.DayDatePickerDialog;
 import com.geurimsoft.grmsmobiledh.view.util.YearDatePickerDialog;
 
 import java.util.ArrayList;
@@ -100,96 +102,152 @@ public class FragmentYearMain extends Fragment
 	
 	private void makeFragmentList()
 	{
-		
+
+		String fn = "makeFragmentList()";
+
 		fragments = new ArrayList<Fragment>();
-		
-		fragments.add(new FragmentYearAmount());
-		fragments.add(new FragmentYearPrice());
-		fragments.add(new FragmentYearCustomerAmount());
-		fragments.add(new FragmentYearCustomerPrice());
-//		fragments.add(new FragmentYearGraph());
+
+		UserRightData urData = GSConfig.CURRENT_USER.getCurrentUserRight(GSConfig.CURRENT_BRANCH.branchID);
+
+		if (urData == null) return;
+
+//		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(getActivity().getClass().getName(), fn) + " branchID : " + GSConfig.CURRENT_BRANCH.branchID + ", ur02 : " + urData.ur02 + ", ur03 : " + urData.ur03 );
+
+		if (urData.ur08 == 1 || urData.ur09 == 1)
+			fragments.add(new FragmentYearAmount());
+
+		if (urData.ur09 == 1)
+			fragments.add(new FragmentYearPrice());
+
+		if (urData.ur10 == 1 || urData.ur11 == 1)
+			fragments.add(new FragmentYearCustomerAmount());
+
+		if (urData.ur11 == 1)
+			fragments.add(new FragmentYearCustomerPrice());
 
 	}
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
-		 inflater.inflate(R.menu.stats_menu, menu);
+
+		super.onCreateOptionsMenu(menu, inflater);
+
+		menu.add(0, 1, 0, "날짜 변경");
+		menu.getItem(0).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+		ArrayList<UserRightData> urd = GSConfig.CURRENT_USER.getUserRightOthers();
+
+		if (urd.size() == 1)
+		{
+			menu.add(0, 2, 0, urd.get(0).branShortName);
+			menu.getItem(1).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		}
+		else if (urd.size() > 1)
+		{
+
+			SubMenu subMenu = menu.addSubMenu("지점선택");
+
+			for(int iter = 0; iter < urd.size(); iter++)
+			{
+				subMenu.add(1, iter + 2, iter, urd.get(iter).branShortName);
+			}
+
+		}
+
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 
-		 switch (item.getItemId())
-		 {
+		String fn = "onOptionsItemSelected()";
 
-//		 	case R.id.stats_change_branchkwangju:
-//
-//				 int which = 0;
-//
-//				 if (GSConfig.CURRENT_USER.getUserRightData(which).getUr01() != 1)
-//				 {
-//					 Toast.makeText(context, "지점에 로그인 권한이 없습니다.", Toast.LENGTH_SHORT).show();
-//					 return false;
-//				 }
-//
-//				 ArrayList<UserRightData> urData = GSConfig.CURRENT_USER.getUserright();
-//
-//				 GSConfig.CURRENT_BRANCH = new GSBranch(urData.get(which).getBranID(), urData.get(which).getBranName(), urData.get(which).getBranShortName());
-//
-//				 Intent intent = new Intent(context, GSConfig.Activity_LIST[which]);
-//				 intent.putExtra("branName", GSConfig.CURRENT_BRANCH.getBranchShortName());
-//
-//				 startActivity(intent);
-//
-//				 return true;
+//		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), fn) + " : item.getItemId() : " + item.getItemId());
 
+		// 날짜 변경
+		if (item.getItemId() == 1)
+		{
 
-			 case R.id.stats_change_date_menu:
-		    	   
-		 		YearDatePickerDialog yearDatePickerDialog = new YearDatePickerDialog(getActivity(), GSConfig.DAY_STATS_YEAR, GSConfig.DAY_STATS_YEAR+10, new YearDatePickerDialog.DialogListner() {
-					
-					@Override
-					public void OnConfirmButton(Dialog dialog, int selectYear) {
+			YearDatePickerDialog yearDatePickerDialog = new YearDatePickerDialog(getActivity(), GSConfig.DAY_STATS_YEAR, GSConfig.DAY_STATS_YEAR+10, new YearDatePickerDialog.DialogListner() {
 
-						if(GSConfig.LIMIT_YEAR > selectYear || selectYear > currentYear)
-						{
-							Toast.makeText(getActivity(), getString(R.string.change_date_year_error), Toast.LENGTH_SHORT).show();
-							return;
-						} 
+				@Override
+				public void OnConfirmButton(Dialog dialog, int selectYear) {
 
-						if(GSConfig.DAY_STATS_YEAR != selectYear)
-						{
-							GSConfig.DAY_STATS_YEAR = selectYear;
-							statsPagerAdapter.notifyDataSetChanged();
-						}
-						
-						dialog.dismiss();
-
+					if(GSConfig.LIMIT_YEAR > selectYear || selectYear > currentYear)
+					{
+						Toast.makeText(getActivity(), getString(R.string.change_date_year_error), Toast.LENGTH_SHORT).show();
+						return;
 					}
-				});
 
-		 		yearDatePickerDialog.show();
+					if(GSConfig.DAY_STATS_YEAR != selectYear)
+					{
+						GSConfig.DAY_STATS_YEAR = selectYear;
+						statsPagerAdapter.notifyDataSetChanged();
+					}
 
-		 		return true;
+					dialog.dismiss();
 
-		 	default:
-		 		return super.onOptionsItemSelected(item);
+				}
 
-		 }
+			});
+
+			yearDatePickerDialog.show();
+
+		}
+		else
+		{
+
+			int orderNum = item.getOrder();
+
+			ArrayList<UserRightData> urDatas = GSConfig.CURRENT_USER.getUserRightOthers();
+
+			UserRightData urData = urDatas.get(orderNum);
+
+			GSConfig.CURRENT_BRANCH = new GSBranch(urData.branID, urData.branName, urData.branShortName);
+
+			Intent intent = new Intent(context, GSConfig.Activity_LIST[0]);
+			intent.putExtra("branID", GSConfig.CURRENT_BRANCH.branchID);
+			intent.putExtra("branName", GSConfig.CURRENT_BRANCH.branchShortName);
+
+			startActivity(intent);
+
+		}
+
+		return true;
 
 	}
 	
 	public class StatsPagerAdapter extends FragmentPagerAdapter
 	{
 
-		private final String[] TITLES;
+		private String[] TITLES;
 
 		public StatsPagerAdapter(FragmentManager fm)
 		{
+
 			super(fm);
-			TITLES = getResources().getStringArray(R.array.stats_year_tab_array1);
+
+			ArrayList<String> titleList = new ArrayList<String>();
+
+			UserRightData urData = GSConfig.CURRENT_USER.getCurrentUserRight(GSConfig.CURRENT_BRANCH.branchID);
+
+			if (urData == null) return;
+
+			if (urData.ur08 == 1 || urData.ur09 == 1)
+				titleList.add("수량");
+
+			if (urData.ur09 == 1)
+				titleList.add("금액");
+
+			if (urData.ur10 == 1 || urData.ur11 == 1)
+				titleList.add("수량(업체별)");
+
+			if (urData.ur11 == 1)
+				titleList.add("금액(업체별)");
+
+			TITLES = titleList.toArray(new String[titleList.size()]);
+
 		}
 
 		@Override
