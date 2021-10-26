@@ -8,12 +8,12 @@
         "source": "C:\\Users\\jcm5758Main\\source\\repos\\GRMSMobile\\GMRSMobileDH\\app\\src\\main\\res\\drawable-xxhdpi\\ic_launcher.png"
     },
     {
-        "merged": "C:\\Users\\jcm5758Main\\source\\repos\\GRMSMobile\\GMRSMobileDH\\app\\build\\intermediates\\res\\merged\\debug\\layout_total_gwangju_release_chart.xml.flat",
-        "source": "C:\\Users\\jcm5758Main\\source\\repos\\GRMSMobile\\GMRSMobileDH\\app\\src\\main\\res\\layout\\total_gwangju_release_chart.xml"
-    },
-    {
         "merged": "C:\\Users\\jcm5758Main\\source\\repos\\GRMSMobile\\GMRSMobileDH\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_month_press.9.png.flat",
         "source": "C:\\Users\\jcm5758Main\\source\\repos\\GRMSMobile\\GMRSMobileDH\\app\\src\\main\\res\\drawable-xhdpi\\month_press.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jcm5758Main\\source\\repos\\GRMSMobile\\GMRSMobileDH\\app\\build\\intermediates\\res\\merged\\debug\\layout_total_gwangju_release_chart.xml.flat",
+        "source": "C:\\Users\\jcm5758Main\\source\\repos\\GRMSMobile\\GMRSMobileDH\\app\\src\\main\\res\\layout\\total_gwangju_release_chart.xml"
     },
     {
         "merged": "C:\\Users\\jcm5758Main\\source\\repos\\GRMSMobile\\GMRSMobileDH\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_sbt.png.flat",
@@ -476,16 +476,16 @@
         "source": "C:\\Users\\jcm5758Main\\source\\repos\\GRMSMobile\\GMRSMobileDH\\app\\src\\main\\res\\layout\\gwangju_month_enterprise.xml"
     },
     {
+        "merged": "C:\\Users\\jcm5758Main\\source\\repos\\GRMSMobile\\GMRSMobileDH\\app\\build\\intermediates\\res\\merged\\debug\\layout_branch_layout.xml.flat",
+        "source": "C:\\Users\\jcm5758Main\\source\\repos\\GRMSMobile\\GMRSMobileDH\\app\\src\\main\\res\\layout\\branch_layout.xml"
+    },
+    {
         "merged": "C:\\Users\\jcm5758Main\\source\\repos\\GRMSMobile\\GMRSMobileDH\\app\\build\\intermediates\\res\\merged\\debug\\layout_enterprise_popup.xml.flat",
         "source": "C:\\Users\\jcm5758Main\\source\\repos\\GRMSMobile\\GMRSMobileDH\\app\\src\\main\\res\\layout\\enterprise_popup.xml"
     },
     {
         "merged": "C:\\Users\\jcm5758Main\\source\\repos\\GRMSMobile\\GMRSMobileDH\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_listbar.png.flat",
         "source": "C:\\Users\\jcm5758Main\\source\\repos\\GRMSMobile\\GMRSMobileDH\\app\\src\\main\\res\\drawable-hdpi\\listbar.png"
-    },
-    {
-        "merged": "C:\\Users\\jcm5758Main\\source\\repos\\GRMSMobile\\GMRSMobileDH\\app\\build\\intermediates\\res\\merged\\debug\\layout_branch_layout.xml.flat",
-        "source": "C:\\Users\\jcm5758Main\\source\\repos\\GRMSMobile\\GMRSMobileDH\\app\\src\\main\\res\\layout\\branch_layout.xml"
     },
     {
         "merged": "C:\\Users\\jcm5758Main\\source\\repos\\GRMSMobile\\GMRSMobileDH\\app\\build\\intermediates\\res\\merged\\debug\\layout_stats_foot.xml.flat",

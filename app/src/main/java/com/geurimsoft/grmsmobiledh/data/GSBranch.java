@@ -1,11 +1,13 @@
 package com.geurimsoft.grmsmobiledh.data;
 
+import android.util.Log;
+
 public class GSBranch
 {
 
-    private int branchID;
-    private String branchName;
-    private String branchShortName;
+    public int branchID;
+    public String branchName;
+    public String branchShortName;
 
     public GSBranch(int branchID, String branchName, String branchShortName)
     {
@@ -14,21 +16,9 @@ public class GSBranch
         this.branchShortName = branchShortName;
     }
 
-    public int getBranchID() {
-        return branchID;
+    public void print()
+    {
+        Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG("UserRigthData", "print()") + " branchID : " + branchID + ", branchName : " + branchName + ", branchShortName : " + branchShortName);
     }
-    public void setBranchID(int branchID) {
-        this.branchID = branchID;
-    }
-    public String getBranchName() {
-        return branchName;
-    }
-    public void setBranchName(String branchName) {
-        this.branchName = branchName;
-    }
-    public String getBranchShortName() {
-        return branchShortName;
-    }
-    public void setBranchShortName(String branchShortName) { this.branchShortName = branchShortName; }
 
 }

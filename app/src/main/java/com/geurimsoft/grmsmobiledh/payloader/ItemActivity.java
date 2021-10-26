@@ -347,7 +347,7 @@ public class ItemActivity extends AppCompatActivity
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<String,String>();
                 params.put("GSType", "PAYLOADER_PROCESSING_FINISH");
-                params.put("GSQuery", "{ \"BranchID\" : \"" + GSConfig.CURRENT_BRANCH.getBranchID()
+                params.put("GSQuery", "{ \"BranchID\" : \"" + GSConfig.CURRENT_BRANCH.branchID
                         + "\", \"ServiceType\" : \"" + serviceType
                         + "\", \"ServiceID\" : \"" + id + "\" }");
                 return params;

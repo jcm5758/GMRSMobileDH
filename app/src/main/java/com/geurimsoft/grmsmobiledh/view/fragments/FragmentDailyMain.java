@@ -13,17 +13,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.PagerTabStrip;
 import androidx.viewpager.widget.ViewPager;
 
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -130,106 +134,137 @@ public class FragmentDailyMain extends Fragment
 	 */
 	private void makeFragmentList()
 	{
-		
+
+		String fn = "makeFragmentList()";
+
 		fragments = new ArrayList<Fragment>();
-		
-		fragments.add(new FragmentDailyAmount());
-		fragments.add(new FragmentDailyPrice());
+
+		UserRightData urData = GSConfig.CURRENT_USER.getCurrentUserRight(GSConfig.CURRENT_BRANCH.branchID);
+
+		if (urData == null) return;
+
+//		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(getActivity().getClass().getName(), fn) + " branchID : " + GSConfig.CURRENT_BRANCH.branchID + ", ur02 : " + urData.ur02 + ", ur03 : " + urData.ur03 );
+
+		if (urData.ur02 == 1 || urData.ur03 == 1)
+			fragments.add(new FragmentDailyAmount());
+
+		if (urData.ur03 == 1)
+			fragments.add(new FragmentDailyPrice());
 
 	}
-	
+
+
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
-		 inflater.inflate(R.menu.stats_menu, menu);
+
+		super.onCreateOptionsMenu(menu, inflater);
+
+		menu.add(0, 1, 0, "날짜 변경");
+		menu.getItem(0).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+		ArrayList<UserRightData> urd = GSConfig.CURRENT_USER.getUserRightOthers();
+
+		if (urd.size() == 1)
+		{
+			menu.add(0, 2, 0, urd.get(0).branShortName);
+			menu.getItem(1).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		}
+		else if (urd.size() > 1)
+		{
+
+			SubMenu subMenu = menu.addSubMenu("지점선택");
+
+			for(int iter = 0; iter < urd.size(); iter++)
+			{
+				subMenu.add(1, iter + 2, iter, urd.get(iter).branShortName);
+			}
+
+		}
+
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 
-		 switch (item.getItemId())
-		 {
+		String fn = "onOptionsItemSelected()";
 
-//			 case R.id.stats_change_branchkwangju:
-//
-//			 	 int which = 0;
-//
-//				 if (GSConfig.CURRENT_USER.getUserRightData(which).getUr01() != 1)
-//				 {
-//					 Toast.makeText(context, "지점에 로그인 권한이 없습니다.", Toast.LENGTH_SHORT).show();
-//					 return false;
-//				 }
-//
-//				 ArrayList<UserRightData> urData = GSConfig.CURRENT_USER.getUserright();
-//
-//				 GSConfig.CURRENT_BRANCH = new GSBranch(urData.get(which).getBranID(), urData.get(which).getBranName(), urData.get(which).getBranShortName());
-//
-//				 Intent intent = new Intent(context, GSConfig.Activity_LIST[which]);
-//				 intent.putExtra("branName", GSConfig.CURRENT_BRANCH.getBranchShortName());
-//				 intent.putExtra("branID", GSConfig.CURRENT_BRANCH.getBranchID());
-//
-//				 startActivity(intent);
-//
-//				 return true;
+//		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), fn) + " : item.getItemId() : " + item.getItemId());
 
+		// 날짜 변경
+		if (item.getItemId() == 1)
+		{
 
-		 	case R.id.stats_change_date_menu:
+			DayDatePickerDialog dayDatePickerDialog = new DayDatePickerDialog(getActivity(), GSConfig.DAY_STATS_YEAR, GSConfig.DAY_STATS_YEAR+10,  GSConfig.DAY_STATS_MONTH, GSConfig.DAY_STATS_DAY, new DayDatePickerDialog.DialogListner() {
 
-		 		DayDatePickerDialog dayDatePickerDialog = new DayDatePickerDialog(getActivity(), GSConfig.DAY_STATS_YEAR, GSConfig.DAY_STATS_YEAR+10,  GSConfig.DAY_STATS_MONTH, GSConfig.DAY_STATS_DAY, new DayDatePickerDialog.DialogListner() {
+				@Override
+				public void OnConfirmButton(Dialog dialog, int selectYear, int selectMonth, int selectDay) {
 
-		 			@Override
-					public void OnConfirmButton(Dialog dialog, int selectYear, int selectMonth, int selectDay) {
+					if(GSConfig.LIMIT_YEAR > selectYear || selectYear > currentYear)
+					{
+						Toast.makeText(getActivity(), getString(R.string.change_date_year_error), Toast.LENGTH_SHORT).show();
+						return;
+					}
 
-						if(GSConfig.LIMIT_YEAR > selectYear || selectYear > currentYear)
-						{
-							Toast.makeText(getActivity(), getString(R.string.change_date_year_error), Toast.LENGTH_SHORT).show();
-							return;
-						}
+					if(GSConfig.LIMIT_YEAR == selectYear && GSConfig.LIMIT_MONTH > selectMonth )
+					{
+						Toast.makeText(getActivity(), getString(R.string.change_date_month_error), Toast.LENGTH_SHORT).show();
+						return;
+					}
 
-						if(GSConfig.LIMIT_YEAR == selectYear && GSConfig.LIMIT_MONTH > selectMonth )
-						{
-							Toast.makeText(getActivity(), getString(R.string.change_date_month_error), Toast.LENGTH_SHORT).show();
-							return;
-						}
+					if( currentYear == selectYear  && selectMonth > currentMonth )
+					{
+						Toast.makeText(getActivity(), getString(R.string.change_date_month_error), Toast.LENGTH_SHORT).show();
+						return;
+					}
 
-						if( currentYear == selectYear  && selectMonth > currentMonth )
-						{
-							Toast.makeText(getActivity(), getString(R.string.change_date_month_error), Toast.LENGTH_SHORT).show();
-							return;
-						}
+					if(currentMonth ==  selectMonth && selectDay > currentDay )
+					{
+						Toast.makeText(getActivity(), getString(R.string.change_date_day_error), Toast.LENGTH_SHORT).show();
+						return;
+					}
 
-						if(currentMonth ==  selectMonth && selectDay > currentDay )
-						{
-							Toast.makeText(getActivity(), getString(R.string.change_date_day_error), Toast.LENGTH_SHORT).show();
-							return;
-						}
+					if(GSConfig.DAY_STATS_YEAR != selectYear || GSConfig.DAY_STATS_MONTH != selectMonth || GSConfig.DAY_STATS_DAY != selectDay)
+					{
 
-						if(GSConfig.DAY_STATS_YEAR != selectYear || GSConfig.DAY_STATS_MONTH != selectMonth || GSConfig.DAY_STATS_DAY != selectDay)
-						{
+						GSConfig.DAY_STATS_YEAR = selectYear;
+						GSConfig.DAY_STATS_MONTH = selectMonth;
+						GSConfig.DAY_STATS_DAY = selectDay;
 
-							GSConfig.DAY_STATS_YEAR = selectYear;
-							GSConfig.DAY_STATS_MONTH = selectMonth;
-							GSConfig.DAY_STATS_DAY = selectDay;
-
-							statsPagerAdapter.notifyDataSetChanged();
-
-						}
-
-						dialog.dismiss();
+						statsPagerAdapter.notifyDataSetChanged();
 
 					}
 
-				});
+					dialog.dismiss();
 
-		 		dayDatePickerDialog.show();
-		 		
-		 		return true;
+				}
 
-		 	default:
-		 		return super.onOptionsItemSelected(item);
+			});
 
-		 }
+			dayDatePickerDialog.show();
+
+		}
+		else
+		{
+
+			int orderNum = item.getOrder();
+
+			ArrayList<UserRightData> urDatas = GSConfig.CURRENT_USER.getUserRightOthers();
+
+			UserRightData urData = urDatas.get(orderNum);
+
+			GSConfig.CURRENT_BRANCH = new GSBranch(urData.branID, urData.branName, urData.branShortName);
+
+			Intent intent = new Intent(context, GSConfig.Activity_LIST[0]);
+			intent.putExtra("branID", GSConfig.CURRENT_BRANCH.branchID);
+			intent.putExtra("branName", GSConfig.CURRENT_BRANCH.branchShortName);
+
+			startActivity(intent);
+
+		}
+
+		return true;
 
 	}
 	
@@ -240,8 +275,14 @@ public class FragmentDailyMain extends Fragment
 
 		public StatsPagerAdapter(FragmentManager fm)
 		{
+
 			super(fm);
-			TITLES = getResources().getStringArray(R.array.stats_day_tab_array1);
+
+			if (GSConfig.CURRENT_USER.getCurrentUserRight(GSConfig.CURRENT_BRANCH.branchID).ur03 == 1)
+				TITLES = getResources().getStringArray(R.array.stats_day_tab_array1);
+			else
+				TITLES = getResources().getStringArray(R.array.stats_day_tab_array2);
+
 		}
 
 		@Override
@@ -264,7 +305,12 @@ public class FragmentDailyMain extends Fragment
 		@Override
 		public Fragment getItem(int position)
 		{
+
+			if (position < 0 || position >= fragments.size())
+				return null;
+
 			return fragments.get(position);
+
 		}
 
 		@Override

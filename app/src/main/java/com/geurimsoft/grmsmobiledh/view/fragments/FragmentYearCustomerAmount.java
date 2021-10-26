@@ -109,7 +109,7 @@ public class FragmentYearCustomerAmount extends Fragment
 //			yi_month_enterprise_amount_release_outside_empty_layout.removeAllViews();
 			yi_month_enterprise_amount_petosa_empty_layout.removeAllViews();
 
-			this.statsView = new EnterpriseYearStatsView(getActivity(), GSConfig.CURRENT_BRANCH.getBranchID(), GSConfig.STATE_AMOUNT, iYear);
+			this.statsView = new EnterpriseYearStatsView(getActivity(), GSConfig.CURRENT_BRANCH.branchID, GSConfig.STATE_AMOUNT, iYear);
 
 			this.unit = getString(R.string.unit_lube);
 
@@ -231,7 +231,7 @@ public class FragmentYearCustomerAmount extends Fragment
 				Map<String,String> params = new HashMap<String,String>();
 
 				params.put("GSType", "YEAR_CUSTOMER");
-				params.put("GSQuery", "{ \"branchID\" : " + GSConfig.CURRENT_BRANCH.getBranchID() + ", \"searchYear\": " + searchYear + ", \"qryContent\" : \"" + qryContent + "\",  \"serviceType\" : " + serviceType + " }");
+				params.put("GSQuery", "{ \"branchID\" : " + GSConfig.CURRENT_BRANCH.branchID + ", \"searchYear\": " + searchYear + ", \"qryContent\" : \"" + qryContent + "\",  \"serviceType\" : " + serviceType + " }");
 
 				//Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + params.get("GSQuery"));
 

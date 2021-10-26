@@ -435,7 +435,7 @@ public class Payloader extends AppCompatActivity
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<String,String>();
                 params.put("GSType", "PAYLOADER_PRODUCT_LIST");
-                params.put("GSQuery", "{ \"BranchID\" : \"" + GSConfig.CURRENT_BRANCH.getBranchID() + "\", \"ServiceType\" : \"1\"}");
+                params.put("GSQuery", "{ \"BranchID\" : \"" + GSConfig.CURRENT_BRANCH.branchID + "\", \"ServiceType\" : \"1\"}");
                 return params;
             }
         };
@@ -504,7 +504,7 @@ public class Payloader extends AppCompatActivity
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<String,String>();
                 params.put("GSType", "PAYLOADER_DAILY");
-                params.put("GSQuery", "{ \"BranchID\" : \"" + GSConfig.CURRENT_BRANCH.getBranchID()
+                params.put("GSQuery", "{ \"BranchID\" : \"" + GSConfig.CURRENT_BRANCH.branchID
                         + "\", \"ServiceType\" : \"" + serviceType
                         + "\", \"ServiceDate\" : \"" + date
                         + "\", \"Product\" : \"" + product

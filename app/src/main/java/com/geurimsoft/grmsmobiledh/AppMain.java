@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,8 +30,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -44,6 +48,7 @@ import com.geurimsoft.grmsmobiledh.apiserver.data.UserInfo;
 import com.geurimsoft.grmsmobiledh.apiserver.data.UserRightData;
 import com.geurimsoft.grmsmobiledh.data.GSBranch;
 import com.geurimsoft.grmsmobiledh.data.GSConfig;
+import com.geurimsoft.grmsmobiledh.data.GSUserRight;
 import com.geurimsoft.grmsmobiledh.payloader.Payloader;
 import com.google.gson.Gson;
 
@@ -69,6 +74,8 @@ public class AppMain extends Activity
 	private Toast appFinishedToast;
 
 	private AlertDialog alertDialog;
+
+	private RadioGroup rgBranch;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -231,7 +238,7 @@ public class AppMain extends Activity
 	}
 
 	/**
-	 * 로그인 권한 확인
+	 * 로그인 권한 확인 및 지점 정보 조회
 	 * @param userID    	User ID
 	 * @param userPWD		User PWD
 	 * @return
@@ -281,27 +288,38 @@ public class AppMain extends Activity
 
 	}
 
+	/**
+	 * 데이터 파싱 후 UserInfo로 변환
+	 * @param userID	사용자 ID
+	 * @param userPWD	비밀번호
+	 * @param msg		수신 json
+	 */
 	public void parseData(String userID, String userPWD, String msg)
 	{
 
 		String functionName = "parseData()";
 
-//		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + ": msg : " + msg);
+		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + ": msg : " + msg);
 
 		Gson gson = new Gson();
 
+		// 데이터 변환
 		UserInfo userInfo = gson.fromJson(msg, UserInfo.class);
 
+		// 사용자 정보가 없으면 접속 제한
 		if (userInfo == null)
 		{
 			Log.e(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "userInfo is null.");
 			return;
 		}
 
+		// 사용자 정보 설정
 		GSConfig.CURRENT_USER = userInfo;
 
 		if (GSConfig.CURRENT_USER.isUserInfoNull() || GSConfig.CURRENT_USER.isUserRightNull())
 			return;
+
+//		GSConfig.CURRENT_USER.print();
 
 		SharedPreferences.Editor editor = GSConfig.gPreference.edit();
 		editor.putString("userID", userID);
@@ -309,71 +327,12 @@ public class AppMain extends Activity
 		editor.putBoolean("outo_chcek", chkAutoLogin.isChecked());
 		editor.commit();
 
-		Toast.makeText(getApplicationContext(),GSConfig.CURRENT_USER.getUserinfo().get(0).getName() + getString(R.string.login_success), Toast.LENGTH_SHORT).show();
+		Toast.makeText(getApplicationContext(),GSConfig.CURRENT_USER.getUserinfo().getName() + getString(R.string.login_success), Toast.LENGTH_SHORT).show();
 
 		// 현장 선택
 		showBranch();
 
 	}
-
-
-//	/**
-//	 * 현장 선택
-//	 */
-//	private void showBranch()
-//	{
-//
-//		if (GSConfig.CURRENT_USER == null || GSConfig.CURRENT_USER.isUserInfoNull() || GSConfig.CURRENT_USER.isUserRightNull())
-//			return;
-//
-//		String fn = "showBranch()";
-//
-//		ArrayList<UserRightData> urData = GSConfig.CURRENT_USER.getUserright();
-//
-//		String[] commandArray = new String[ urData.size() ];
-//
-//		for(int i = 0; i < urData.size(); i++)
-//		{
-//			commandArray[i] = urData.get(i).getBranName();
-//		}
-//
-//		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//		builder.setCancelable(false);
-//		builder.setTitle(getString(R.string.site_msg));
-//		builder.setItems(commandArray, new DialogInterface.OnClickListener()
-//		{
-//
-//			@Override
-//			public void onClick(DialogInterface dialog, int which)
-//			{
-//
-////				Log.d(GSConfig.APP_DEBUG, this.getClass().getName() + "." + fn + " : which : " + which);
-//
-//				if (GSConfig.CURRENT_USER.getUserRightData(which).getUr01() != 1)
-//				{
-//					Toast.makeText(getApplicationContext(),"지점에 로그인 권한이 없습니다.", Toast.LENGTH_SHORT).show();
-//					return;
-//				}
-//
-//				GSConfig.CURRENT_BRANCH = new GSBranch(urData.get(which).getBranID(), urData.get(which).getBranName(), urData.get(which).getBranShortName());
-//
-////				Intent intent = new Intent(AppMain.this, GSConfig.Activity_LIST[0]);
-//				Intent intent = new Intent(AppMain.this, GSConfig.Activity_LIST[1]);
-//				intent.putExtra("branName", GSConfig.CURRENT_BRANCH.getBranchShortName());
-//				intent.putExtra("branID", GSConfig.CURRENT_BRANCH.getBranchID());
-//
-//				startActivity(intent);
-//
-//				dialog.dismiss();
-//
-//			}
-//
-//		});
-//
-//		AlertDialog alert = builder.create();
-//		alert.show();
-//
-//	}
 
 	/**
 	 * 현장 선택
@@ -389,8 +348,8 @@ public class AppMain extends Activity
 		// 뷰 레이아웃 생성
 		dialogView = (View) View.inflate(getApplicationContext(), R.layout.branch_layout, null);
 
-		// 리스트 뷰
-		ListView listView = (ListView)dialogView.findViewById(R.id.lvBranch);
+		// 라디오 그룹
+		rgBranch = (RadioGroup)dialogView.findViewById(R.id.rgBranch);
 
 		// 상차 버튼
 		Button btPayload = (Button)dialogView.findViewById(R.id.btPayload);
@@ -402,44 +361,64 @@ public class AppMain extends Activity
 		ArrayList<UserRightData> urData = GSConfig.CURRENT_USER.getUserright();
 
 		//---------------------------------------------------------------------------
-		// 지점 배열 만들기
+		// 지점 리스트 만들기
 		//---------------------------------------------------------------------------
-
-		String[] branchArray = new String[ urData.size() ];
 
 		for(int i = 0; i < urData.size(); i++)
 		{
-			branchArray[i] = urData.get(i).getBranName();
+
+			//Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), fn) + ": branShortName : " + urData.get(i).branShortName);
+
+			RadioButton radioButton = new RadioButton(this);
+			radioButton.setText( urData.get(i).branShortName );
+			radioButton.setId(i + 101);
+			radioButton.setTextColor(Color.BLACK);
+
+			int finalIndex = i;
+
+			radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+				{
+
+					//Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), fn) + ": Id : " + buttonView.getId());
+					//Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), fn) + ": isChecked : " + isChecked);
+
+					if (!isChecked) return;
+
+					// 사용자 권한
+					ArrayList<UserRightData> urData = GSConfig.CURRENT_USER.getUserright();
+
+					for(int i = 0; i < urData.size(); i++)
+					{
+
+						if (buttonView.getId() == (i + 101))
+						{
+
+							if ( urData.get(finalIndex).ur12 == 0 )
+							{
+								btPayload.setVisibility(View.INVISIBLE);
+							}
+							else
+							{
+								btPayload.setVisibility(View.VISIBLE);
+							}
+
+						}
+
+					}
+
+				}
+
+			});
+
+			rgBranch.addView(radioButton);
+
 		}
 
 		//---------------------------------------------------------------------------
-		// 리스트 어댑터 생성
-		//---------------------------------------------------------------------------
-
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, branchArray);
-		listView.setAdapter(adapter);
-
-		listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-		{
-
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
-			{
-
-				if (GSConfig.CURRENT_USER.getUserRightData(i).getUr01() != 1)
-				{
-					Toast.makeText(getApplicationContext(),"지점에 로그인 권한이 없습니다.", Toast.LENGTH_SHORT).show();
-					return;
-				}
-
-				GSConfig.CURRENT_BRANCH = new GSBranch(urData.get(i).getBranID(), urData.get(i).getBranName(), urData.get(i).getBranShortName());
-
-			}
-
-		});
-
-		//---------------------------------------------------------------------------
-		// 상차 버튼 이벤트
+		// 상차 버튼
 		//---------------------------------------------------------------------------
 
 		btPayload.setOnClickListener(new View.OnClickListener()
@@ -449,9 +428,12 @@ public class AppMain extends Activity
 			public void onClick(View view)
 			{
 
+				// 지점 설정
+				setBranch();
+
 				Intent intent = new Intent(AppMain.this, GSConfig.Activity_LIST[1]);
-				intent.putExtra("branName", GSConfig.CURRENT_BRANCH.getBranchShortName());
-				intent.putExtra("branID", GSConfig.CURRENT_BRANCH.getBranchID());
+				intent.putExtra("branID", GSConfig.CURRENT_BRANCH.branchID);
+				intent.putExtra("branName", GSConfig.CURRENT_BRANCH.branchShortName);
 
 				startActivity(intent);
 
@@ -471,6 +453,15 @@ public class AppMain extends Activity
 			@Override
 			public void onClick(View view)
 			{
+
+				// 지점 설정
+				setBranch();
+
+//				Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), fn) + "------------------------------------------");
+
+//				GSConfig.CURRENT_BRANCH.print();
+
+//				GSConfig.CURRENT_USER.getCurrentUserRight(GSConfig.CURRENT_BRANCH.branchID).print();
 
 				Intent intent = new Intent(AppMain.this, GSConfig.Activity_LIST[0]);
 
@@ -493,6 +484,31 @@ public class AppMain extends Activity
 		alertDialog = builder.create();
 		alertDialog.show();
 
+	}
+
+	/**
+	 * 지점 설정
+	 */
+	public void setBranch()
+	{
+
+		String fn = "setBranch()";
+
+//		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), fn) + ": rgBranch.getCheckedRadioButtonId() : " + rgBranch.getCheckedRadioButtonId());
+
+		// 사용자 권한
+		ArrayList<UserRightData> urData = GSConfig.CURRENT_USER.getUserright();
+
+		for(int i = 0; i < urData.size(); i++)
+		{
+
+			if (rgBranch.getCheckedRadioButtonId() == (i + 101))
+			{
+				GSConfig.CURRENT_BRANCH = new GSBranch(urData.get(i).branID, urData.get(i).branName, urData.get(i).branShortName);
+				return;
+			}
+
+		}
 
 	}
 	

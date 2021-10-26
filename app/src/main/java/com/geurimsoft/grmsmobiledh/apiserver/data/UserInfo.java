@@ -28,12 +28,12 @@ public class UserInfo implements Serializable
     private String message;
 
     @SerializedName("userinfo")
-    private ArrayList<UserInfoData> userinfo;
+    private UserInfoData userinfo;
 
     @SerializedName("userright")
     private ArrayList<UserRightData> userright;
 
-    public UserInfo(String status, String message, ArrayList<UserInfoData> userinfo, ArrayList<UserRightData> userright)
+    public UserInfo(String status, String message, UserInfoData userinfo, ArrayList<UserRightData> userright)
     {
 
         this.status = status;
@@ -61,22 +61,17 @@ public class UserInfo implements Serializable
         this.message = message;
     }
 
-    public void setUserinfo(ArrayList<UserInfoData> userinfo) {
+    public void setUserinfo(UserInfoData userinfo) {
         this.userinfo = userinfo;
     }
 
-    public ArrayList<UserInfoData> getUserinfo() {
+    public UserInfoData getUserinfo() {
         return userinfo;
     }
 
     public boolean isUserInfoNull()
     {
-
-        if (this.userinfo == null || this.userinfo.size() == 0)
-            return true;
-        else
-            return false;
-
+        return (this.userinfo == null) ? true : false;
     }
 
     public UserRightData getUserRightData(int ind) { return userright.get(ind); }
@@ -89,11 +84,48 @@ public class UserInfo implements Serializable
 
     public boolean isUserRightNull()
     {
+        return (this.userright == null || this.userright.size() == 0) ? true : false;
+    }
 
-        if (this.userright == null || this.userright.size() == 0)
-            return true;
-        else
-            return false;
+    public ArrayList<UserRightData> getUserRightOthers()
+    {
+
+        ArrayList<UserRightData> results = new ArrayList<UserRightData>();
+
+        for(UserRightData ur : userright)
+        {
+
+            if (ur.branID != GSConfig.CURRENT_BRANCH.branchID)
+                results.add(ur);
+
+        }
+
+        return results;
+
+    }
+
+    public UserRightData getCurrentUserRight(int branchID)
+    {
+
+        for(UserRightData ur : userright)
+        {
+
+            if (ur.branID == GSConfig.CURRENT_BRANCH.branchID)
+                return ur;
+
+        }
+
+        return null;
+
+    }
+
+    public void print()
+    {
+
+        for(UserRightData ur : userright)
+        {
+            ur.print();
+        }
 
     }
 

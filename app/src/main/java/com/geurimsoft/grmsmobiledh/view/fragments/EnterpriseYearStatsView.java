@@ -339,7 +339,7 @@ public class EnterpriseYearStatsView
 				protected Map<String, String> getParams() throws AuthFailureError {
 					Map<String,String> params = new HashMap<String,String>();
 					params.put("GSType", "YEAR_CUSTOMER_MONTH");
-					params.put("GSQuery", "{ \"branchID\" : " + GSConfig.CURRENT_BRANCH.getBranchID() + ", \"customerFullName\": \"" + customerName + "\", \"serviceType\": " + serviceType + ", \"searchYear\": " + iYear + ", \"qryContent\" : \"" + qryContent + "\" }");
+					params.put("GSQuery", "{ \"branchID\" : " + GSConfig.CURRENT_BRANCH.branchID + ", \"customerFullName\": \"" + customerName + "\", \"serviceType\": " + serviceType + ", \"searchYear\": " + iYear + ", \"qryContent\" : \"" + qryContent + "\" }");
 					return params;
 				}
 			};

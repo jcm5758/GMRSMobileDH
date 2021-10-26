@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.geurimsoft.grmsmobiledh.apiserver.data.UserInfo;
+import com.geurimsoft.grmsmobiledh.apiserver.data.UserRightData;
 import com.geurimsoft.grmsmobiledh.payloader.GSPayloaderServiceDataTop;
 
 import java.text.DecimalFormat;
@@ -23,7 +24,8 @@ public class GSConfig
 
     public static final String WEB_SERVER_ADDR = "http://211.253.8.254/dh/app_version.txt";
 
-    public static final String SERVER_ADDR = "211.253.8.254";
+    //public static final String SERVER_ADDR = "211.253.8.254";
+    public static final String SERVER_ADDR = "192.168.0.20";
 
     // API 서버 포트
     public static final int API_SERVER_PORT = 8404;

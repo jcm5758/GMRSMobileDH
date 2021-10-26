@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -128,7 +129,31 @@ public class FragmentMonthMain extends Fragment
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
-		 inflater.inflate(R.menu.stats_menu, menu);
+
+		super.onCreateOptionsMenu(menu, inflater);
+
+		menu.add(0, 1, 0, "날짜 변경");
+		menu.getItem(0).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+		ArrayList<UserRightData> urd = GSConfig.CURRENT_USER.getUserRightOthers();
+
+		if (urd.size() == 1)
+		{
+			menu.add(0, 2, 0, urd.get(0).branShortName);
+			menu.getItem(1).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		}
+		else if (urd.size() > 1)
+		{
+
+			SubMenu subMenu = menu.addSubMenu("지점선택");
+
+			for(int iter = 0; iter < urd.size(); iter++)
+			{
+				subMenu.add(1, iter + 2, iter, urd.get(iter).branShortName);
+			}
+
+		}
+
 	}
 	
 	@Override
