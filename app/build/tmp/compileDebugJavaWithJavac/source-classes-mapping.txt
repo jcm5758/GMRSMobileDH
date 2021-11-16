@@ -31,6 +31,8 @@ com/geurimsoft/grmsmobiledh/view/fragments/EnterpriseMonthStatsView.java
  com.geurimsoft.grmsmobiledh.view.fragments.EnterpriseMonthStatsView$MonthDetailList$3
 com/geurimsoft/grmsmobiledh/chart/IDemoChart.java
  com.geurimsoft.grmsmobiledh.chart.IDemoChart
+com/geurimsoft/grmsmobiledh/apiserver/data/ServicePredict.java
+ com.geurimsoft.grmsmobiledh.apiserver.data.ServicePredict
 com/geurimsoft/grmsmobiledh/view/fragments/MonthCustomerStatsView.java
  com.geurimsoft.grmsmobiledh.view.fragments.MonthCustomerStatsView
  com.geurimsoft.grmsmobiledh.view.fragments.MonthCustomerStatsView$1

@@ -316,10 +316,19 @@ public class AppMain extends Activity
 		// 사용자 정보 설정
 		GSConfig.CURRENT_USER = userInfo;
 
-		if (GSConfig.CURRENT_USER.isUserInfoNull() || GSConfig.CURRENT_USER.isUserRightNull())
-			return;
+		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + ": status : " + GSConfig.CURRENT_USER.message);
 
-//		GSConfig.CURRENT_USER.print();
+		GSConfig.CURRENT_USER.userinfo.print();
+
+		if (GSConfig.CURRENT_USER.userright != null)
+		{
+			GSConfig.CURRENT_USER.printUserRight();
+		}
+
+		if (GSConfig.CURRENT_USER.servicepredict != null)
+		{
+			GSConfig.CURRENT_USER.printServicePredict();
+		}
 
 		SharedPreferences.Editor editor = GSConfig.gPreference.edit();
 		editor.putString("userID", userID);
@@ -327,10 +336,17 @@ public class AppMain extends Activity
 		editor.putBoolean("outo_chcek", chkAutoLogin.isChecked());
 		editor.commit();
 
-		Toast.makeText(getApplicationContext(),GSConfig.CURRENT_USER.getUserinfo().getName() + getString(R.string.login_success), Toast.LENGTH_SHORT).show();
+		Toast.makeText(getApplicationContext(),GSConfig.CURRENT_USER.userinfo.Name + getString(R.string.login_success), Toast.LENGTH_SHORT).show();
 
-		// 현장 선택
-		showBranch();
+		if (GSConfig.CURRENT_USER.message.equals(GSConfig.LOGIN_SUCESS_MESSAGE))
+		{
+			// 현장 선택
+			showBranch();
+		}
+		else if (GSConfig.CURRENT_USER.message.equals(GSConfig.LOGIN_FOREIGN_SUCESS_MESSAGE))
+		{
+			Toast.makeText(getApplicationContext(),"덤프기사님 반갑습니다.", Toast.LENGTH_SHORT).show();
+		}
 
 	}
 
@@ -340,8 +356,17 @@ public class AppMain extends Activity
 	private void showBranch()
 	{
 
-		if (GSConfig.CURRENT_USER == null || GSConfig.CURRENT_USER.isUserInfoNull() || GSConfig.CURRENT_USER.isUserRightNull())
+		if (GSConfig.CURRENT_USER == null || GSConfig.CURRENT_USER.isUserInfoNull())
+		{
+			Toast.makeText(getApplicationContext(),"사용자 정보가 없습니다.", Toast.LENGTH_SHORT).show();
 			return;
+		}
+
+		if (GSConfig.CURRENT_USER.isUserRightNull())
+		{
+			Toast.makeText(getApplicationContext(),"사용자 권한 정보가 없습니다. 관리자에게 문의하세요.", Toast.LENGTH_SHORT).show();
+			return;
+		}
 
 		String fn = "showBranch()";
 
@@ -358,7 +383,7 @@ public class AppMain extends Activity
 		Button btStat = (Button)dialogView.findViewById(R.id.btStat);
 
 		// 사용자 권한
-		ArrayList<UserRightData> urData = GSConfig.CURRENT_USER.getUserright();
+		ArrayList<UserRightData> urData = GSConfig.CURRENT_USER.userright;
 
 		//---------------------------------------------------------------------------
 		// 지점 리스트 만들기
@@ -388,7 +413,7 @@ public class AppMain extends Activity
 					if (!isChecked) return;
 
 					// 사용자 권한
-					ArrayList<UserRightData> urData = GSConfig.CURRENT_USER.getUserright();
+					ArrayList<UserRightData> urData = GSConfig.CURRENT_USER.userright;
 
 					for(int i = 0; i < urData.size(); i++)
 					{
@@ -497,7 +522,7 @@ public class AppMain extends Activity
 //		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), fn) + ": rgBranch.getCheckedRadioButtonId() : " + rgBranch.getCheckedRadioButtonId());
 
 		// 사용자 권한
-		ArrayList<UserRightData> urData = GSConfig.CURRENT_USER.getUserright();
+		ArrayList<UserRightData> urData = GSConfig.CURRENT_USER.userright;
 
 		for(int i = 0; i < urData.size(); i++)
 		{

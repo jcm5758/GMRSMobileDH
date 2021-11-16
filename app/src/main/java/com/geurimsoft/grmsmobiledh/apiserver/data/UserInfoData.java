@@ -9,50 +9,49 @@
 
 package com.geurimsoft.grmsmobiledh.apiserver.data;
 
+import android.util.Log;
+
+import com.geurimsoft.grmsmobiledh.data.GSConfig;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
 public class UserInfoData implements Serializable {
 
-    @SerializedName("id")
-    private int id;
+    @SerializedName("ID")
+    public int ID = -1;
 
-    @SerializedName("userID")
-    private String userID;
+    @SerializedName("ServiceType")
+    public int ServiceType = -1;
 
-    @SerializedName("name")
-    private String name;
+    @SerializedName("Name")
+    public String Name = "";
 
-    public UserInfoData(int id, String userID, String name)
+    @SerializedName("UserID")
+    public String UserID = "";
+
+    @SerializedName("VehicleNum")
+    public String VehicleNum = "";
+
+    @SerializedName("Company")
+    public String Company = "";
+
+    @SerializedName("Phone")
+    public String Phone = "";
+
+    @SerializedName("Mobile")
+    public String Mobile = "";
+
+    public void print()
     {
-        this.id = id;
-        this.userID = userID;
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getUserID() {
-        return userID;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), "print()") + ": ID : " + this.ID);
+        Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), "print()") + ": ServiceType : " + this.ServiceType);
+        Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), "print()") + ": Name : " + this.Name);
+        Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), "print()") + ": UserID : " + this.UserID);
+        Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), "print()") + ": VehicleNum : " + this.VehicleNum);
+        Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), "print()") + ": Company : " + this.Company);
+        Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), "print()") + ": Phone : " + this.Phone);
+        Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), "print()") + ": Mobile : " + this.Mobile);
     }
 
 }

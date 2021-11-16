@@ -24,8 +24,8 @@ public class GSConfig
 
     public static final String WEB_SERVER_ADDR = "http://211.253.8.254/dh/app_version.txt";
 
-    public static final String SERVER_ADDR = "211.253.8.254";
-    //public static final String SERVER_ADDR = "192.168.0.20";
+    //public static final String SERVER_ADDR = "211.253.8.254";
+    public static final String SERVER_ADDR = "192.168.0.20";
 
     // API 서버 포트
     public static final int API_SERVER_PORT = 8404;
@@ -155,5 +155,11 @@ public class GSConfig
         return format.format(date);
 
     }
+
+    // 로그인 성공 메시지
+    public static String LOGIN_SUCESS_MESSAGE = "LOGIN SUCCESS";
+
+    // 로그인 외부 성공 메시지
+    public static String LOGIN_FOREIGN_SUCESS_MESSAGE = "LOGIN FOREIGN SUCCESS";
 
 }

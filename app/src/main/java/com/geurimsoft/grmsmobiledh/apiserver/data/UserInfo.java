@@ -22,64 +22,23 @@ public class UserInfo implements Serializable
 {
 
     @SerializedName("status")
-    private String status;
+    public String status;
 
     @SerializedName("message")
-    private String message;
+    public String message;
 
     @SerializedName("userinfo")
-    private UserInfoData userinfo;
+    public UserInfoData userinfo;
 
     @SerializedName("userright")
-    private ArrayList<UserRightData> userright;
+    public ArrayList<UserRightData> userright;
 
-    public UserInfo(String status, String message, UserInfoData userinfo, ArrayList<UserRightData> userright)
-    {
-
-        this.status = status;
-        this.message = message;
-        this.userinfo = userinfo;
-        this.userright = userright;
-
-    }
-
-    public String getStatus()
-    {
-        return status;
-    }
-
-    public void setStatus(String status)
-    {
-        this.status = status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public void setUserinfo(UserInfoData userinfo) {
-        this.userinfo = userinfo;
-    }
-
-    public UserInfoData getUserinfo() {
-        return userinfo;
-    }
+    @SerializedName("servicepredict")
+    public ArrayList<ServicePredict> servicepredict;
 
     public boolean isUserInfoNull()
     {
         return (this.userinfo == null) ? true : false;
-    }
-
-    public UserRightData getUserRightData(int ind) { return userright.get(ind); }
-    public ArrayList<UserRightData> getUserright() {
-        return userright;
-    }
-    public void setUserright(ArrayList<UserRightData> userright) {
-        this.userright = userright;
     }
 
     public boolean isUserRightNull()
@@ -92,7 +51,7 @@ public class UserInfo implements Serializable
 
         ArrayList<UserRightData> results = new ArrayList<UserRightData>();
 
-        for(UserRightData ur : userright)
+        for(UserRightData ur : this.userright)
         {
 
             if (ur.branID != GSConfig.CURRENT_BRANCH.branchID)
@@ -107,7 +66,7 @@ public class UserInfo implements Serializable
     public UserRightData getCurrentUserRight(int branchID)
     {
 
-        for(UserRightData ur : userright)
+        for(UserRightData ur : this.userright)
         {
 
             if (ur.branID == GSConfig.CURRENT_BRANCH.branchID)
@@ -119,10 +78,20 @@ public class UserInfo implements Serializable
 
     }
 
-    public void print()
+    public void printUserRight()
     {
 
-        for(UserRightData ur : userright)
+        for(UserRightData ur : this.userright)
+        {
+            ur.print();
+        }
+
+    }
+
+    public void printServicePredict()
+    {
+
+        for(ServicePredict ur : this.servicepredict)
         {
             ur.print();
         }
