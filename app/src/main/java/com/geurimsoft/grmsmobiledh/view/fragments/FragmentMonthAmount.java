@@ -177,13 +177,14 @@ public class FragmentMonthAmount extends Fragment
 	{
 
 		String functionName = "parseData()";
-		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + msg);
+
+		if (GSConfig.IsDebugging)
+			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + msg);
 
 		try
 		{
 
 			Gson gson = new Gson();
-
 			GSMonthInOut data = gson.fromJson(msg, GSMonthInOut.class);
 
 			this.setDisplayData(data);

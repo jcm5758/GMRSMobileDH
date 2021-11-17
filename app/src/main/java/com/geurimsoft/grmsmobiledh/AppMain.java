@@ -362,15 +362,20 @@ public class AppMain extends Activity
 		else if (GSConfig.CURRENT_USER.message.equals(GSConfig.LOGIN_FOREIGN_SUCESS_MESSAGE))
 		{
 
-			// 배차 정보가 없습니다.
-			if (GSConfig.CURRENT_USER.isServicePredictNull())
-			{
-				Toast.makeText(getApplicationContext(),"배차 정보가 없습니다.", Toast.LENGTH_SHORT).show();
-				return;
-			}
-
-			Intent intent = new Intent(AppMain.this, GSConfig.Activity_LIST[2]);
+			// 덤프트럭 통계로 이동
+			Intent intent = new Intent(AppMain.this, GSConfig.Activity_LIST[3]);
 			startActivity(intent);
+
+//			// 배차 정보가 없습니다.
+//			if (GSConfig.CURRENT_USER.isServicePredictNull())
+//			{
+//				Toast.makeText(getApplicationContext(),"배차 정보가 없습니다.", Toast.LENGTH_SHORT).show();
+//				return;
+//			}
+
+//			// 덤프트럭 배차로 이동
+//			Intent intent = new Intent(AppMain.this, GSConfig.Activity_LIST[2]);
+//			startActivity(intent);
 
 		}
 

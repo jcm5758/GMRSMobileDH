@@ -21,6 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name="com.geurimsoft.grmsmobiledh.view.fragments.ActivityMain"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"/>
 
@@ -30,7 +31,10 @@
         <activity android:name="com.geurimsoft.grmsmobiledh.payloader.ItemActivity"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"/>
 
-        <activity android:name=".view.dump.DumpActivity"
+        <activity android:name="com.geurimsoft.grmsmobiledh.view.dump.ActivityMain"
+            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"/>
+
+        <activity android:name="com.geurimsoft.grmsmobiledh.view.dump.DumpActivity"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"/>
 
         <activity android:name="org.achartengine.GraphicalActivity" />

@@ -42,7 +42,12 @@ public class GSConfig
     public static UserInfo CURRENT_USER = null;
 
     // Acitivity 리스트 : 지점 수정할 때 수정해야 함
-    public static Class[] Activity_LIST = new Class[]{ com.geurimsoft.grmsmobiledh.view.fragments.ActivityMain.class, com.geurimsoft.grmsmobiledh.payloader.Payloader.class, DumpActivity.class};
+    public static Class[] Activity_LIST = new Class[]{
+            com.geurimsoft.grmsmobiledh.view.fragments.ActivityMain.class,
+            com.geurimsoft.grmsmobiledh.payloader.Payloader.class,
+            com.geurimsoft.grmsmobiledh.view.dump.DumpActivity.class,
+            com.geurimsoft.grmsmobiledh.view.dump.ActivityMain.class
+    };
 
     public static String LOG_MSG(String className, String funcName)
     {
