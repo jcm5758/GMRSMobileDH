@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.geurimsoft.grmsmobiledh.apiserver.data.UserInfo;
-import com.geurimsoft.grmsmobiledh.apiserver.data.UserRightData;
+import com.geurimsoft.grmsmobiledh.view.dump.DumpActivity;
 import com.geurimsoft.grmsmobiledh.payloader.GSPayloaderServiceDataTop;
 
 import java.text.DecimalFormat;
@@ -21,6 +21,8 @@ public class GSConfig
 
     // 디버깅용 태그
     public static final String APP_DEBUG = "Geurimsoft";
+
+    public static boolean IsDebugging = false;
 
     public static final String WEB_SERVER_ADDR = "http://211.253.8.254/dh/app_version.txt";
 
@@ -40,7 +42,7 @@ public class GSConfig
     public static UserInfo CURRENT_USER = null;
 
     // Acitivity 리스트 : 지점 수정할 때 수정해야 함
-    public static Class[] Activity_LIST = new Class[]{ com.geurimsoft.grmsmobiledh.view.fragments.ActivityMain.class, com.geurimsoft.grmsmobiledh.payloader.Payloader.class };
+    public static Class[] Activity_LIST = new Class[]{ com.geurimsoft.grmsmobiledh.view.fragments.ActivityMain.class, com.geurimsoft.grmsmobiledh.payloader.Payloader.class, DumpActivity.class};
 
     public static String LOG_MSG(String className, String funcName)
     {

@@ -25,13 +25,6 @@ public class ResultStatus
     @SerializedName("data")
     private ArrayList data;
 
-    public ResultStatus(String status, String message, ArrayList data)
-    {
-        this.status = status;
-        this.message = message;
-        this.data = data;
-    }
-
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
 

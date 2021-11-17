@@ -84,9 +84,6 @@ public class FragmentDailyAmount extends Fragment
 		this.release_empty_layout = (LinearLayout)view.findViewById(R.id.release_empty_layout);
 		this.petosa_empty_layout = (LinearLayout)view.findViewById(R.id.petosa_empty_layout);
 
-//		this.income_empty_layout_outside = (LinearLayout)view.findViewById(R.id.income_empty_layout_outside);
-//		this.release_empty_layout_outside = (LinearLayout)view.findViewById(R.id.release_empty_layout_outside);
-		
 		this.loading_indicator = (LinearLayout)view.findViewById(R.id.loading_indicator);
 		this.loading_fail = (LinearLayout)view.findViewById(R.id.loading_fail);
 		
@@ -95,9 +92,6 @@ public class FragmentDailyAmount extends Fragment
 		this.daily_income_title = (TextView) view.findViewById(R.id.daily_income_title);
 		this.daily_release_title = (TextView) view.findViewById(R.id.daily_release_title);
 		this.daily_petosa_title = (TextView) view.findViewById(R.id.daily_petosa_title);
-
-//		this.daily_income_title_outside = (TextView) view.findViewById(R.id.daily_income_title_outside);
-//		this.daily_release_title_outside = (TextView) view.findViewById(R.id.daily_release_title_outside);
 
 		// 일일 입고/출고/토사 수량 조회
 		makeDailyAmountData(GSConfig.DAY_STATS_YEAR, GSConfig.DAY_STATS_MONTH,GSConfig.DAY_STATS_DAY);
@@ -126,7 +120,9 @@ public class FragmentDailyAmount extends Fragment
 		{
 
 			String str = _year + "년 " + _monthOfYear + "월 " + _dayOfMonth + "일 입출고 현황";
-//			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + _year + "년 " + _monthOfYear + "월 " + _dayOfMonth + "일");
+
+			if (GSConfig.IsDebugging)
+				Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + _year + "년 " + _monthOfYear + "월 " + _dayOfMonth + "일");
 
 			this.stats_daily_date.setText(str);
 
@@ -149,7 +145,8 @@ public class FragmentDailyAmount extends Fragment
 
 		String functionName = "getData()";
 
-//		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "searchDate : " + searchDate + ", qryContent : " + qryContent);
+		if (GSConfig.IsDebugging)
+			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "searchDate : " + searchDate + ", qryContent : " + qryContent);
 
 		String url = GSConfig.API_SERVER_ADDR;
 		RequestQueue requestQueue = Volley.newRequestQueue(GSConfig.context);
@@ -161,8 +158,12 @@ public class FragmentDailyAmount extends Fragment
 				new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
-//						Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "응답 -> " + response);
+
+						if (GSConfig.IsDebugging)
+							Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "응답 -> " + response);
+
 						parseData(response);
+
 					}
 				},
 				//에러 발생시 호출될 리스너 객체
@@ -187,10 +188,12 @@ public class FragmentDailyAmount extends Fragment
 				DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
 				DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-		request.setShouldCache(false); //이전 결과 있어도 새로 요청하여 응답을 보여준다.
+		// 이전 결과 있어도 새로 요청하여 응답을 보여준다.
+		request.setShouldCache(false);
 		requestQueue.add(request);
 
-//		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "요청 보냄.");
+		if (GSConfig.IsDebugging)
+			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "요청 보냄.");
 
 	}
 
@@ -199,7 +202,8 @@ public class FragmentDailyAmount extends Fragment
 
 		String functionName = "parseData()";
 
-		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + msg);
+		if (GSConfig.IsDebugging)
+			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + msg);
 
 		GSDailyInOut dio = new GSDailyInOut();
 
@@ -227,14 +231,9 @@ public class FragmentDailyAmount extends Fragment
 			return;
 		}
 
-//		dio.print();
-
 		income_empty_layout.removeAllViews();
 		release_empty_layout.removeAllViews();
 		petosa_empty_layout.removeAllViews();
-
-//		income_empty_layout_outside.removeAllViews();
-//		release_empty_layout_outside.removeAllViews();
 
 		StatsView statsView = new StatsView(getActivity(), dio, 0);
 
@@ -252,20 +251,6 @@ public class FragmentDailyAmount extends Fragment
 		tempGroup = dio.findByServiceType("토사");
 		if (tempGroup != null)
 			daily_petosa_title.setText(tempGroup.getTitleUnit());
-
-//		tempGroup = dio.findByServiceType("외부입고");
-//		if (tempGroup != null)
-//		{
-//			statsView.makeStockOutsideStatsView(income_empty_layout_outside);
-//			daily_income_title_outside.setText(tempGroup.getTitleUnit());
-//		}
-//
-//		tempGroup = dio.findByServiceType("외부출고");
-//		if (tempGroup != null)
-//		{
-//			statsView.makeReleaseOutsideStatsView(release_empty_layout_outside);
-//			daily_release_title_outside.setText(tempGroup.getTitleUnit());
-//		}
 
 	}
 

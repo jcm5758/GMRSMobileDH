@@ -66,8 +66,6 @@ public class FragmentYearCustomerPrice extends Fragment
 
 		this.yi_month_enterprise_amount_income_empty_layout = (LinearLayout)view.findViewById(R.id.yi_month_enterprise_amount_income_empty_layout);
 		this.yi_month_enterprise_amount_release_empty_layout = (LinearLayout)view.findViewById(R.id.yi_month_enterprise_amount_release_empty_layout);
-//		this.yi_month_enterprise_amount_income_outside_empty_layout = (LinearLayout)view.findViewById(R.id.yi_month_enterprise_amount_income_outside_empty_layout);
-//		this.yi_month_enterprise_amount_release_outside_empty_layout = (LinearLayout)view.findViewById(R.id.yi_month_enterprise_amount_release_outside_empty_layout);
 		this.yi_month_enterprise_amount_petosa_empty_layout = (LinearLayout)view.findViewById(R.id.yi_month_enterprise_amount_petosa_empty_layout);
 
 		this.yi_month_enterprise_amount_loading_indicator = (LinearLayout)view.findViewById(R.id.yi_month_enterprise_amount_loading_indicator);
@@ -76,8 +74,6 @@ public class FragmentYearCustomerPrice extends Fragment
 		this.yi_month_enterprise_amount_date = (TextView)view.findViewById(R.id.yi_month_enterprise_amount_date);
 		this.yi_month_enterprise_amount_income_title = (TextView)view.findViewById(R.id.yi_month_enterprise_amount_income_title);
 		this.yi_month_enterprise_amount_release_title = (TextView)view.findViewById(R.id.yi_month_enterprise_amount_release_title);
-//		this.yi_month_enterprise_amount_income_outside_title = (TextView)view.findViewById(R.id.yi_month_enterprise_amount_income_outside_title);
-//		this.yi_month_enterprise_amount_release_outside_title = (TextView)view.findViewById(R.id.yi_month_enterprise_amount_release_outside_title);
 		this.yi_month_enterprise_amount_petosa_title = (TextView)view.findViewById(R.id.yi_month_enterprise_amount_petosa_title);
 
 		makeMonthEnterpriseAmountData(GSConfig.DAY_STATS_YEAR);
@@ -106,8 +102,6 @@ public class FragmentYearCustomerPrice extends Fragment
 
 			yi_month_enterprise_amount_income_empty_layout.removeAllViews();
 			yi_month_enterprise_amount_release_empty_layout.removeAllViews();
-//			yi_month_enterprise_amount_income_outside_empty_layout.removeAllViews();
-//			yi_month_enterprise_amount_release_outside_empty_layout.removeAllViews();
 			yi_month_enterprise_amount_petosa_empty_layout.removeAllViews();
 
 			this.statsView = new EnterpriseYearStatsView(getActivity(), GSConfig.CURRENT_BRANCH.branchID, GSConfig.STATE_PRICE, iYear);
@@ -117,8 +111,6 @@ public class FragmentYearCustomerPrice extends Fragment
 			this.getData(_year, "TotalPrice", GSConfig.MODE_STOCK);
 			this.getData(_year, "TotalPrice", GSConfig.MODE_RELEASE);
 			this.getData(_year, "TotalPrice", GSConfig.MODE_PETOSA);
-//			this.getData(_year, "TotalPrice", GSConfig.MODE_OUTSIDE_STOCK);
-//			this.getData(_year, "TotalPrice", GSConfig.MODE_OUTSIDE_RELEASE);
 
 		}
 		catch(Exception ex)
@@ -147,7 +139,8 @@ public class FragmentYearCustomerPrice extends Fragment
 					@Override
 					public void onResponse(String response) {
 
-						//						Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "응답 -> " + response);
+						if (GSConfig.IsDebugging)
+							Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "응답 -> " + response);
 
 						Gson gson = new Gson();
 						GSDailyInOutGroupNew dataGroup = null;
@@ -241,10 +234,12 @@ public class FragmentYearCustomerPrice extends Fragment
 				DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
 				DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-		request.setShouldCache(false); //이전 결과 있어도 새로 요청하여 응답을 보여준다.
+		// 이전 결과 있어도 새로 요청하여 응답을 보여준다.
+		request.setShouldCache(false);
 		requestQueue.add(request);
 
-//		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "요청 보냄.");
+		if (GSConfig.IsDebugging)
+			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "요청 보냄.");
 
 	}
 

@@ -97,7 +97,9 @@ public class FragmentMonthAmount extends Fragment
 		{
 
 			dateStr = _year + "년 " + _monthOfYear + "월  입출고 현황(단위:루베)";
-//			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + _year + "년 " + _monthOfYear + "월");
+
+			if (GSConfig.IsDebugging)
+				Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + _year + "년 " + _monthOfYear + "월");
 
 			yi_month_amount_date.setText(dateStr);
 
@@ -119,7 +121,8 @@ public class FragmentMonthAmount extends Fragment
 
 		String functionName = "getData()";
 
-//		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "searchDate : " + searchDate + ", qryContent : " + qryContent);
+		if (GSConfig.IsDebugging)
+			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "searchYear : " + searchYear + ", searchMonth : " + searchMonth + ", qryContent : " + qryContent);
 
 		String url = GSConfig.API_SERVER_ADDR;
 		RequestQueue requestQueue = Volley.newRequestQueue(GSConfig.context);
@@ -131,8 +134,12 @@ public class FragmentMonthAmount extends Fragment
 				new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
-//						Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "응답 -> " + response);
+
+						if (GSConfig.IsDebugging)
+							Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "응답 -> " + response);
+
 						parseData(response);
+
 					}
 				},
 				//에러 발생시 호출될 리스너 객체
@@ -157,10 +164,12 @@ public class FragmentMonthAmount extends Fragment
 				DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
 				DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-		request.setShouldCache(false); //이전 결과 있어도 새로 요청하여 응답을 보여준다.
+		// 이전 결과 있어도 새로 요청하여 응답을 보여준다.
+		request.setShouldCache(false);
 		requestQueue.add(request);
 
-//		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "요청 보냄.");
+		if (GSConfig.IsDebugging)
+			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "요청 보냄.");
 
 	}
 

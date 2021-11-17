@@ -299,7 +299,8 @@ public class AppMain extends Activity
 
 		String functionName = "parseData()";
 
-		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + ": msg : " + msg);
+		if (GSConfig.IsDebugging)
+			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + ": msg : " + msg);
 
 		Gson gson = new Gson();
 
@@ -313,21 +314,36 @@ public class AppMain extends Activity
 			return;
 		}
 
+		if (GSConfig.IsDebugging)
+		{
+			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + ": status : " + userInfo.status);
+			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + ": message : " + userInfo.message);
+		}
+
+		if (userInfo.status.equals("FAIL"))
+		{
+			Toast.makeText(getApplicationContext(), "사용자 정보가 없습니다.", Toast.LENGTH_SHORT).show();
+			return;
+		}
+
 		// 사용자 정보 설정
 		GSConfig.CURRENT_USER = userInfo;
 
-		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + ": status : " + GSConfig.CURRENT_USER.message);
-
-		GSConfig.CURRENT_USER.userinfo.print();
-
-		if (GSConfig.CURRENT_USER.userright != null)
+		if (GSConfig.IsDebugging)
 		{
-			GSConfig.CURRENT_USER.printUserRight();
-		}
 
-		if (GSConfig.CURRENT_USER.servicepredict != null)
-		{
-			GSConfig.CURRENT_USER.printServicePredict();
+			GSConfig.CURRENT_USER.userinfo.print();
+
+			if (GSConfig.CURRENT_USER.userright != null)
+			{
+				GSConfig.CURRENT_USER.printUserRight();
+			}
+
+			if (GSConfig.CURRENT_USER.servicepredict != null)
+			{
+				GSConfig.CURRENT_USER.printServicePredict();
+			}
+
 		}
 
 		SharedPreferences.Editor editor = GSConfig.gPreference.edit();
@@ -345,7 +361,17 @@ public class AppMain extends Activity
 		}
 		else if (GSConfig.CURRENT_USER.message.equals(GSConfig.LOGIN_FOREIGN_SUCESS_MESSAGE))
 		{
-			Toast.makeText(getApplicationContext(),"덤프기사님 반갑습니다.", Toast.LENGTH_SHORT).show();
+
+			// 배차 정보가 없습니다.
+			if (GSConfig.CURRENT_USER.isServicePredictNull())
+			{
+				Toast.makeText(getApplicationContext(),"배차 정보가 없습니다.", Toast.LENGTH_SHORT).show();
+				return;
+			}
+
+			Intent intent = new Intent(AppMain.this, GSConfig.Activity_LIST[2]);
+			startActivity(intent);
+
 		}
 
 	}

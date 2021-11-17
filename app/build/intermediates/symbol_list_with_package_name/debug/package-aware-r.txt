@@ -1913,6 +1913,8 @@ id blocking
 id bottom
 id bottom_navigation
 id bounce
+id btDumpCancel
+id btDumpOK
 id btPayload
 id btStat
 id bt_oneFragment
@@ -2498,6 +2500,14 @@ id tvDetailServiceTime
 id tvDetailUnit
 id tvDetailUnit2
 id tvDetailVehicleNum
+id tvDumpCustomerName
+id tvDumpCustomerSiteName
+id tvDumpLogisticCompany
+id tvDumpProduct
+id tvDumpServiceDate
+id tvDumpServiceType
+id tvDumpUnit
+id tvDumpVehicleNum
 id tvListCustomer
 id tvListId
 id tvLoading
@@ -2648,6 +2658,7 @@ layout design_text_input_end_icon
 layout design_text_input_start_icon
 layout dialog_api_loading
 layout dialog_api_reconnect
+layout dump_main
 layout enterprise_popup
 layout etc_activity
 layout gj_month_amount

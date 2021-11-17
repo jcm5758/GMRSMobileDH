@@ -38,6 +38,9 @@
         <activity
             android:name="com.geurimsoft.grmsmobiledh.payloader.ItemActivity"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
+        <activity
+            android:name="com.geurimsoft.grmsmobiledh.dump.DumpActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
         <activity android:name="org.achartengine.GraphicalActivity" />
     </application>
 

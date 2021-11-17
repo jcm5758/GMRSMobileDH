@@ -40,10 +40,10 @@ public class UserInfo implements Serializable
     {
         return (this.userinfo == null) ? true : false;
     }
-
-    public boolean isUserRightNull()
+    public boolean isUserRightNull(){ return (this.userright == null || this.userright.size() == 0) ? true : false; }
+    public boolean isServicePredictNull()
     {
-        return (this.userright == null || this.userright.size() == 0) ? true : false;
+        return (this.servicepredict == null) ? true : false;
     }
 
     public ArrayList<UserRightData> getUserRightOthers()
@@ -75,6 +75,16 @@ public class UserInfo implements Serializable
         }
 
         return null;
+
+    }
+
+    public ServicePredict getSerivcePredict(int ind)
+    {
+
+        if (this.servicepredict == null || this.servicepredict.size() == 0)
+            return null;
+
+        return this.servicepredict.get(0);
 
     }
 

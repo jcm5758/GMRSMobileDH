@@ -67,8 +67,6 @@ public class FragmentMonthCustomerAmount extends Fragment
 
 		this.yi_month_enterprise_amount_income_empty_layout = (LinearLayout)view.findViewById(R.id.month_enterprise_amount_income_empty_layout);
 		this.yi_month_enterprise_amount_release_empty_layout = (LinearLayout)view.findViewById(R.id.month_enterprise_amount_release_empty_layout);
-//		this.yi_month_enterprise_amount_outside_income_empty_layout = (LinearLayout)view.findViewById(R.id.month_enterprise_amount_outside_income_empty_layout);
-//		this.yi_month_enterprise_amount_outside_release_empty_layout = (LinearLayout)view.findViewById(R.id.month_enterprise_amount_outside_release_empty_layout);
 		this.yi_month_enterprise_amount_petosa_empty_layout = (LinearLayout)view.findViewById(R.id.month_enterprise_amount_petosa_empty_layout);
 
 		this.yi_month_enterprise_amount_loading_indicator = (LinearLayout)view.findViewById(R.id.month_enterprise_amount_loading_indicator);
@@ -77,8 +75,6 @@ public class FragmentMonthCustomerAmount extends Fragment
 		this.yi_month_enterprise_amount_date = (TextView)view.findViewById(R.id.month_enterprise_amount_date);
 		this.yi_month_enterprise_amount_income_title = (TextView)view.findViewById(R.id.month_enterprise_amount_income_title);
 		this.yi_month_enterprise_amount_release_title = (TextView)view.findViewById(R.id.month_enterprise_amount_release_title);
-//		this.yi_month_enterprise_amount_outside_income_title = (TextView)view.findViewById(R.id.month_enterprise_amount_outside_income_title);
-//		this.yi_month_enterprise_amount_outside_release_title = (TextView)view.findViewById(R.id.month_enterprise_amount_outside_release_title);
 		this.yi_month_enterprise_amount_petosa_title = (TextView)view.findViewById(R.id.month_enterprise_amount_petosa_title);
 
 		makeMonthEnterpriseAmountData(GSConfig.DAY_STATS_YEAR, GSConfig.DAY_STATS_MONTH);
@@ -100,7 +96,9 @@ public class FragmentMonthCustomerAmount extends Fragment
 		{
 
 			String dateStr = _year + "년 " + _monthOfYear + "월  입출고 현황";
-//			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + _year + "년 " + _monthOfYear + "월");
+
+			if (GSConfig.IsDebugging)
+				Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + _year + "년 " + _monthOfYear + "월");
 
 			yi_month_enterprise_amount_date.setText(dateStr);
 
@@ -122,7 +120,8 @@ public class FragmentMonthCustomerAmount extends Fragment
 
 		String functionName = "getData()";
 
-//		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "searchDate : " + searchDate + ", qryContent : " + qryContent);
+		if (GSConfig.IsDebugging)
+			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "searchYear : " + searchYear + ", searchMonth : " + searchMonth + ", qryContent : " + qryContent);
 
 		iYear = searchYear;
 		iMonth = searchMonth;
@@ -137,8 +136,12 @@ public class FragmentMonthCustomerAmount extends Fragment
 				new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
-//						Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "응답 -> " + response);
+
+						if (GSConfig.IsDebugging)
+							Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "응답 -> " + response);
+
 						parseData(response);
+
 					}
 				},
 				//에러 발생시 호출될 리스너 객체
@@ -163,10 +166,12 @@ public class FragmentMonthCustomerAmount extends Fragment
 				DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
 				DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-		request.setShouldCache(false); //이전 결과 있어도 새로 요청하여 응답을 보여준다.
+		// 이전 결과 있어도 새로 요청하여 응답을 보여준다.
+		request.setShouldCache(false);
 		requestQueue.add(request);
 
-//		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "요청 보냄.");
+		if (GSConfig.IsDebugging)
+			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "요청 보냄.");
 
 	}
 
@@ -174,7 +179,9 @@ public class FragmentMonthCustomerAmount extends Fragment
 	{
 
 		String functionName = "parseData()";
-//		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + msg);
+
+		if (GSConfig.IsDebugging)
+			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + msg);
 
 		try
 		{
@@ -211,16 +218,12 @@ public class FragmentMonthCustomerAmount extends Fragment
 
 			GSDailyInOutGroup inputGroup = data.findByServiceType(GSConfig.MODE_NAMES[GSConfig.MODE_STOCK]);
 			GSDailyInOutGroup outputGroup = data.findByServiceType(GSConfig.MODE_NAMES[GSConfig.MODE_RELEASE]);
-//			GSDailyInOutGroup inputOutsideGroup = data.findByServiceType("외부(입고)");
-//			GSDailyInOutGroup outputOutsideGroup = data.findByServiceType("외부(출고)");
 			GSDailyInOutGroup slugeGroup = data.findByServiceType(GSConfig.MODE_NAMES[GSConfig.MODE_PETOSA]);
 
 			String unit = getString(R.string.unit_lube);
 
 			yi_month_enterprise_amount_income_empty_layout.removeAllViews();
 			yi_month_enterprise_amount_release_empty_layout.removeAllViews();
-//			yi_month_enterprise_amount_outside_income_empty_layout.removeAllViews();
-//			yi_month_enterprise_amount_outside_release_empty_layout.removeAllViews();
 			yi_month_enterprise_amount_petosa_empty_layout.removeAllViews();
 
 			MonthCustomerStatsView statsView = new MonthCustomerStatsView(getActivity(), 3, GSConfig.STATE_AMOUNT, iYear, iMonth);
@@ -236,12 +239,6 @@ public class FragmentMonthCustomerAmount extends Fragment
 				statsView.makeStatsView(yi_month_enterprise_amount_release_empty_layout, outputGroup, GSConfig.MODE_RELEASE, GSConfig.STATE_AMOUNT);
 				yi_month_enterprise_amount_release_title.setText(GSConfig.MODE_NAMES[GSConfig.MODE_RELEASE] + "(" + GSConfig.changeToCommanString(outputGroup.totalUnit) + unit + ")");
 			}
-
-//			statsView.makeStatsView(yi_month_enterprise_amount_outside_income_empty_layout, inputOutsideGroup, GSConfig.MODE_STOCK, GSConfig.STATE_AMOUNT);
-//			yi_month_enterprise_amount_outside_income_title.setText( "외부입고(" + GSConfig.changeToCommanString(inputOutsideGroup.totalUnit) + unit + ")");
-//
-//			statsView.makeStatsView(yi_month_enterprise_amount_outside_release_empty_layout, outputOutsideGroup, GSConfig.MODE_RELEASE, GSConfig.STATE_AMOUNT);
-//			yi_month_enterprise_amount_outside_release_title.setText("외부출고(" + GSConfig.changeToCommanString(outputOutsideGroup.totalUnit) + unit + ")");
 
 			if (slugeGroup != null)
 			{

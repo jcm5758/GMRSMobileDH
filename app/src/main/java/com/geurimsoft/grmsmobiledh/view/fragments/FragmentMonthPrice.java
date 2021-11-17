@@ -94,7 +94,9 @@ public class FragmentMonthPrice extends Fragment
 		{
 
 			dateStr = _year + "년 " + _monthOfYear + "월  입출고 현황(단위:천원)";
-//			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + _year + "년 " + _monthOfYear + "월");
+
+			if (GSConfig.IsDebugging)
+				Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + _year + "년 " + _monthOfYear + "월");
 
 			yi_month_price_date.setText(dateStr);
 
@@ -116,7 +118,8 @@ public class FragmentMonthPrice extends Fragment
 
 		String functionName = "getData()";
 
-//		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "searchDate : " + searchDate + ", qryContent : " + qryContent);
+		if (GSConfig.IsDebugging)
+			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "searchYear : " + searchYear + ", searchMonth : " + searchMonth + ", qryContent : " + qryContent);
 
 		String url = GSConfig.API_SERVER_ADDR;
 		RequestQueue requestQueue = Volley.newRequestQueue(GSConfig.context);
@@ -128,8 +131,12 @@ public class FragmentMonthPrice extends Fragment
 				new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
-//						Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "응답 -> " + response);
+
+						if (GSConfig.IsDebugging)
+							Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "응답 -> " + response);
+
 						parseData(response);
+
 					}
 				},
 				//에러 발생시 호출될 리스너 객체
@@ -165,7 +172,9 @@ public class FragmentMonthPrice extends Fragment
 	{
 
 		String functionName = "parseData()";
-//		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + msg);
+
+		if (GSConfig.IsDebugging)
+			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + msg);
 
 		try
 		{

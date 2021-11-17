@@ -4,7 +4,8 @@ import android.util.Log;
 
 import com.geurimsoft.grmsmobiledh.data.GSConfig;
 
-public class GSUtil {
+public class GSUtil
+{
 
     /**
      * 입력받은 문자열이 null 이나 empty인지
@@ -102,6 +103,35 @@ public class GSUtil {
         {
             Log.e(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(GSUtil.class.getName(), functionName) + ex.toString());
             return -1;
+        }
+
+    }
+
+    public static String makeDashStringFromInt(int date)
+    {
+
+        String functionName = "makeDashStringFromInt()";
+
+        try
+        {
+
+            String sDate = Integer.toString(date);
+
+            if(GSUtil.isNullOrEmpty(sDate))
+                return "";
+
+            if(sDate.length() != 8)
+                return "";
+
+            String result = sDate.substring(0, 4) + "-" + sDate.substring(4, 6) + "-" + sDate.substring(6);
+
+            return result;
+
+        }
+        catch(Exception ex)
+        {
+            Log.e(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(GSUtil.class.getName(), functionName) + ex.toString());
+            return "";
         }
 
     }
