@@ -22,7 +22,7 @@ public class GSConfig
     // 디버깅용 태그
     public static final String APP_DEBUG = "Geurimsoft";
 
-    public static boolean IsDebugging = false;
+    public static boolean IsDebugging = true;
 
     public static final String WEB_SERVER_ADDR = "http://211.253.8.254/dh/app_version.txt";
 

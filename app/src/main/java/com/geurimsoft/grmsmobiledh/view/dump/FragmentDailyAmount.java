@@ -27,15 +27,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.geurimsoft.grmsmobiledh.R;
+import com.geurimsoft.grmsmobiledh.apiserver.data.GSDumpDay;
 import com.geurimsoft.grmsmobiledh.data.GSConfig;
 import com.geurimsoft.grmsmobiledh.util.GSUtil;
-import com.geurimsoft.grmsmobiledh.apiserver.data.GSDailyInOut;
-import com.geurimsoft.grmsmobiledh.apiserver.data.GSDailyInOutGroup;
-import com.geurimsoft.grmsmobiledh.view.fragments.StatsView;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,9 +40,6 @@ public class FragmentDailyAmount extends Fragment
 
     private LinearLayout income_empty_layout, release_empty_layout, petosa_empty_layout;
     private TextView stats_daily_date, daily_income_title, daily_release_title, daily_petosa_title;
-
-    private LinearLayout income_empty_layout_outside, release_empty_layout_outside;
-    private TextView daily_income_title_outside, daily_release_title_outside;
 
     private LinearLayout loading_indicator, loading_fail;
 
@@ -159,12 +152,7 @@ public class FragmentDailyAmount extends Fragment
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
-                        if (GSConfig.IsDebugging)
-                            Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "응답 -> " + response);
-
                         parseData(response);
-
                     }
                 },
                 //에러 발생시 호출될 리스너 객체
@@ -206,18 +194,14 @@ public class FragmentDailyAmount extends Fragment
         if (GSConfig.IsDebugging)
             Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + msg);
 
-        GSDailyInOut dio = new GSDailyInOut();
-
         Gson gson = new Gson();
-        GSDailyInOutGroup[] diog = gson.fromJson(msg, GSDailyInOutGroup[].class);
+        GSDumpDay dumpDay = gson.fromJson(msg, GSDumpDay.class);
 
-        dio.list = new ArrayList<>(Arrays.asList(diog));
-
-        this.setDisplayData(dio);
+        this.setDisplayData(dumpDay);
 
     }
 
-    private void setDisplayData(GSDailyInOut dio)
+    private void setDisplayData(GSDumpDay data)
     {
 
         if(getActivity() == null)
@@ -226,9 +210,9 @@ public class FragmentDailyAmount extends Fragment
             return;
         }
 
-        if (dio == null)
+        if (data == null)
         {
-            Log.e(GSConfig.APP_DEBUG, "ERROR : " + this.getClass().getName() + " : setDisplayData() : dio is null.");
+            Log.e(GSConfig.APP_DEBUG, "ERROR : " + this.getClass().getName() + " : setDisplayData() : data is null.");
             return;
         }
 
@@ -236,22 +220,80 @@ public class FragmentDailyAmount extends Fragment
         release_empty_layout.removeAllViews();
         petosa_empty_layout.removeAllViews();
 
-        StatsView statsView = new StatsView(getActivity(), dio, 0);
+        // 전체 데이터가 없으면 표출 안함
+        if (data.isNullOrEmptyAll())
+        {
 
-        statsView.makeStockStatsView(income_empty_layout);
-        GSDailyInOutGroup tempGroup = dio.findByServiceType("입고");
-        if (tempGroup != null)
-            daily_income_title.setText(tempGroup.getTitleUnit());
+            daily_income_title.setVisibility(View.VISIBLE);
+            daily_income_title.setText("조회된 데이터가 없습니다.");
 
-        statsView.makeReleaseStatsView(release_empty_layout);
-        tempGroup = dio.findByServiceType("출고");
-        if (tempGroup != null)
-            daily_release_title.setText(tempGroup.getTitleUnit());
+            income_empty_layout.setVisibility(View.GONE);
 
-        statsView.makePetosaStatsView(petosa_empty_layout);
-        tempGroup = dio.findByServiceType("토사");
-        if (tempGroup != null)
-            daily_petosa_title.setText(tempGroup.getTitleUnit());
+            daily_release_title.setVisibility(View.GONE);
+            release_empty_layout.setVisibility(View.GONE);
+
+            daily_petosa_title.setVisibility(View.GONE);
+            petosa_empty_layout.setVisibility(View.GONE);
+
+            return;
+
+        }
+
+        StatsView statsView = new StatsView(getActivity(), data);
+
+        // 입고 내역이 없으면 텍스트 감추고 표 감추기
+        // 전체는 있는데 입고는 있으면
+        if (!data.isNullOrEmptyAll() && !data.isNullOrEmptyInput())
+        {
+
+            daily_income_title.setVisibility(View.VISIBLE);
+            income_empty_layout.setVisibility(View.VISIBLE);
+
+            statsView.makeTableView(income_empty_layout, data.serviceInput);
+
+        }
+        // 전체는 있는데 입고는 없으면
+        else if (!data.isNullOrEmptyAll() && data.isNullOrEmptyInput())
+        {
+            daily_income_title.setVisibility(View.GONE);
+            income_empty_layout.setVisibility(View.GONE);
+        }
+
+        // 출고 내역이 없으면 텍스트 감추고 표 감추기
+        // 전체는 있는데 출고는 있으면
+        if (!data.isNullOrEmptyAll() && !data.isNullOrEmptyOutput())
+        {
+
+            daily_release_title.setVisibility(View.VISIBLE);
+            release_empty_layout.setVisibility(View.VISIBLE);
+
+            statsView.makeTableView(release_empty_layout, data.serviceOutput);
+
+        }
+        // 전체는 있는데 출고는 없으면
+        else if (!data.isNullOrEmptyAll() && data.isNullOrEmptyOutput())
+        {
+            daily_release_title.setVisibility(View.GONE);
+            release_empty_layout.setVisibility(View.GONE);
+        }
+
+        // 토사 내역이 없으면 텍스트 감추고 표 감추기
+        // 전체는 있는데 토사는 있으면
+        if (!data.isNullOrEmptyAll() && !data.isNullOrEmptySluge())
+        {
+
+            daily_petosa_title.setVisibility(View.VISIBLE);
+            petosa_empty_layout.setVisibility(View.VISIBLE);
+
+            statsView.makeTableView(petosa_empty_layout, data.serviceSluge);
+
+        }
+        // 전체는 있는데 토사는 있으면
+        else if (!data.isNullOrEmptyAll() && data.isNullOrEmptySluge())
+        {
+            daily_petosa_title.setVisibility(View.GONE);
+            petosa_empty_layout.setVisibility(View.GONE);
+        }
 
     }
 
