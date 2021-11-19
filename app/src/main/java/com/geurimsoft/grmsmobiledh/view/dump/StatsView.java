@@ -10,11 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.geurimsoft.grmsmobiledh.R;
-import com.geurimsoft.grmsmobiledh.apiserver.data.GSDailyInOut;
-import com.geurimsoft.grmsmobiledh.apiserver.data.GSDailyInOutDetail;
-import com.geurimsoft.grmsmobiledh.apiserver.data.GSDailyInOutGroup;
 import com.geurimsoft.grmsmobiledh.apiserver.data.GSDumpDay;
-import com.geurimsoft.grmsmobiledh.apiserver.data.GSDumpDetail;
+import com.geurimsoft.grmsmobiledh.apiserver.data.GSDumpDayDetail;
 import com.geurimsoft.grmsmobiledh.data.GSConfig;
 
 import java.util.ArrayList;
@@ -22,23 +19,13 @@ import java.util.ArrayList;
 public class StatsView
 {
 
-    private LinearLayout stock_layout, release_layout, petosa_layout;
-    private LinearLayout stock_layout_outside, release_layout_outside;
+    private LinearLayout stock_layout;
 
     private Context mContext;
 
     private GSDumpDay dumpData;
 
     private String[] header;
-//    private ArrayList<GSDumpDetail> serviceInput;
-//    private ArrayList<GSDumpDetail> serviceOutput;
-//    private ArrayList<GSDumpDetail> serviceSluge;
-
-    private int stock_count;
-    private int release_count;
-    private int petosa_count;
-    private int stock_outside_count;
-    private int release_outside_count;
 
     public StatsView(Context _context, GSDumpDay dumpData)
     {
@@ -47,9 +34,6 @@ public class StatsView
         this.dumpData = dumpData;
 
         this.header = this.dumpData.header;
-//        this.serviceInput = this.data.serviceInput;
-//        this.serviceOutput = this.data.serviceOutput;
-//        this.serviceSluge = this.data.serviceSluge;
 
     }
 
@@ -57,7 +41,7 @@ public class StatsView
      * 입고/출고/토사 데이터 테이블로 표출
      * @param _stock_layout
      */
-    public void makeTableView(LinearLayout _stock_layout, ArrayList<GSDumpDetail> serviceData)
+    public void makeTableView(LinearLayout _stock_layout, ArrayList<GSDumpDayDetail> serviceData)
     {
 
         String functionName = "makeTableView()";
@@ -98,7 +82,7 @@ public class StatsView
         {
 
             // 상세 정보
-            GSDumpDetail detail = serviceData.get(stock_index);
+            GSDumpDayDetail detail = serviceData.get(stock_index);
 
             // 레이아웃
             LinearLayout stock_row_layout = new LinearLayout(mContext);

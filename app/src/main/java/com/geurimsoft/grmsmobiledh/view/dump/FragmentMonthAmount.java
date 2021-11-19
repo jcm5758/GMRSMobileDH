@@ -29,9 +29,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.geurimsoft.grmsmobiledh.R;
-import com.geurimsoft.grmsmobiledh.apiserver.data.GSDumpDay;
+import com.geurimsoft.grmsmobiledh.apiserver.data.GSDumpMonth;
 import com.geurimsoft.grmsmobiledh.data.GSConfig;
-import com.geurimsoft.grmsmobiledh.data.StAdapter;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -40,12 +39,20 @@ import java.util.Map;
 public class FragmentMonthAmount extends Fragment
 {
 
+    private int branchID = 0;
+
     private ListView yi_month_amount_listview;
     private TextView yi_month_amount_date;
-    private String dateStr;
-    private LinearLayout yi_month_amount_header_container, yi_month_amount_loading_indicator, yi_month_amount_loading_fail;
+    private LinearLayout yi_month_amount_header_container;
+    private LinearLayout yi_month_amount_loading_indicator;
+    private LinearLayout yi_month_amount_loading_fail;
 
-    public FragmentMonthAmount() {}
+    private String dateStr;
+
+    public FragmentMonthAmount(int branchID)
+    {
+        this.branchID = branchID;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -70,7 +77,6 @@ public class FragmentMonthAmount extends Fragment
 
         this.yi_month_amount_listview = (ListView)view.findViewById(R.id.yi_month_amount_listview);
         this.yi_month_amount_date = (TextView)view.findViewById(R.id.yi_month_amount_date);
-
         this.yi_month_amount_header_container = (LinearLayout)view.findViewById(R.id.yi_month_amount_header_container);
 
         this.yi_month_amount_loading_indicator = (LinearLayout)view.findViewById(R.id.yi_month_amount_loading_indicator);
@@ -103,9 +109,7 @@ public class FragmentMonthAmount extends Fragment
 
             yi_month_amount_date.setText(dateStr);
 
-            String qryContent = "Unit";
-
-            this.getData(_year, _monthOfYear, qryContent);
+            this.getData(_year, _monthOfYear);
 
         }
         catch(Exception ex)
@@ -120,15 +124,14 @@ public class FragmentMonthAmount extends Fragment
      * 데이터 불러오기
      * @param searchYear 검색 연도
      * @param searchMonth 검색 월
-     * @param qryContent 수량 / 돈
      */
-    private void getData(int searchYear, int searchMonth, String qryContent)
+    private void getData(int searchYear, int searchMonth)
     {
 
         String functionName = "getData()";
 
         if (GSConfig.IsDebugging)
-            Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "searchYear : " + searchYear + ", searchMonth : " + searchMonth + ", qryContent : " + qryContent);
+            Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "searchYear : " + searchYear + ", searchMonth : " + searchMonth);
 
         String url = GSConfig.API_SERVER_ADDR;
         RequestQueue requestQueue = Volley.newRequestQueue(GSConfig.context);
@@ -155,7 +158,7 @@ public class FragmentMonthAmount extends Fragment
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<String,String>();
                 params.put("GSType", "DUMP_MONTH");
-                params.put("GSQuery", "{ \"branchID\" : " + GSConfig.CURRENT_BRANCH.branchID + ", \"searchYear\": " + searchYear + ", \"searchMonth\": " + searchMonth + ", \"qryContent\" : \"" + qryContent + "\" }");
+                params.put("GSQuery", "{ \"BranchID\" : " + branchID + ", \"SearchYear\": " + searchYear + ", \"SearchMonth\": " + searchMonth + ", \"VehicleNum\" : \"" + GSConfig.CURRENT_USER.userinfo.VehicleNum + "\" }");
                 return params;
             }
         };
@@ -190,9 +193,9 @@ public class FragmentMonthAmount extends Fragment
         {
 
             Gson gson = new Gson();
-            GSDumpDay dumpDay = gson.fromJson(msg, GSDumpDay.class);
+            GSDumpMonth dumpData = gson.fromJson(msg, GSDumpMonth.class);
 
-            this.setDisplayData(dumpDay);
+            this.setDisplayData(dumpData);
 
         }
         catch(Exception ex)
@@ -207,22 +210,27 @@ public class FragmentMonthAmount extends Fragment
      * 파싱 데이터를 테이블에 출력
      * @param data
      */
-    private void setDisplayData(GSDumpDay data)
+    private void setDisplayData(GSDumpMonth data)
     {
 
-//        yi_month_amount_header_container.removeAllViews();
-//
-//        StatsHeaderAndFooterView statsHeaderAndFooterView = new StatsHeaderAndFooterView(getActivity(), data, GSConfig.STATE_AMOUNT);
-//        statsHeaderAndFooterView.makeHeaderView(yi_month_amount_header_container);
-//
-//        StAdapter adapter = new StAdapter(getActivity(), data, GSConfig.STATE_AMOUNT);
-//
-//        View foot = View.inflate(getActivity(), R.layout.stats_foot, null);
-//        LinearLayout footer_layout = (LinearLayout)foot.findViewById(R.id.stats_footer_container);
-//        statsHeaderAndFooterView.makeFooterView(footer_layout);
-//
-//        yi_month_amount_listview.addFooterView(foot);
-//        yi_month_amount_listview.setAdapter(adapter);
+        yi_month_amount_header_container.removeAllViews();
+
+        if (data != null && data.ServiceData != null)
+        {
+
+            StAdapter adapter = new StAdapter(getActivity(), data);
+
+            StatsHeaderAndFooterView sVeiw = new StatsHeaderAndFooterView(getActivity());
+            sVeiw.makeHeaderView(yi_month_amount_header_container, data.header);
+
+            View foot = View.inflate(getActivity(), R.layout.stats_foot, null);
+            LinearLayout footer_layout = (LinearLayout)foot.findViewById(R.id.stats_footer_container);
+            sVeiw.makeFooterView(footer_layout, data.FinalData);
+
+            yi_month_amount_listview.addFooterView(foot);
+            yi_month_amount_listview.setAdapter(adapter);
+
+        }
 
     }
 

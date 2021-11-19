@@ -8,44 +8,28 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.geurimsoft.grmsmobiledh.R;
-import com.geurimsoft.grmsmobiledh.apiserver.data.GSDumpDay;
-import com.geurimsoft.grmsmobiledh.data.GSMonthInOut;
-import com.geurimsoft.grmsmobiledh.data.GSMonthInOutDetail;
+import com.geurimsoft.grmsmobiledh.apiserver.data.GSDumpMonthDetail;
+import com.geurimsoft.grmsmobiledh.data.GSConfig;
+
+import java.util.ArrayList;
 
 public class StatsHeaderAndFooterView
 {
 
     private Context mContext;
+
     private LinearLayout header_layout, footer_layout;
 
-    private GSDumpDay serviceData;
-
-    private int header_count;
-    private int footer_count;
-    private String[] header_titles;
-    private String[] footer_items;
-
-    public StatsHeaderAndFooterView(Context _context, GSDumpDay serviceData, int statType)
+    public StatsHeaderAndFooterView(Context _context)
     {
-
         this.mContext = _context;
-        this.serviceData = serviceData;
-
-//        GSMonthInOutDetail footerData = this.serviceData.getFinalData();
-//
-//        this.header_count = this.serviceData.headerCount;
-//        this.header_titles = this.serviceData.header;
-
-//        this.footer_count = footerData.valueSize + 1;
-//        this.footer_items = footerData.getStringValues(statType);
-
     }
 
     /**
      * 통계 테이블의 헤더 부분
      * @param _header_layout
      */
-    public void makeHeaderView(LinearLayout _header_layout)
+    public void makeHeaderView(LinearLayout _header_layout, String[] headers)
     {
 
         this.header_layout = _header_layout;
@@ -57,9 +41,9 @@ public class StatsHeaderAndFooterView
         layout.setOrientation(LinearLayout.HORIZONTAL);
 
         // Header Layout
-        for(int header_index = 0; header_index < this.header_count; header_index++)
+        for(int header_index = 0; header_index < headers.length; header_index++)
         {
-            TextView stock_title_textview = makeMenuTextView(mContext, this.header_titles[header_index], "#ffffff", Gravity.CENTER);
+            TextView stock_title_textview = makeMenuTextView(mContext, headers[header_index], "#ffffff", Gravity.CENTER);
             layout.addView(stock_title_textview);
         }
 
@@ -71,7 +55,7 @@ public class StatsHeaderAndFooterView
      * 통계 테이블의 맨마지막 합계 부분
      * @param _footer_layout
      */
-    public void makeFooterView(LinearLayout _footer_layout)
+    public void makeFooterView(LinearLayout _footer_layout, GSDumpMonthDetail detail)
     {
 
         this.footer_layout = _footer_layout;
@@ -85,18 +69,36 @@ public class StatsHeaderAndFooterView
         TextView textview = null;
         int gravity = Gravity.CENTER;
 
-        for(int footer_index = 0; footer_index < this.footer_count; footer_index++)
-        {
+        // 일
+        gravity = Gravity.CENTER;
+        textview = makeMenuTextView(mContext, detail.SDate, "#000000",  gravity);
+        layout.addView(textview);
 
-            if(footer_index == 0)
-                gravity = Gravity.CENTER;
-            else
-                gravity = Gravity.CENTER_VERTICAL | Gravity.RIGHT;
+        gravity = Gravity.CENTER_VERTICAL | Gravity.RIGHT;
 
-            textview = makeMenuTextView(mContext, this.footer_items[footer_index], "#000000",  gravity);
-            layout.addView(textview);
+        // 입고(횟수)
+        textview = makeMenuTextView(mContext, GSConfig.changeToCommanString(detail.InputCount), "#000000",  gravity);
+        layout.addView(textview);
 
-        }
+        // 입고(수량)
+        textview = makeMenuTextView(mContext, GSConfig.changeToCommanString(detail.InputSum), "#000000",  gravity);
+        layout.addView(textview);
+
+        // 출고(횟수)
+        textview = makeMenuTextView(mContext, GSConfig.changeToCommanString(detail.OutputCount), "#000000",  gravity);
+        layout.addView(textview);
+
+        // 출고(수량)
+        textview = makeMenuTextView(mContext, GSConfig.changeToCommanString(detail.OutputSum), "#000000",  gravity);
+        layout.addView(textview);
+
+        // 토사(횟수)
+        textview = makeMenuTextView(mContext, GSConfig.changeToCommanString(detail.SlugeCount), "#000000",  gravity);
+        layout.addView(textview);
+
+        // 토사(수량)
+        textview = makeMenuTextView(mContext, GSConfig.changeToCommanString(detail.SlugeSum), "#000000",  gravity);
+        layout.addView(textview);
 
         footer_layout.addView(layout);
 

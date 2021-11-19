@@ -57,6 +57,7 @@ array general_grade_site_array
 array rainbow
 array stats_day_tab_array1
 array stats_day_tab_array2
+array stats_day_tab_array3
 array stats_month_tab_array1
 array stats_month_tab_array2
 array stats_tab_array

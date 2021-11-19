@@ -6468,6 +6468,9 @@
         <item>ETC2</item>
         <item>ETC3</item>
         <item>ETC4</item>
+    </string-array><string-array name="stats_day_tab_array3">
+        <item>풍년가</item>
+        <item>디에이치</item>
     </string-array></file><file path="C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\res\values\styles.xml" qualifiers=""><style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         
         <item name="colorPrimary">@color/colorPrimary</item>

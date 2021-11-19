@@ -19,7 +19,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -31,13 +30,7 @@ import androidx.viewpager.widget.PagerTabStrip;
 import androidx.viewpager.widget.ViewPager;
 
 import com.geurimsoft.grmsmobiledh.R;
-import com.geurimsoft.grmsmobiledh.apiserver.data.UserRightData;
-import com.geurimsoft.grmsmobiledh.data.GSBranch;
 import com.geurimsoft.grmsmobiledh.data.GSConfig;
-import com.geurimsoft.grmsmobiledh.view.fragments.FragmentMonthAmount;
-import com.geurimsoft.grmsmobiledh.view.fragments.FragmentMonthCustomerAmount;
-import com.geurimsoft.grmsmobiledh.view.fragments.FragmentMonthCustomerPrice;
-import com.geurimsoft.grmsmobiledh.view.fragments.FragmentMonthPrice;
 import com.geurimsoft.grmsmobiledh.view.util.MonthDatePickerDialog;
 
 import java.util.ArrayList;
@@ -126,7 +119,8 @@ public class FragmentMonthMain extends Fragment
         String fn = "makeFragmentList()";
 
         fragments = new ArrayList<Fragment>();
-        fragments.add(new FragmentMonthAmount());
+        fragments.add(new FragmentMonthAmount(1));
+        fragments.add(new FragmentMonthAmount(2));
 
     }
 
@@ -204,15 +198,8 @@ public class FragmentMonthMain extends Fragment
 
         public StatsPagerAdapter(FragmentManager fm)
         {
-
             super(fm);
-
-            ArrayList<String> titleList = new ArrayList<String>();
-
-            titleList.add("수량");
-
-            TITLES = titleList.toArray(new String[titleList.size()]);
-
+            TITLES = new String[]{ "풍년가", "디에이치" };
         }
 
         @Override

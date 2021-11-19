@@ -1,3 +1,11 @@
+/**
+ * 덤프트럭 일별 데이터
+ *
+ * 2021. 11. 19.
+ *
+ * Written by jcm5758
+ */
+
 package com.geurimsoft.grmsmobiledh.apiserver.data;
 
 import java.util.ArrayList;
@@ -6,9 +14,9 @@ public class GSDumpDay
 {
 
     public String[] header;
-    public ArrayList<GSDumpDetail> serviceInput;
-    public ArrayList<GSDumpDetail> serviceOutput;
-    public ArrayList<GSDumpDetail> serviceSluge;
+    public ArrayList<GSDumpDayDetail> serviceInput;
+    public ArrayList<GSDumpDayDetail> serviceOutput;
+    public ArrayList<GSDumpDayDetail> serviceSluge;
 
     public boolean isNullOrEmptyInput()
     {

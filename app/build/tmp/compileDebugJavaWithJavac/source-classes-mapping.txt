@@ -14,10 +14,14 @@ com/geurimsoft/grmsmobiledh/view/fragments/FragmentYearGraph.java
  com.geurimsoft.grmsmobiledh.view.fragments.FragmentYearGraph$3
 com/geurimsoft/grmsmobiledh/widget/OnWheelScrollListener.java
  com.geurimsoft.grmsmobiledh.widget.OnWheelScrollListener
+com/geurimsoft/grmsmobiledh/widget/OnWheelChangedListener.java
+ com.geurimsoft.grmsmobiledh.widget.OnWheelChangedListener
 com/geurimsoft/grmsmobiledh/data/Vehicle.java
  com.geurimsoft.grmsmobiledh.data.Vehicle
 com/geurimsoft/grmsmobiledh/view/ViewPagerAdapter.java
  com.geurimsoft.grmsmobiledh.view.ViewPagerAdapter
+com/geurimsoft/grmsmobiledh/apiserver/data/GSDumpDayDetail.java
+ com.geurimsoft.grmsmobiledh.apiserver.data.GSDumpDayDetail
 com/geurimsoft/grmsmobiledh/data/GSDataStatisticYearChart.java
  com.geurimsoft.grmsmobiledh.data.GSDataStatisticYearChart
 com/geurimsoft/grmsmobiledh/view/fragments/EnterpriseMonthStatsView.java
@@ -51,8 +55,10 @@ com/geurimsoft/grmsmobiledh/payloader/ItemActivity.java
  com.geurimsoft.grmsmobiledh.payloader.ItemActivity$5
  com.geurimsoft.grmsmobiledh.payloader.ItemActivity$6
  com.geurimsoft.grmsmobiledh.payloader.ItemActivity$7
-com/geurimsoft/grmsmobiledh/data/GSData.java
- com.geurimsoft.grmsmobiledh.data.GSData
+com/geurimsoft/grmsmobiledh/view/dump/FragmentDailyMain.java
+ com.geurimsoft.grmsmobiledh.view.dump.FragmentDailyMain
+ com.geurimsoft.grmsmobiledh.view.dump.FragmentDailyMain$1
+ com.geurimsoft.grmsmobiledh.view.dump.FragmentDailyMain$StatsPagerAdapter
 com/geurimsoft/grmsmobiledh/view/fragments/FragmentYearCustomerPrice.java
  com.geurimsoft.grmsmobiledh.view.fragments.FragmentYearCustomerPrice
  com.geurimsoft.grmsmobiledh.view.fragments.FragmentYearCustomerPrice$1
@@ -62,6 +68,11 @@ com/geurimsoft/grmsmobiledh/apiserver/data/ResultStatus.java
  com.geurimsoft.grmsmobiledh.apiserver.data.ResultStatus
 com/geurimsoft/grmsmobiledh/data/GwangjuReleaseData.java
  com.geurimsoft.grmsmobiledh.data.GwangjuReleaseData
+com/geurimsoft/grmsmobiledh/view/fragments/FragmentMonthPrice.java
+ com.geurimsoft.grmsmobiledh.view.fragments.FragmentMonthPrice
+ com.geurimsoft.grmsmobiledh.view.fragments.FragmentMonthPrice$1
+ com.geurimsoft.grmsmobiledh.view.fragments.FragmentMonthPrice$2
+ com.geurimsoft.grmsmobiledh.view.fragments.FragmentMonthPrice$3
 com/geurimsoft/grmsmobiledh/data/GSDataRequest.java
  com.geurimsoft.grmsmobiledh.data.GSDataRequest
 com/geurimsoft/grmsmobiledh/payloader/GSPayloaderServiceData.java
@@ -82,8 +93,11 @@ com/geurimsoft/grmsmobiledh/data/StatsData.java
  com.geurimsoft.grmsmobiledh.data.StatsData
 com/geurimsoft/grmsmobiledh/view/etc/JoomyungTabActivity.java
  com.geurimsoft.grmsmobiledh.view.etc.JoomyungTabActivity
-com/geurimsoft/grmsmobiledh/widget/adapter/AdapterWheel.java
- com.geurimsoft.grmsmobiledh.widget.adapter.AdapterWheel
+com/geurimsoft/grmsmobiledh/view/dump/FragmentDailyAmount.java
+ com.geurimsoft.grmsmobiledh.view.dump.FragmentDailyAmount
+ com.geurimsoft.grmsmobiledh.view.dump.FragmentDailyAmount$1
+ com.geurimsoft.grmsmobiledh.view.dump.FragmentDailyAmount$2
+ com.geurimsoft.grmsmobiledh.view.dump.FragmentDailyAmount$3
 com/geurimsoft/grmsmobiledh/AppMain.java
  com.geurimsoft.grmsmobiledh.AppMain
  com.geurimsoft.grmsmobiledh.AppMain$1
@@ -127,6 +141,8 @@ com/geurimsoft/grmsmobiledh/apiserver/data/GSDailyInOutDetail.java
  com.geurimsoft.grmsmobiledh.apiserver.data.GSDailyInOutDetail
 com/geurimsoft/grmsmobiledh/apiserver/data/UserInfo.java
  com.geurimsoft.grmsmobiledh.apiserver.data.UserInfo
+com/geurimsoft/grmsmobiledh/view/dump/StatsHeaderAndFooterView.java
+ com.geurimsoft.grmsmobiledh.view.dump.StatsHeaderAndFooterView
 com/geurimsoft/grmsmobiledh/data/ReleaseData.java
  com.geurimsoft.grmsmobiledh.data.ReleaseData
 com/geurimsoft/grmsmobiledh/view/fragments/FragmentDailyPrice.java
@@ -152,6 +168,8 @@ com/geurimsoft/grmsmobiledh/payloader/Payloader.java
  com.geurimsoft.grmsmobiledh.payloader.Payloader$9
 com/geurimsoft/grmsmobiledh/payloader/GSVehicleData.java
  com.geurimsoft.grmsmobiledh.payloader.GSVehicleData
+com/geurimsoft/grmsmobiledh/data/GSData.java
+ com.geurimsoft.grmsmobiledh.data.GSData
 com/geurimsoft/grmsmobiledh/data/toDay.java
  com.geurimsoft.grmsmobiledh.data.toDay
 com/geurimsoft/grmsmobiledh/payloader/GSPayloaderServiceDataTop.java
@@ -177,6 +195,8 @@ com/geurimsoft/grmsmobiledh/apiserver/data/UserRightData.java
  com.geurimsoft.grmsmobiledh.apiserver.data.UserRightData
 com/geurimsoft/grmsmobiledh/util/GSUtil.java
  com.geurimsoft.grmsmobiledh.util.GSUtil
+com/geurimsoft/grmsmobiledh/apiserver/data/GSDumpDay.java
+ com.geurimsoft.grmsmobiledh.apiserver.data.GSDumpDay
 com/geurimsoft/grmsmobiledh/view/util/DayDatePickerDialog.java
  com.geurimsoft.grmsmobiledh.view.util.DayDatePickerDialog
  com.geurimsoft.grmsmobiledh.view.util.DayDatePickerDialog$1
@@ -262,6 +282,8 @@ com/geurimsoft/grmsmobiledh/view/fragments/FragmentYearMain.java
  com.geurimsoft.grmsmobiledh.view.fragments.FragmentYearMain
  com.geurimsoft.grmsmobiledh.view.fragments.FragmentYearMain$1
  com.geurimsoft.grmsmobiledh.view.fragments.FragmentYearMain$StatsPagerAdapter
+com/geurimsoft/grmsmobiledh/view/dump/StatsView.java
+ com.geurimsoft.grmsmobiledh.view.dump.StatsView
 com/geurimsoft/grmsmobiledh/data/StatsTotalData.java
  com.geurimsoft.grmsmobiledh.data.StatsTotalData
 com/geurimsoft/grmsmobiledh/payloader/GSPayloaderStatus.java
@@ -283,6 +305,8 @@ com/geurimsoft/grmsmobiledh/chart/GChart02.java
  com.geurimsoft.grmsmobiledh.chart.GChart02
 com/geurimsoft/grmsmobiledh/payloader/GSPayloaderList.java
  com.geurimsoft.grmsmobiledh.payloader.GSPayloaderList
+com/geurimsoft/grmsmobiledh/widget/adapter/AdapterWheel.java
+ com.geurimsoft.grmsmobiledh.widget.adapter.AdapterWheel
 com/geurimsoft/grmsmobiledh/payloader/RecyclerAdapter.java
  com.geurimsoft.grmsmobiledh.payloader.RecyclerAdapter
  com.geurimsoft.grmsmobiledh.payloader.RecyclerAdapter$ItemViewHolder
@@ -308,6 +332,8 @@ com/geurimsoft/grmsmobiledh/view/fragments/FragmentMonthMain.java
  com.geurimsoft.grmsmobiledh.view.fragments.FragmentMonthMain
  com.geurimsoft.grmsmobiledh.view.fragments.FragmentMonthMain$1
  com.geurimsoft.grmsmobiledh.view.fragments.FragmentMonthMain$StatsPagerAdapter
+com/geurimsoft/grmsmobiledh/apiserver/data/GSDumpMonthDetail.java
+ com.geurimsoft.grmsmobiledh.apiserver.data.GSDumpMonthDetail
 com/geurimsoft/grmsmobiledh/dialog/ApiLoadingDialog.java
  com.geurimsoft.grmsmobiledh.dialog.ApiLoadingDialog
 com/geurimsoft/grmsmobiledh/apiserver/data/GSDailyInOutGroupNew.java
@@ -341,25 +367,17 @@ com/geurimsoft/grmsmobiledh/payloader/LastItem.java
  com.geurimsoft.grmsmobiledh.payloader.LastItem$2
  com.geurimsoft.grmsmobiledh.payloader.LastItem$3
  com.geurimsoft.grmsmobiledh.payloader.LastItem$4
-com/geurimsoft/grmsmobiledh/widget/OnWheelChangedListener.java
- com.geurimsoft.grmsmobiledh.widget.OnWheelChangedListener
-com/geurimsoft/grmsmobiledh/view/fragments/FragmentMonthPrice.java
- com.geurimsoft.grmsmobiledh.view.fragments.FragmentMonthPrice
- com.geurimsoft.grmsmobiledh.view.fragments.FragmentMonthPrice$1
- com.geurimsoft.grmsmobiledh.view.fragments.FragmentMonthPrice$2
- com.geurimsoft.grmsmobiledh.view.fragments.FragmentMonthPrice$3
-com/geurimsoft/grmsmobiledh/apiserver/data/GSDumpDetail.java
- com.geurimsoft.grmsmobiledh.apiserver.data.GSDumpDetail
-com/geurimsoft/grmsmobiledh/apiserver/data/GSDumpDay.java
- com.geurimsoft.grmsmobiledh.apiserver.data.GSDumpDay
-com/geurimsoft/grmsmobiledh/view/dump/StatsView.java
- com.geurimsoft.grmsmobiledh.view.dump.StatsView
-com/geurimsoft/grmsmobiledh/view/dump/FragmentDailyMain.java
- com.geurimsoft.grmsmobiledh.view.dump.FragmentDailyMain
- com.geurimsoft.grmsmobiledh.view.dump.FragmentDailyMain$1
- com.geurimsoft.grmsmobiledh.view.dump.FragmentDailyMain$StatsPagerAdapter
-com/geurimsoft/grmsmobiledh/view/dump/FragmentDailyAmount.java
- com.geurimsoft.grmsmobiledh.view.dump.FragmentDailyAmount
- com.geurimsoft.grmsmobiledh.view.dump.FragmentDailyAmount$1
- com.geurimsoft.grmsmobiledh.view.dump.FragmentDailyAmount$2
- com.geurimsoft.grmsmobiledh.view.dump.FragmentDailyAmount$3
+com/geurimsoft/grmsmobiledh/apiserver/data/GSDumpMonth.java
+ com.geurimsoft.grmsmobiledh.apiserver.data.GSDumpMonth
+com/geurimsoft/grmsmobiledh/view/dump/StAdapter.java
+ com.geurimsoft.grmsmobiledh.view.dump.StAdapter
+ com.geurimsoft.grmsmobiledh.view.dump.StAdapter$ViewHolder
+com/geurimsoft/grmsmobiledh/view/dump/FragmentMonthAmount.java
+ com.geurimsoft.grmsmobiledh.view.dump.FragmentMonthAmount
+ com.geurimsoft.grmsmobiledh.view.dump.FragmentMonthAmount$1
+ com.geurimsoft.grmsmobiledh.view.dump.FragmentMonthAmount$2
+ com.geurimsoft.grmsmobiledh.view.dump.FragmentMonthAmount$3
+com/geurimsoft/grmsmobiledh/view/dump/FragmentMonthMain.java
+ com.geurimsoft.grmsmobiledh.view.dump.FragmentMonthMain
+ com.geurimsoft.grmsmobiledh.view.dump.FragmentMonthMain$1
+ com.geurimsoft.grmsmobiledh.view.dump.FragmentMonthMain$StatsPagerAdapter
