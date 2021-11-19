@@ -38,12 +38,17 @@ import java.util.Map;
 public class FragmentDailyAmount extends Fragment
 {
 
+    private int branchID = 0;
+
     private LinearLayout income_empty_layout, release_empty_layout, petosa_empty_layout;
     private TextView stats_daily_date, daily_income_title, daily_release_title, daily_petosa_title;
 
     private LinearLayout loading_indicator, loading_fail;
 
-    public FragmentDailyAmount() {}
+    public FragmentDailyAmount(int branchID)
+    {
+        this.branchID = branchID;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -88,7 +93,7 @@ public class FragmentDailyAmount extends Fragment
         this.daily_petosa_title = (TextView) view.findViewById(R.id.daily_petosa_title);
 
         // 일일 입고/출고/토사 수량 조회
-        makeDailyAmountData(GSConfig.DAY_STATS_YEAR, GSConfig.DAY_STATS_MONTH,GSConfig.DAY_STATS_DAY);
+        makeDailyData(GSConfig.DAY_STATS_YEAR, GSConfig.DAY_STATS_MONTH,GSConfig.DAY_STATS_DAY);
 
     }
 
@@ -105,10 +110,10 @@ public class FragmentDailyAmount extends Fragment
      * @param _monthOfYear		월
      * @param _dayOfMonth		일
      */
-    public void makeDailyAmountData(int _year, int _monthOfYear, int _dayOfMonth)
+    public void makeDailyData(int _year, int _monthOfYear, int _dayOfMonth)
     {
 
-        String functionName = "makeDailyAmountData()";
+        String functionName = "makeDailyData()";
 
         try
         {
@@ -121,9 +126,8 @@ public class FragmentDailyAmount extends Fragment
             this.stats_daily_date.setText(str);
 
             String queryDate = GSUtil.makeStringFromDate(_year, _monthOfYear, _dayOfMonth);
-            String qryContent = "Unit";
 
-            this.getData(queryDate, qryContent);
+            this.getData(queryDate);
 
         }
         catch(Exception ex)
@@ -134,13 +138,17 @@ public class FragmentDailyAmount extends Fragment
 
     }
 
-    private void getData(String searchDate, String qryContent)
+    /**
+     * 서버에 데이터 요청
+     * @param searchDate 검색일
+     */
+    private void getData(String searchDate)
     {
 
         String functionName = "getData()";
 
         if (GSConfig.IsDebugging)
-            Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "searchDate : " + searchDate + ", qryContent : " + qryContent);
+            Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "searchDate : " + searchDate);
 
         String url = GSConfig.API_SERVER_ADDR;
         RequestQueue requestQueue = Volley.newRequestQueue(GSConfig.context);
@@ -167,7 +175,7 @@ public class FragmentDailyAmount extends Fragment
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<String,String>();
                 params.put("GSType", "DUMP_DAY");
-                params.put("GSQuery", "{ \"VehicleNum\" : " + GSConfig.CURRENT_USER.userinfo.VehicleNum + ", \"ServiceDate\": " + searchDate + "}");
+                params.put("GSQuery", "{ \"BranchID\" : " + branchID + ", \"VehicleNum\": " + GSConfig.CURRENT_USER.userinfo.VehicleNum + ", \"ServiceDate\": " + searchDate + "}");
                 return params;
             }
         };
@@ -186,6 +194,10 @@ public class FragmentDailyAmount extends Fragment
 
     }
 
+    /**
+     * 서버 데이터를 클래스로 변환
+     * @param msg
+     */
     public void parseData(String msg)
     {
 
@@ -201,6 +213,10 @@ public class FragmentDailyAmount extends Fragment
 
     }
 
+    /**
+     * 변환 데이터를 테이블에 표출
+     * @param data
+     */
     private void setDisplayData(GSDumpDay data)
     {
 

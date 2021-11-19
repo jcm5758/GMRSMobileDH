@@ -47,6 +47,10 @@
     <string-array name="stats_day_tab_array2">
         <item>수량</item>
     </string-array>
+    <string-array name="stats_day_tab_array3">
+        <item>풍년가</item>
+        <item>디에이치</item>
+    </string-array>
     <string-array name="stats_month_tab_array1">
         <item>수량</item>
         <item>금액</item>

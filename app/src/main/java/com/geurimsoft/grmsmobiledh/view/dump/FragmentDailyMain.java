@@ -134,7 +134,8 @@ public class FragmentDailyMain extends Fragment
         String fn = "makeFragmentList()";
 
         this.fragments = new ArrayList<Fragment>();
-        this.fragments.add(new FragmentDailyAmount());
+        this.fragments.add(new FragmentDailyAmount(1));
+        this.fragments.add(new FragmentDailyAmount(2));
 
     }
 
@@ -226,11 +227,8 @@ public class FragmentDailyMain extends Fragment
 
         public StatsPagerAdapter(FragmentManager fm)
         {
-
             super(fm);
-
-            TITLES = getResources().getStringArray(R.array.stats_day_tab_array2);
-
+            TITLES = new String[]{ "풍년가", "디에이치" };
         }
 
         @Override
