@@ -96,7 +96,7 @@ public class StatsView
             // 거래처명
             //-------------------------------------------
 
-            if (detail.CustomerName.equals("소계"))
+            if (detail.CustomerName.equals("합계"))
                 stock_item_textview = makeMenuTextView(mContext, detail.CustomerName, "#000000", gravity);
             else
                 stock_item_textview = makeRowTextView(mContext, detail.CustomerName, gravity);
@@ -107,7 +107,7 @@ public class StatsView
             // 현장명
             //-------------------------------------------
 
-            if (detail.CustomerName.equals("소계"))
+            if (detail.CustomerName.equals("합계"))
                 stock_item_textview = makeMenuTextView(mContext, detail.CustomerSiteName, "#000000", gravity);
             else
                 stock_item_textview = makeRowTextView(mContext, detail.CustomerSiteName, gravity);
@@ -118,7 +118,7 @@ public class StatsView
             // 품명
             //-------------------------------------------
 
-            if (detail.CustomerName.equals("소계"))
+            if (detail.CustomerName.equals("합계"))
                 stock_item_textview = makeMenuTextView(mContext, detail.Product, "#000000", gravity);
             else
                 stock_item_textview = makeRowTextView(mContext, detail.Product, gravity);
@@ -131,7 +131,7 @@ public class StatsView
 
             gravity = Gravity.CENTER_VERTICAL | Gravity.RIGHT;
 
-            if (detail.CustomerName.equals("소계"))
+            if (detail.CustomerName.equals("합계"))
                 stock_item_textview = makeMenuTextView(mContext, GSConfig.changeToCommanString(detail.CountUnit), "#000000", gravity);
             else
                 stock_item_textview = makeRowTextView(mContext, GSConfig.changeToCommanString(detail.CountUnit), gravity);
@@ -142,7 +142,7 @@ public class StatsView
             // 수량
             //-------------------------------------------
 
-            if (detail.CustomerName.equals("소계"))
+            if (detail.CustomerName.equals("합계"))
                 stock_item_textview = makeMenuTextView(mContext, GSConfig.changeToCommanString(detail.SumUnit), "#000000", gravity);
             else
                 stock_item_textview = makeRowTextView(mContext, GSConfig.changeToCommanString(detail.SumUnit), gravity);

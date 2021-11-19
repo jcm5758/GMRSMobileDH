@@ -11,7 +11,6 @@ package com.geurimsoft.grmsmobiledh.view.dump;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -121,6 +120,8 @@ public class FragmentMonthMain extends Fragment
         fragments = new ArrayList<Fragment>();
         fragments.add(new FragmentMonthAmount(1));
         fragments.add(new FragmentMonthAmount(2));
+        fragments.add(new FragmentMonthCustomerAmount(1));
+        fragments.add(new FragmentMonthCustomerAmount(2));
 
     }
 
@@ -199,7 +200,7 @@ public class FragmentMonthMain extends Fragment
         public StatsPagerAdapter(FragmentManager fm)
         {
             super(fm);
-            TITLES = new String[]{ "풍년가", "디에이치" };
+            TITLES = new String[]{ "풍년가", "디에이치", "풍년가(거래처별)", "디에이치(거래처별)" };
         }
 
         @Override
