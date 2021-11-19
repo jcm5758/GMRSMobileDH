@@ -218,7 +218,7 @@ public class FragmentMonthAmount extends Fragment
         if (data != null && data.ServiceData != null)
         {
 
-            StAdapter adapter = new StAdapter(getActivity(), data);
+            StAdapterMonth adapter = new StAdapterMonth(getActivity(), data);
 
             StatsHeaderAndFooterView sVeiw = new StatsHeaderAndFooterView(getActivity());
             sVeiw.makeHeaderView(yi_month_amount_header_container, data.header);

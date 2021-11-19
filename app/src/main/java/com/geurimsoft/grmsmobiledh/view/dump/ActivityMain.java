@@ -43,7 +43,7 @@ public class ActivityMain extends AppCompatActivity
         // 일보, 월보, 연보 프래그먼트
         Fragment frag1 = new FragmentDailyMain();
         Fragment frag2 = new FragmentMonthMain();
-//        Fragment frag3 = new FragmentYearMain();
+        Fragment frag3 = new FragmentYearMain();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, frag1).commit();
 
@@ -66,9 +66,9 @@ public class ActivityMain extends AppCompatActivity
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, frag2).commit();
                         return true;
 
-//                    case R.id.tab3:
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.container, frag3).commit();
-//                        return true;
+                    case R.id.tab3:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, frag3).commit();
+                        return true;
 
                 }
 

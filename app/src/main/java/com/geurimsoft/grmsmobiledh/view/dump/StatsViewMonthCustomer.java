@@ -27,9 +27,6 @@ public class StatsViewMonthCustomer
 {
 
     private Activity mActivity;
-    private int branchID;
-    private int searchYear;
-    private int searchMonth;
     private String[] header;
 
     private Context mContext;
@@ -39,25 +36,14 @@ public class StatsViewMonthCustomer
 
     /**
      * 월별-거래처별-일별 통계
-     * @param _activity		Acitivity
-     * @param branchID		지점 ID
-     */
-
-    /**
-     * 월별-거래처별-일별 통계
      * @param _activity     Activity
-     * @param branchID      지정 ID
-     * @param searchYear    검색 연도
-     * @param searchMonth   검색 일
+     * @param header        테이블 제목
      */
-    public StatsViewMonthCustomer(Activity _activity, int branchID, int searchYear, int searchMonth, String[] header)
+    public StatsViewMonthCustomer(Activity _activity, String[] header)
     {
 
         this.mContext = _activity;
         this.mActivity = _activity;
-        this.branchID = branchID;
-        this.searchYear = searchYear;
-        this.searchMonth = searchMonth;
         this.header = header;
 
     }
@@ -124,8 +110,6 @@ public class StatsViewMonthCustomer
                     stock_item_textview = makeMenuTextView(mContext, detail.CustomerName, "#000000", gravity);
                     stock_row_layout.addView(stock_item_textview);
 
-                    gravity = Gravity.CENTER_VERTICAL | Gravity.RIGHT;
-
                     // 현장명
                     stock_item_textview = makeMenuTextView(mContext, detail.CustomerSiteName, "#000000", gravity);
                     stock_row_layout.addView(stock_item_textview);
@@ -133,6 +117,8 @@ public class StatsViewMonthCustomer
                     // 품목
                     stock_item_textview = makeMenuTextView(mContext, detail.Product, "#000000", gravity);
                     stock_row_layout.addView(stock_item_textview);
+
+                    gravity = Gravity.CENTER_VERTICAL | Gravity.RIGHT;
 
                     // 횟수
                     stock_item_textview = makeMenuTextView(mContext, GSConfig.changeToCommanString(detail.CountUnit), "#000000", gravity);
@@ -152,8 +138,6 @@ public class StatsViewMonthCustomer
                     stock_item_textview = makeRowTextView(mContext, detail.CustomerName, gravity);
                     stock_row_layout.addView(stock_item_textview);
 
-                    gravity = Gravity.CENTER_VERTICAL | Gravity.RIGHT;
-
                     // 현장명
                     stock_item_textview = makeRowTextView(mContext, detail.CustomerSiteName, gravity);
                     stock_row_layout.addView(stock_item_textview);
@@ -161,6 +145,8 @@ public class StatsViewMonthCustomer
                     // 품목
                     stock_item_textview = makeRowTextView(mContext, detail.Product, gravity);
                     stock_row_layout.addView(stock_item_textview);
+
+                    gravity = Gravity.CENTER_VERTICAL | Gravity.RIGHT;
 
                     // 횟수
                     stock_item_textview = makeRowTextView(mContext, GSConfig.changeToCommanString(detail.CountUnit), gravity);

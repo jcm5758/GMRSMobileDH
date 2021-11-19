@@ -253,7 +253,7 @@ public class FragmentMonthCustomerAmount extends Fragment
 
         }
 
-        StatsViewMonthCustomer statsView = new StatsViewMonthCustomer(getActivity(), 3, iYear, iMonth, data.header);
+        StatsViewMonthCustomer statsView = new StatsViewMonthCustomer(getActivity(), data.header);
 
         // 입고 내역이 없으면 텍스트 감추고 표 감추기
         // 전체는 있는데 입고는 있으면
