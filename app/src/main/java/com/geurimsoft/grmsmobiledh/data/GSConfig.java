@@ -3,6 +3,7 @@ package com.geurimsoft.grmsmobiledh.data;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.geurimsoft.grmsmobiledh.apiserver.data.UserInfo;
 import com.geurimsoft.grmsmobiledh.view.dump.DumpActivity;
@@ -61,14 +62,17 @@ public class GSConfig
     // Global preference
     public static SharedPreferences gPreference;
 
-    // 현재의 연월일
-    public static int DAY_STATS_YEAR = 0;
-    public static int DAY_STATS_MONTH = 0;
-    public static int DAY_STATS_DAY = 0;
+    // 날짜 관련
+    public static Calendar calendar;
 
-    // 통계에서 날짜 변경 시 년, 월 제한 (2020-05-01 추가)
-    public static int LIMIT_YEAR = 2020;
-    public static int LIMIT_MONTH = 5;
+    // 현재의 연월일
+    public static int CURRENT_YEAR = 0;
+    public static int CURRENT_MONTH = 0;
+    public static int CURRENT_DAY = 0;
+
+    // 통계에서 날짜 변경 시 년, 월 제한
+    public static int LIMIT_YEAR = 2021;
+    public static int LIMIT_MONTH = 10;
 
     public static double moneyDivideNum = 1000;
 
@@ -168,5 +172,35 @@ public class GSConfig
 
     // 로그인 외부 성공 메시지
     public static String LOGIN_FOREIGN_SUCESS_MESSAGE = "LOGIN FOREIGN SUCCESS";
+
+    /**
+     * 날짜 지정
+     */
+    public static void setDateCurrent()
+    {
+
+        GSConfig.CURRENT_YEAR = GSConfig.calendar.get(Calendar.YEAR);
+        GSConfig.CURRENT_MONTH = GSConfig.calendar.get(Calendar.MONTH) + 1;
+        GSConfig.CURRENT_DAY = GSConfig.calendar.get(Calendar.DATE);
+
+        if (GSConfig.IsDebugging)
+            Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG("GSConfig", "setDate()") + " GSConfig.DAY_STATS_YEAR : " + GSConfig.CURRENT_YEAR + ", GSConfig.DAY_STATS_MONTH : " + GSConfig.CURRENT_MONTH + ", GSConfig.DAY_STATS_DAY : " + GSConfig.CURRENT_DAY );
+
+    }
+
+    /**
+     * 날짜 지정
+     */
+    public static void setDate(int year, int month, int day)
+    {
+
+        GSConfig.CURRENT_YEAR = year;
+        GSConfig.CURRENT_MONTH = month;
+        GSConfig.CURRENT_DAY = day;
+
+        if (GSConfig.IsDebugging)
+            Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG("GSConfig", "setDate()") + " GSConfig.DAY_STATS_YEAR : " + GSConfig.CURRENT_YEAR + ", GSConfig.DAY_STATS_MONTH : " + GSConfig.CURRENT_MONTH + ", GSConfig.DAY_STATS_DAY : " + GSConfig.CURRENT_DAY );
+
+    }
 
 }

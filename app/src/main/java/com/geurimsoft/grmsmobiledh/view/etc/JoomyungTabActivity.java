@@ -38,12 +38,6 @@ public class JoomyungTabActivity extends FragmentActivity
 
 		setContentView(R.layout.stats_tab_activity);
 		
-		//AppConfig.activities.add(JoomyungTabActivity.this);
-		
-		GSConfig.DAY_STATS_YEAR = 0;
-		GSConfig.DAY_STATS_MONTH = 0;
-		GSConfig.DAY_STATS_DAY = 0;
-		
 		this.preferences = getSharedPreferences("user_account", Context.MODE_PRIVATE);
 
 		this.actionBar = getActionBar();

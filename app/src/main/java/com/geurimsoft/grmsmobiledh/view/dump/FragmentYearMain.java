@@ -38,9 +38,6 @@ import java.util.Calendar;
 public class FragmentYearMain extends Fragment
 {
 
-    private Calendar calendar = Calendar.getInstance();
-    private int currentYear;
-
     private PagerTabStrip statsTabStrip;
     private ViewPager statsPager;
     private StatsPagerAdapter statsPagerAdapter;
@@ -54,7 +51,6 @@ public class FragmentYearMain extends Fragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        this.currentYear =  calendar.get(Calendar.YEAR);
     }
 
     @Override
@@ -62,12 +58,8 @@ public class FragmentYearMain extends Fragment
     {
 
         View v = inflater.inflate(R.layout.stats_pager_layout, container, false);
-        this.context = container.getContext();
 
-        if(GSConfig.DAY_STATS_YEAR == 0 || GSConfig.DAY_STATS_MONTH == 0 || GSConfig.DAY_STATS_DAY == 0)
-        {
-            GSConfig.DAY_STATS_YEAR = this.currentYear;
-        }
+        this.context = container.getContext();
 
         makeFragmentList();
 
@@ -138,20 +130,20 @@ public class FragmentYearMain extends Fragment
         if (item.getItemId() == 1)
         {
 
-            YearDatePickerDialog yearDatePickerDialog = new YearDatePickerDialog(getActivity(), GSConfig.DAY_STATS_YEAR, GSConfig.DAY_STATS_YEAR+10, new YearDatePickerDialog.DialogListner() {
+            YearDatePickerDialog yearDatePickerDialog = new YearDatePickerDialog(getActivity(), GSConfig.CURRENT_YEAR, GSConfig.CURRENT_YEAR+10, new YearDatePickerDialog.DialogListner() {
 
                 @Override
                 public void OnConfirmButton(Dialog dialog, int selectYear) {
 
-                    if(GSConfig.LIMIT_YEAR > selectYear || selectYear > currentYear)
+                    if(GSConfig.LIMIT_YEAR > selectYear || selectYear > GSConfig.CURRENT_YEAR)
                     {
                         Toast.makeText(getActivity(), getString(R.string.change_date_year_error), Toast.LENGTH_SHORT).show();
                         return;
                     }
 
-                    if(GSConfig.DAY_STATS_YEAR != selectYear)
+                    if(GSConfig.CURRENT_YEAR != selectYear)
                     {
-                        GSConfig.DAY_STATS_YEAR = selectYear;
+                        GSConfig.CURRENT_YEAR = selectYear;
                         statsPagerAdapter.notifyDataSetChanged();
                     }
 

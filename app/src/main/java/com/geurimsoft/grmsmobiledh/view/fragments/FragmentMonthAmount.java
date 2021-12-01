@@ -78,7 +78,7 @@ public class FragmentMonthAmount extends Fragment
 		
 		this.yi_month_amount_listview.setDividerHeight(0);
 		
-		makeMonthAmountData(GSConfig.DAY_STATS_YEAR, GSConfig.DAY_STATS_MONTH);
+		makeMonthAmountData();
 
 	}
 	
@@ -88,7 +88,10 @@ public class FragmentMonthAmount extends Fragment
 		super.onPause();
 	}
 
-	private void makeMonthAmountData(int _year, int _monthOfYear)
+	/**
+	 * 월 수량 조회
+	 */
+	private void makeMonthAmountData()
 	{
 
 		String functionName = "makeMonthAmountData()";
@@ -96,16 +99,16 @@ public class FragmentMonthAmount extends Fragment
 		try
 		{
 
-			dateStr = _year + "년 " + _monthOfYear + "월  입출고 현황(단위:루베)";
+			dateStr = GSConfig.CURRENT_YEAR + "년 " + GSConfig.CURRENT_MONTH  + "월  입출고 현황(단위:루베)";
 
 			if (GSConfig.IsDebugging)
-				Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + _year + "년 " + _monthOfYear + "월");
+				Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + GSConfig.CURRENT_YEAR + "년 " + GSConfig.CURRENT_MONTH  + "월");
 
 			yi_month_amount_date.setText(dateStr);
 
 			String qryContent = "Unit";
 
-			this.getData(_year, _monthOfYear, qryContent);
+			this.getData(qryContent);
 
 		}
 		catch(Exception ex)
@@ -116,13 +119,17 @@ public class FragmentMonthAmount extends Fragment
 
 	}
 
-	private void getData(int searchYear, int searchMonth, String qryContent)
+	/**
+	 * 서버에 데이터 요청
+	 * @param qryContent 수량 or 금액
+	 */
+	private void getData(String qryContent)
 	{
 
 		String functionName = "getData()";
 
 		if (GSConfig.IsDebugging)
-			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "searchYear : " + searchYear + ", searchMonth : " + searchMonth + ", qryContent : " + qryContent);
+			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "qryContent : " + qryContent);
 
 		String url = GSConfig.API_SERVER_ADDR;
 		RequestQueue requestQueue = Volley.newRequestQueue(GSConfig.context);
@@ -154,7 +161,7 @@ public class FragmentMonthAmount extends Fragment
 			protected Map<String, String> getParams() throws AuthFailureError {
 				Map<String,String> params = new HashMap<String,String>();
 				params.put("GSType", "MONTH");
-				params.put("GSQuery", "{ \"branchID\" : " + GSConfig.CURRENT_BRANCH.branchID + ", \"searchYear\": " + searchYear + ", \"searchMonth\": " + searchMonth + ", \"qryContent\" : \"" + qryContent + "\" }");
+				params.put("GSQuery", "{ \"branchID\" : " + GSConfig.CURRENT_BRANCH.branchID + ", \"searchYear\": " + GSConfig.CURRENT_YEAR + ", \"searchMonth\": " + GSConfig.CURRENT_MONTH + ", \"qryContent\" : \"" + qryContent + "\" }");
 				return params;
 			}
 		};

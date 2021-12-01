@@ -43,9 +43,6 @@ import java.util.Calendar;
 public class FragmentMonthMain extends Fragment
 {
 	
-	private Calendar calendar = Calendar.getInstance();
-	private int currentYear, currentMonth;
-	
 	private PagerTabStrip statsTabStrip;
 	private ViewPager statsPager;
 	private StatsPagerAdapter statsPagerAdapter;
@@ -58,12 +55,7 @@ public class FragmentMonthMain extends Fragment
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
-
 		super.onCreate(savedInstanceState);
-		
-		this.currentYear =  calendar.get(Calendar.YEAR);
-		this.currentMonth = calendar.get(Calendar.MONTH) + 1;
-		
 	}
 	
 	@Override
@@ -71,14 +63,9 @@ public class FragmentMonthMain extends Fragment
 	{
 
 		View v = inflater.inflate(R.layout.stats_pager_layout, container, false);
+
 		this.context = container.getContext();
-		
-		if(GSConfig.DAY_STATS_YEAR == 0 || GSConfig.DAY_STATS_MONTH == 0 ||GSConfig.DAY_STATS_DAY == 0)
-		{
-			GSConfig.DAY_STATS_YEAR = this.currentYear;
-			GSConfig.DAY_STATS_MONTH = this.currentMonth;
-		}
-		
+
 		makeFragmentList();
 		
 		setHasOptionsMenu(true);
@@ -183,12 +170,12 @@ public class FragmentMonthMain extends Fragment
 		if (item.getItemId() == 1)
 		{
 
-			MonthDatePickerDialog monthDatePickerDialog = new MonthDatePickerDialog(getActivity(), GSConfig.DAY_STATS_YEAR, GSConfig.DAY_STATS_YEAR+10,  GSConfig.DAY_STATS_MONTH, new MonthDatePickerDialog.DialogListner() {
+			MonthDatePickerDialog monthDatePickerDialog = new MonthDatePickerDialog(getActivity(), GSConfig.CURRENT_YEAR, GSConfig.CURRENT_YEAR+10,  GSConfig.CURRENT_MONTH, new MonthDatePickerDialog.DialogListner() {
 
 				@Override
 				public void OnConfirmButton(Dialog dialog, int selectYear, int selectMonth) {
 
-					if(GSConfig.LIMIT_YEAR > selectYear || selectYear > currentYear)
+					if(GSConfig.LIMIT_YEAR > selectYear || selectYear > GSConfig.CURRENT_YEAR)
 					{
 						Toast.makeText(getActivity(), getString(R.string.change_date_year_error), Toast.LENGTH_SHORT).show();
 						return;
@@ -200,20 +187,16 @@ public class FragmentMonthMain extends Fragment
 						return;
 					}
 
-					if( currentYear == selectYear  && selectMonth > currentMonth )
+					if( GSConfig.CURRENT_YEAR == selectYear  && selectMonth > GSConfig.CURRENT_MONTH )
 					{
 						Toast.makeText(getActivity(), getString(R.string.change_date_month_error), Toast.LENGTH_SHORT).show();
 						return;
 					}
 
-					if(GSConfig.DAY_STATS_YEAR != selectYear || GSConfig.DAY_STATS_MONTH != selectMonth)
+					if(GSConfig.CURRENT_YEAR != selectYear || GSConfig.CURRENT_MONTH != selectMonth)
 					{
-
-						GSConfig.DAY_STATS_YEAR = selectYear;
-						GSConfig.DAY_STATS_MONTH = selectMonth;
-
+						GSConfig.setDate(selectYear, selectMonth, 1);
 						statsPagerAdapter.notifyDataSetChanged();
-
 					}
 
 					dialog.dismiss();

@@ -84,7 +84,7 @@ public class FragmentMonthAmount extends Fragment
 
         this.yi_month_amount_listview.setDividerHeight(0);
 
-        makeMonthData(GSConfig.DAY_STATS_YEAR, GSConfig.DAY_STATS_MONTH);
+        makeMonthData();
 
     }
 
@@ -94,7 +94,7 @@ public class FragmentMonthAmount extends Fragment
         super.onPause();
     }
 
-    private void makeMonthData(int _year, int _monthOfYear)
+    private void makeMonthData()
     {
 
         String functionName = "makeMonthData()";
@@ -102,14 +102,14 @@ public class FragmentMonthAmount extends Fragment
         try
         {
 
-            dateStr = _year + "년 " + _monthOfYear + "월  입출고 현황(단위:루베)";
+            dateStr = GSConfig.CURRENT_YEAR + "년 " + GSConfig.CURRENT_MONTH + "월  입출고 현황(단위:루베)";
 
             if (GSConfig.IsDebugging)
-                Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + _year + "년 " + _monthOfYear + "월");
+                Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + GSConfig.CURRENT_YEAR + "년 " + GSConfig.CURRENT_MONTH + "월");
 
             yi_month_amount_date.setText(dateStr);
 
-            this.getData(_year, _monthOfYear);
+            this.getData();
 
         }
         catch(Exception ex)
@@ -122,16 +122,11 @@ public class FragmentMonthAmount extends Fragment
 
     /**
      * 데이터 불러오기
-     * @param searchYear 검색 연도
-     * @param searchMonth 검색 월
      */
-    private void getData(int searchYear, int searchMonth)
+    private void getData()
     {
 
         String functionName = "getData()";
-
-        if (GSConfig.IsDebugging)
-            Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "searchYear : " + searchYear + ", searchMonth : " + searchMonth);
 
         String url = GSConfig.API_SERVER_ADDR;
         RequestQueue requestQueue = Volley.newRequestQueue(GSConfig.context);
@@ -158,7 +153,7 @@ public class FragmentMonthAmount extends Fragment
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<String,String>();
                 params.put("GSType", "DUMP_MONTH");
-                params.put("GSQuery", "{ \"BranchID\" : " + branchID + ", \"SearchYear\": " + searchYear + ", \"SearchMonth\": " + searchMonth + ", \"VehicleNum\" : \"" + GSConfig.CURRENT_USER.userinfo.VehicleNum + "\" }");
+                params.put("GSQuery", "{ \"BranchID\" : " + branchID + ", \"SearchYear\": " + GSConfig.CURRENT_YEAR + ", \"SearchMonth\": " + GSConfig.CURRENT_MONTH + ", \"VehicleNum\" : \"" + GSConfig.CURRENT_USER.userinfo.VehicleNum + "\" }");
                 return params;
             }
         };

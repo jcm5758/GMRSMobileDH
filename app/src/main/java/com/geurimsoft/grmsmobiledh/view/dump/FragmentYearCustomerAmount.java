@@ -46,8 +46,6 @@ public class FragmentYearCustomerAmount extends Fragment
 
     private TextView yi_month_enterprise_amount_date, yi_month_enterprise_amount_income_title, yi_month_enterprise_amount_release_title, yi_month_enterprise_amount_petosa_title;
 
-    private int iYear;
-
     EnterpriseYearStatsView statsView;
     String unit;
 
@@ -89,7 +87,7 @@ public class FragmentYearCustomerAmount extends Fragment
         this.yi_month_enterprise_amount_release_title = (TextView)view.findViewById(R.id.yi_month_enterprise_amount_release_title);
         this.yi_month_enterprise_amount_petosa_title = (TextView)view.findViewById(R.id.yi_month_enterprise_amount_petosa_title);
 
-        makeData(GSConfig.DAY_STATS_YEAR);
+        makeData();
 
     }
 
@@ -101,9 +99,8 @@ public class FragmentYearCustomerAmount extends Fragment
 
     /**
      * 데이터 조회
-     * @param _year
      */
-    private void makeData(int _year)
+    private void makeData()
     {
 
         String functionName = "makeData()";
@@ -111,10 +108,10 @@ public class FragmentYearCustomerAmount extends Fragment
         try
         {
 
-            String dateStr = _year + "년  입출고 현황";
+            String dateStr = GSConfig.CURRENT_YEAR + "년  입출고 현황";
 
             if (GSConfig.IsDebugging)
-                Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + _year + "년");
+                Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + GSConfig.CURRENT_YEAR + "년");
 
             yi_month_enterprise_amount_date.setText(dateStr);
 
@@ -122,7 +119,7 @@ public class FragmentYearCustomerAmount extends Fragment
             yi_month_enterprise_amount_release_empty_layout.removeAllViews();
             yi_month_enterprise_amount_petosa_empty_layout.removeAllViews();
 
-            this.getData(_year);
+            this.getData();
 
         }
         catch(Exception ex)
@@ -135,17 +132,11 @@ public class FragmentYearCustomerAmount extends Fragment
 
     /**
      * 서버에 데이터 요청
-     * @param searchYear 검색 년
      */
-    private void getData(int searchYear)
+    private void getData()
     {
 
         String functionName = "getData()";
-
-        if (GSConfig.IsDebugging)
-            Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "searchYear : " + searchYear);
-
-        iYear = searchYear;
 
         String url = GSConfig.API_SERVER_ADDR;
         RequestQueue requestQueue = Volley.newRequestQueue(GSConfig.context);
@@ -173,7 +164,7 @@ public class FragmentYearCustomerAmount extends Fragment
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<String,String>();
                 params.put("GSType", "DUMP_YEAR_CUSTOMER");
-                params.put("GSQuery", "{ \"BranchID\" : " + branchID + ", \"SearchYear\": " + searchYear + ", \"VehicleNum\" : \"" + GSConfig.CURRENT_USER.userinfo.VehicleNum + "\" }");
+                params.put("GSQuery", "{ \"BranchID\" : " + branchID + ", \"SearchYear\": " + GSConfig.CURRENT_YEAR + ", \"VehicleNum\" : \"" + GSConfig.CURRENT_USER.userinfo.VehicleNum + "\" }");
                 return params;
             }
 

@@ -62,7 +62,7 @@ public class FragmentYearGraph extends Fragment
 		this.stats_year_graph_loading_indicator = (LinearLayout)view.findViewById(R.id.chart_loading_indicator);
 		this.stats_year_graph_loading_fail = (LinearLayout)view.findViewById(R.id.chart_loading_fail);
 
-		makeYearGraphData(GSConfig.DAY_STATS_YEAR);
+		makeYearGraphData();
 
 	}
 	
@@ -72,7 +72,7 @@ public class FragmentYearGraph extends Fragment
 		super.onPause();
 	}
 	
-	private void makeYearGraphData(int _year)
+	private void makeYearGraphData()
 	{
 
 		String functionName = "makeYearGraphData()";
@@ -80,10 +80,10 @@ public class FragmentYearGraph extends Fragment
 		try
 		{
 
-			String dateStr = _year + "년  입출고 현황";
+			String dateStr = GSConfig.CURRENT_YEAR + "년  입출고 현황";
 			String qryContent = "Unit";
 
-			this.getData(_year, qryContent, dateStr);
+			this.getData(qryContent, dateStr);
 
 		}
 		catch(Exception ex)
@@ -94,7 +94,7 @@ public class FragmentYearGraph extends Fragment
 
 	}
 
-	private void getData(int searchYear, String qryContent, String dateStr)
+	private void getData(String qryContent, String dateStr)
 	{
 
 		String functionName = "getData()";
@@ -127,7 +127,7 @@ public class FragmentYearGraph extends Fragment
 			protected Map<String, String> getParams() throws AuthFailureError {
 				Map<String,String> params = new HashMap<String,String>();
 				params.put("GSType", "YEAR");
-				params.put("GSQuery", "{ \"branchID\" : " + GSConfig.CURRENT_BRANCH.branchID + ", \"searchYear\": " + searchYear + ", \"qryContent\" : \"" + qryContent + "\" }");
+				params.put("GSQuery", "{ \"branchID\" : " + GSConfig.CURRENT_BRANCH.branchID + ", \"searchYear\": " + GSConfig.CURRENT_YEAR + ", \"qryContent\" : \"" + qryContent + "\" }");
 				return params;
 			}
 		};

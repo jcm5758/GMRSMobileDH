@@ -44,10 +44,6 @@ import java.util.Calendar;
 public class FragmentDailyMain extends Fragment
 {
 
-	// 날짜 관련
-	private Calendar calendar = Calendar.getInstance();
-	private int currentYear, currentMonth, currentDay;
-
 	// 슬라이딩 구현용
 	private PagerTabStrip statsTabStrip;
 	private ViewPager statsPager;
@@ -61,18 +57,7 @@ public class FragmentDailyMain extends Fragment
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
-
 		super.onCreate(savedInstanceState);
-
-		String functionName = "onCreate()";
-
-		// 현재 연월일 찾기
-		this.currentYear =  calendar.get(Calendar.YEAR);
-		this.currentMonth = calendar.get(Calendar.MONTH) + 1;
-		this.currentDay = calendar.get(Calendar.DATE);
-
-//		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(getActivity().getClass().getName(), functionName) + " this.currentYear : " + this.currentYear + ", this.currentMonth : " + this.currentMonth + ", this.currentDay : " + this.currentDay );
-
 	}
 	
 	@Override
@@ -82,14 +67,6 @@ public class FragmentDailyMain extends Fragment
 		View v = inflater.inflate(R.layout.stats_pager_layout, container, false);
 
 		this.context = container.getContext();
-
-		// 전역변수에 날짜 정보 지정
-		if(GSConfig.DAY_STATS_YEAR == 0 || GSConfig.DAY_STATS_MONTH == 0 || GSConfig.DAY_STATS_DAY == 0)
-		{
-			GSConfig.DAY_STATS_YEAR = this.currentYear;
-			GSConfig.DAY_STATS_MONTH = this.currentMonth;
-			GSConfig.DAY_STATS_DAY = this.currentDay;
-		}
 
 		// 프래그먼트 리스트 생성
 		makeFragmentList();
@@ -196,12 +173,12 @@ public class FragmentDailyMain extends Fragment
 		if (item.getItemId() == 1)
 		{
 
-			DayDatePickerDialog dayDatePickerDialog = new DayDatePickerDialog(getActivity(), GSConfig.DAY_STATS_YEAR, GSConfig.DAY_STATS_YEAR+10,  GSConfig.DAY_STATS_MONTH, GSConfig.DAY_STATS_DAY, new DayDatePickerDialog.DialogListner() {
+			DayDatePickerDialog dayDatePickerDialog = new DayDatePickerDialog(getActivity(), GSConfig.CURRENT_YEAR, GSConfig.CURRENT_YEAR+10,  GSConfig.CURRENT_MONTH, GSConfig.CURRENT_DAY, new DayDatePickerDialog.DialogListner() {
 
 				@Override
 				public void OnConfirmButton(Dialog dialog, int selectYear, int selectMonth, int selectDay) {
 
-					if(GSConfig.LIMIT_YEAR > selectYear || selectYear > currentYear)
+					if(GSConfig.LIMIT_YEAR > selectYear || selectYear > GSConfig.CURRENT_YEAR)
 					{
 						Toast.makeText(getActivity(), getString(R.string.change_date_year_error), Toast.LENGTH_SHORT).show();
 						return;
@@ -213,27 +190,22 @@ public class FragmentDailyMain extends Fragment
 						return;
 					}
 
-					if( currentYear == selectYear  && selectMonth > currentMonth )
+					if( GSConfig.CURRENT_YEAR == selectYear  && selectMonth > GSConfig.CURRENT_MONTH )
 					{
 						Toast.makeText(getActivity(), getString(R.string.change_date_month_error), Toast.LENGTH_SHORT).show();
 						return;
 					}
 
-					if(currentMonth ==  selectMonth && selectDay > currentDay )
+					if(GSConfig.CURRENT_MONTH ==  selectMonth && selectDay > GSConfig.CURRENT_DAY )
 					{
 						Toast.makeText(getActivity(), getString(R.string.change_date_day_error), Toast.LENGTH_SHORT).show();
 						return;
 					}
 
-					if(GSConfig.DAY_STATS_YEAR != selectYear || GSConfig.DAY_STATS_MONTH != selectMonth || GSConfig.DAY_STATS_DAY != selectDay)
+					if(GSConfig.CURRENT_YEAR != selectYear || GSConfig.CURRENT_MONTH != selectMonth || GSConfig.CURRENT_DAY != selectDay)
 					{
-
-						GSConfig.DAY_STATS_YEAR = selectYear;
-						GSConfig.DAY_STATS_MONTH = selectMonth;
-						GSConfig.DAY_STATS_DAY = selectDay;
-
+						GSConfig.setDate(selectYear, selectMonth, selectDay);
 						statsPagerAdapter.notifyDataSetChanged();
-
 					}
 
 					dialog.dismiss();

@@ -61,7 +61,7 @@ public class FragmentMonthGraph extends Fragment
 		this.stats_month_graph_loading_indicator = (LinearLayout)view.findViewById(R.id.chart_loading_indicator);
 		this.stats_month_graph_loading_fail = (LinearLayout)view.findViewById(R.id.chart_loading_fail);
 
-		makeMonthGraphData(GSConfig.DAY_STATS_YEAR, GSConfig.DAY_STATS_MONTH);
+		makeMonthGraphData();
 
 	}
 	
@@ -71,7 +71,7 @@ public class FragmentMonthGraph extends Fragment
 		super.onPause();
 	}
 	
-	private void makeMonthGraphData(int _year, int _monthOfYear)
+	private void makeMonthGraphData()
 	{
 
 		String functionName = "makeMonthGraphData()";
@@ -79,12 +79,12 @@ public class FragmentMonthGraph extends Fragment
 		try
 		{
 
-			String dateStr = _year + "년 " + _monthOfYear + "월  입출고 현황";
+			String dateStr = GSConfig.CURRENT_YEAR + "년 " + GSConfig.CURRENT_MONTH + "월  입출고 현황";
 //			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + _year + "년 " + _monthOfYear + "월");
 
 			String qryContent = "Unit";
 
-			this.getData(_year, _monthOfYear, qryContent, dateStr);
+			this.getData(qryContent, dateStr);
 
 		}
 		catch(Exception ex)
@@ -95,7 +95,7 @@ public class FragmentMonthGraph extends Fragment
 		
 	}
 
-	private void getData(int searchYear, int searchMonth, String qryContent, String dateStr)
+	private void getData(String qryContent, String dateStr)
 	{
 
 		String functionName = "getData()";
@@ -128,7 +128,7 @@ public class FragmentMonthGraph extends Fragment
 			protected Map<String, String> getParams() throws AuthFailureError {
 				Map<String,String> params = new HashMap<String,String>();
 				params.put("GSType", "MONTH");
-				params.put("GSQuery", "{ \"branchID\" : " + GSConfig.CURRENT_BRANCH.branchID + ", \"searchYear\": " + searchYear + ", \"searchMonth\": " + searchMonth + ", \"qryContent\" : \"" + qryContent + "\" }");
+				params.put("GSQuery", "{ \"branchID\" : " + GSConfig.CURRENT_BRANCH.branchID + ", \"searchYear\": " + GSConfig.CURRENT_YEAR + ", \"searchMonth\": " + GSConfig.CURRENT_MONTH + ", \"qryContent\" : \"" + qryContent + "\" }");
 				return params;
 			}
 		};

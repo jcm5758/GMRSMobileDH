@@ -93,7 +93,7 @@ public class FragmentDailyAmount extends Fragment
         this.daily_petosa_title = (TextView) view.findViewById(R.id.daily_petosa_title);
 
         // 일일 입고/출고/토사 수량 조회
-        makeDailyData(GSConfig.DAY_STATS_YEAR, GSConfig.DAY_STATS_MONTH,GSConfig.DAY_STATS_DAY);
+        makeDailyData();
 
     }
 
@@ -105,12 +105,8 @@ public class FragmentDailyAmount extends Fragment
 
     /**
      * 일일 입고/출고/토사 수량 조회
-     *
-     * @param _year				연도
-     * @param _monthOfYear		월
-     * @param _dayOfMonth		일
      */
-    public void makeDailyData(int _year, int _monthOfYear, int _dayOfMonth)
+    public void makeDailyData()
     {
 
         String functionName = "makeDailyData()";
@@ -118,14 +114,14 @@ public class FragmentDailyAmount extends Fragment
         try
         {
 
-            String str = _year + "년 " + _monthOfYear + "월 " + _dayOfMonth + "일";
+            String str = GSConfig.CURRENT_YEAR + "년 " + GSConfig.CURRENT_MONTH + "월 " + GSConfig.CURRENT_DAY + "일";
 
             if (GSConfig.IsDebugging)
-                Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + _year + "년 " + _monthOfYear + "월 " + _dayOfMonth + "일");
+                Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + GSConfig.CURRENT_YEAR + "년 " + GSConfig.CURRENT_MONTH + "월 " + GSConfig.CURRENT_DAY + "일");
 
             this.stats_daily_date.setText(str);
 
-            String queryDate = GSUtil.makeStringFromDate(_year, _monthOfYear, _dayOfMonth);
+            String queryDate = GSUtil.makeStringFromDate(GSConfig.CURRENT_YEAR, GSConfig.CURRENT_MONTH, GSConfig.CURRENT_DAY);
 
             this.getData(queryDate);
 

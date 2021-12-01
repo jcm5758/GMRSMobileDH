@@ -69,7 +69,7 @@ public class FragmentYearAmount extends Fragment
 		
 		this.yi_year_amount_listview.setDividerHeight(0);
 		
-		makeYearAmountData(GSConfig.DAY_STATS_YEAR);
+		makeYearAmountData();
 
 	}
 	
@@ -79,7 +79,7 @@ public class FragmentYearAmount extends Fragment
 		super.onPause();
 	}
 	
-	private void makeYearAmountData(int _year)
+	private void makeYearAmountData()
 	{
 
 		String functionName = "makeYearAmountData()";
@@ -87,16 +87,16 @@ public class FragmentYearAmount extends Fragment
 		try
 		{
 
-			String dateStr = _year + "년  입출고 현황(단위:루베)";
+			String dateStr = GSConfig.CURRENT_YEAR + "년  입출고 현황(단위:루베)";
 
 			if (GSConfig.IsDebugging)
-				Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + _year + "년");
+				Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + GSConfig.CURRENT_YEAR + "년");
 
 			yi_year_amount_date.setText(dateStr);
 
 			String qryContent = "Unit";
 
-			this.getData(_year, qryContent);
+			this.getData(qryContent);
 
 		}
 		catch(Exception ex)
@@ -107,13 +107,13 @@ public class FragmentYearAmount extends Fragment
 
 	}
 
-	private void getData(int searchYear, String qryContent)
+	private void getData(String qryContent)
 	{
 
 		String functionName = "getData()";
 
 		if (GSConfig.IsDebugging)
-			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "searchYear : " + searchYear + ", qryContent : " + qryContent);
+			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "searchYear : " + GSConfig.CURRENT_YEAR + ", qryContent : " + qryContent);
 
 		String url = GSConfig.API_SERVER_ADDR;
 		RequestQueue requestQueue = Volley.newRequestQueue(GSConfig.context);
@@ -145,7 +145,7 @@ public class FragmentYearAmount extends Fragment
 			protected Map<String, String> getParams() throws AuthFailureError {
 				Map<String,String> params = new HashMap<String,String>();
 				params.put("GSType", "YEAR");
-				params.put("GSQuery", "{ \"branchID\" : " + GSConfig.CURRENT_BRANCH.branchID + ", \"searchYear\": " + searchYear + ", \"qryContent\" : \"" + qryContent + "\" }");
+				params.put("GSQuery", "{ \"branchID\" : " + GSConfig.CURRENT_BRANCH.branchID + ", \"searchYear\": " + GSConfig.CURRENT_YEAR + ", \"qryContent\" : \"" + qryContent + "\" }");
 				return params;
 			}
 		};

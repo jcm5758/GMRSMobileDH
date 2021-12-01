@@ -36,8 +36,6 @@ public class FragmentYearCustomerPrice extends Fragment
 	private TextView yi_month_enterprise_amount_date, yi_month_enterprise_amount_income_title, yi_month_enterprise_amount_release_title, yi_month_enterprise_amount_petosa_title;
 	private TextView yi_month_enterprise_amount_income_outside_title, yi_month_enterprise_amount_release_outside_title;
 
-	private int iYear;
-
 	EnterpriseYearStatsView statsView;
 	String unit;
 
@@ -76,7 +74,7 @@ public class FragmentYearCustomerPrice extends Fragment
 		this.yi_month_enterprise_amount_release_title = (TextView)view.findViewById(R.id.yi_month_enterprise_amount_release_title);
 		this.yi_month_enterprise_amount_petosa_title = (TextView)view.findViewById(R.id.yi_month_enterprise_amount_petosa_title);
 
-		makeMonthEnterpriseAmountData(GSConfig.DAY_STATS_YEAR);
+		makeMonthEnterpriseAmountData();
 
 	}
 
@@ -86,7 +84,7 @@ public class FragmentYearCustomerPrice extends Fragment
 		super.onPause();
 	}
 
-	private void makeMonthEnterpriseAmountData(int _year)
+	private void makeMonthEnterpriseAmountData()
 	{
 
 		String functionName = "makeYearAmountData()";
@@ -94,7 +92,7 @@ public class FragmentYearCustomerPrice extends Fragment
 		try
 		{
 
-			String dateStr = _year + "년  입출고 현황";
+			String dateStr = GSConfig.CURRENT_YEAR + "년  입출고 현황";
 
 			yi_month_enterprise_amount_date.setText(dateStr);
 
@@ -104,13 +102,13 @@ public class FragmentYearCustomerPrice extends Fragment
 			yi_month_enterprise_amount_release_empty_layout.removeAllViews();
 			yi_month_enterprise_amount_petosa_empty_layout.removeAllViews();
 
-			this.statsView = new EnterpriseYearStatsView(getActivity(), GSConfig.CURRENT_BRANCH.branchID, GSConfig.STATE_PRICE, iYear);
+			this.statsView = new EnterpriseYearStatsView(getActivity(), GSConfig.CURRENT_BRANCH.branchID, GSConfig.STATE_PRICE, GSConfig.CURRENT_YEAR);
 
 			this.unit = getString(R.string.unit_won);
 
-			this.getData(_year, "TotalPrice", GSConfig.MODE_STOCK);
-			this.getData(_year, "TotalPrice", GSConfig.MODE_RELEASE);
-			this.getData(_year, "TotalPrice", GSConfig.MODE_PETOSA);
+			this.getData("TotalPrice", GSConfig.MODE_STOCK);
+			this.getData("TotalPrice", GSConfig.MODE_RELEASE);
+			this.getData("TotalPrice", GSConfig.MODE_PETOSA);
 
 		}
 		catch(Exception ex)
@@ -121,12 +119,10 @@ public class FragmentYearCustomerPrice extends Fragment
 
 	}
 
-	private void getData(int searchYear, String qryContent, int serviceType)
+	private void getData(String qryContent, int serviceType)
 	{
 
 		String functionName = "getData()";
-
-		iYear = searchYear;
 
 		String url = GSConfig.API_SERVER_ADDR;
 		RequestQueue requestQueue = Volley.newRequestQueue(GSConfig.context);
@@ -220,7 +216,7 @@ public class FragmentYearCustomerPrice extends Fragment
 			protected Map<String, String> getParams() throws AuthFailureError {
 				Map<String,String> params = new HashMap<String,String>();
 				params.put("GSType", "YEAR_CUSTOMER");
-				params.put("GSQuery", "{ \"branchID\" : " + GSConfig.CURRENT_BRANCH.branchID + ", \"searchYear\": " + searchYear + ", \"qryContent\" : \"" + qryContent + "\",  \"serviceType\" : " + serviceType + " }");
+				params.put("GSQuery", "{ \"branchID\" : " + GSConfig.CURRENT_BRANCH.branchID + ", \"searchYear\": " + GSConfig.CURRENT_YEAR + ", \"qryContent\" : \"" + qryContent + "\",  \"serviceType\" : " + serviceType + " }");
 				return params;
 			}
 		};

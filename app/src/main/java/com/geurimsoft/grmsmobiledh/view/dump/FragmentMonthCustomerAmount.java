@@ -50,8 +50,6 @@ public class FragmentMonthCustomerAmount extends Fragment
 
     private TextView yi_month_enterprise_amount_date, yi_month_enterprise_amount_income_title, yi_month_enterprise_amount_release_title, yi_month_enterprise_amount_petosa_title;
 
-    private int iYear, iMonth;
-
     public FragmentMonthCustomerAmount(int branchID)
     {
         this.branchID = branchID;
@@ -91,7 +89,7 @@ public class FragmentMonthCustomerAmount extends Fragment
         this.yi_month_enterprise_amount_release_title = (TextView)view.findViewById(R.id.month_enterprise_amount_release_title);
         this.yi_month_enterprise_amount_petosa_title = (TextView)view.findViewById(R.id.month_enterprise_amount_petosa_title);
 
-        makeData(GSConfig.DAY_STATS_YEAR, GSConfig.DAY_STATS_MONTH);
+        makeData();
 
     }
 
@@ -103,10 +101,8 @@ public class FragmentMonthCustomerAmount extends Fragment
 
     /**
      * 데이터 조회
-     * @param _year 연도
-     * @param _monthOfYear 월
      */
-    private void makeData(int _year, int _monthOfYear)
+    private void makeData()
     {
 
         String functionName = "makeData()";
@@ -114,14 +110,14 @@ public class FragmentMonthCustomerAmount extends Fragment
         try
         {
 
-            String dateStr = _year + "년 " + _monthOfYear + "월  입출고 현황";
+            String dateStr = GSConfig.CURRENT_YEAR  + "년 " + GSConfig.CURRENT_MONTH + "월  입출고 현황";
 
             if (GSConfig.IsDebugging)
-                Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + _year + "년 " + _monthOfYear + "월");
+                Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + GSConfig.CURRENT_YEAR + "년 " + GSConfig.CURRENT_MONTH + "월");
 
             yi_month_enterprise_amount_date.setText(dateStr);
 
-            this.getData(_year, _monthOfYear);
+            this.getData();
 
         }
         catch(Exception ex)
@@ -134,19 +130,11 @@ public class FragmentMonthCustomerAmount extends Fragment
 
     /**
      * 서버에 데이터 요청
-     * @param searchYear 년
-     * @param searchMonth 월
      */
-    private void getData(int searchYear, int searchMonth)
+    private void getData()
     {
 
         String functionName = "getData()";
-
-        if (GSConfig.IsDebugging)
-            Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "searchYear : " + searchYear + ", searchMonth : " + searchMonth);
-
-        this.iYear = searchYear;
-        this.iMonth = searchMonth;
 
         String url = GSConfig.API_SERVER_ADDR;
         RequestQueue requestQueue = Volley.newRequestQueue(GSConfig.context);
@@ -173,7 +161,7 @@ public class FragmentMonthCustomerAmount extends Fragment
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<String,String>();
                 params.put("GSType", "DUMP_MONTH_CUSTOMER");
-                params.put("GSQuery", "{ \"BranchID\" : " + branchID + ", \"SearchYear\": " + searchYear + ", \"SearchMonth\": " + searchMonth + ", \"VehicleNum\" : \"" + GSConfig.CURRENT_USER.userinfo.VehicleNum + "\" }");
+                params.put("GSQuery", "{ \"BranchID\" : " + branchID + ", \"SearchYear\": " + GSConfig.CURRENT_YEAR + ", \"SearchMonth\": " + GSConfig.CURRENT_MONTH  + ", \"VehicleNum\" : \"" + GSConfig.CURRENT_USER.userinfo.VehicleNum + "\" }");
                 return params;
             }
         };

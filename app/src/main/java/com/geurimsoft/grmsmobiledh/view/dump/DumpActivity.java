@@ -46,10 +46,6 @@ public class DumpActivity  extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dump_main);
 
-        GSConfig.DAY_STATS_YEAR = 0;
-        GSConfig.DAY_STATS_MONTH = 0;
-        GSConfig.DAY_STATS_DAY = 0;
-
         GSConfig.activities.add(DumpActivity.this);
 
         // TextView 객체 생성

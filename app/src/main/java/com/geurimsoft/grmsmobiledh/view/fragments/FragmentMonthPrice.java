@@ -70,7 +70,7 @@ public class FragmentMonthPrice extends Fragment
 		
 		this.yi_month_price_listview.setDividerHeight(0);
 		
-		makeMonthpriceData(GSConfig.DAY_STATS_YEAR, GSConfig.DAY_STATS_MONTH);
+		makeMonthpriceData();
 
 	}
 	
@@ -82,10 +82,8 @@ public class FragmentMonthPrice extends Fragment
 
 	/**
 	 * 데이터 질의문 생성 및 요청
-	 * @param _year
-	 * @param _monthOfYear
 	 */
-	private void makeMonthpriceData(int _year, int _monthOfYear)
+	private void makeMonthpriceData()
 	{
 
 		String functionName = "makeMonthpriceData()";
@@ -93,16 +91,16 @@ public class FragmentMonthPrice extends Fragment
 		try
 		{
 
-			dateStr = _year + "년 " + _monthOfYear + "월  입출고 현황(단위:천원)";
+			dateStr = GSConfig.CURRENT_YEAR + "년 " + GSConfig.CURRENT_MONTH + "월  입출고 현황(단위:천원)";
 
 			if (GSConfig.IsDebugging)
-				Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + _year + "년 " + _monthOfYear + "월");
+				Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + GSConfig.CURRENT_YEAR + "년 " + GSConfig.CURRENT_MONTH + "월");
 
 			yi_month_price_date.setText(dateStr);
 
 			String qryContent = "TotalPrice";
 
-			this.getData(_year, _monthOfYear, qryContent);
+			this.getData(qryContent);
 
 		}
 		catch(Exception ex)
@@ -113,13 +111,17 @@ public class FragmentMonthPrice extends Fragment
 		
 	}
 
-	private void getData(int searchYear, int searchMonth, String qryContent)
+	/**
+	 * 서버에 데이터 요청
+	 * @param qryContent 수량 or 금액
+	 */
+	private void getData(String qryContent)
 	{
 
 		String functionName = "getData()";
 
 		if (GSConfig.IsDebugging)
-			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "searchYear : " + searchYear + ", searchMonth : " + searchMonth + ", qryContent : " + qryContent);
+			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "qryContent : " + qryContent);
 
 		String url = GSConfig.API_SERVER_ADDR;
 		RequestQueue requestQueue = Volley.newRequestQueue(GSConfig.context);
@@ -151,7 +153,7 @@ public class FragmentMonthPrice extends Fragment
 			protected Map<String, String> getParams() throws AuthFailureError {
 				Map<String,String> params = new HashMap<String,String>();
 				params.put("GSType", "MONTH");
-				params.put("GSQuery", "{ \"branchID\" : " + GSConfig.CURRENT_BRANCH.branchID + ", \"searchYear\": " + searchYear + ", \"searchMonth\": " + searchMonth + ", \"qryContent\" : \"" + qryContent + "\" }");
+				params.put("GSQuery", "{ \"branchID\" : " + GSConfig.CURRENT_BRANCH.branchID + ", \"searchYear\": " + GSConfig.CURRENT_YEAR + ", \"searchMonth\": " + GSConfig.CURRENT_MONTH + ", \"qryContent\" : \"" + qryContent + "\" }");
 				return params;
 			}
 		};

@@ -57,6 +57,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -84,14 +85,20 @@ public class AppMain extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_layout);
 
-		GSConfig.DAY_STATS_YEAR = 0;
-		GSConfig.DAY_STATS_MONTH = 0;
-		GSConfig.DAY_STATS_DAY = 0;
+		// 날짜 관련
+		GSConfig.calendar = Calendar.getInstance();
+
+		GSConfig.CURRENT_YEAR = 0;
+		GSConfig.CURRENT_MONTH = 0;
+		GSConfig.CURRENT_DAY = 0;
 
 		GSConfig.activities.add(AppMain.this);
 
 		GSConfig.context = this;
-		
+
+		// 날짜 지정
+		GSConfig.setDateCurrent();
+
 		setUserInterface();
 
 		// 자동 로그인 체크시
