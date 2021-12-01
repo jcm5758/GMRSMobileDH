@@ -266,6 +266,9 @@ com/geurimsoft/grmsmobiledh/widget/WheelRecycle.java
  com.geurimsoft.grmsmobiledh.widget.WheelRecycle
 com/geurimsoft/grmsmobiledh/view/dump/StatsViewMonthCustomer.java
  com.geurimsoft.grmsmobiledh.view.dump.StatsViewMonthCustomer
+com/geurimsoft/grmsmobiledh/NFCActivity.java
+ com.geurimsoft.grmsmobiledh.NFCActivity
+ com.geurimsoft.grmsmobiledh.NFCActivity$1
 com/geurimsoft/grmsmobiledh/widget/adapter/DayNumericWheelAdapter.java
  com.geurimsoft.grmsmobiledh.widget.adapter.DayNumericWheelAdapter
 com/geurimsoft/grmsmobiledh/view/fragments/FragmentMonthGraph.java

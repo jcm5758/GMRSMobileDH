@@ -10,6 +10,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.NFC" />
+
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -28,6 +33,17 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <!-- <data android:mimeType="text/plain" /> -->
+                <data android:mimeType="appliation/com.geurimsoft.grmsmobiledh.nfcactivity" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.nfc.action.TECH_DISCOVERED"
+                android:resource="@xml/nfc_tech_filter" />
         </activity>
         <activity
             android:name="com.geurimsoft.grmsmobiledh.view.fragments.ActivityMain"
@@ -44,6 +60,10 @@
         <activity
             android:name="com.geurimsoft.grmsmobiledh.view.dump.DumpActivity"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
+        <activity
+            android:name="com.geurimsoft.grmsmobiledh.NFCActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" >
+        </activity>
         <activity android:name="org.achartengine.GraphicalActivity" />
     </application>
 

@@ -20,6 +20,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
 import android.net.Uri;
+import android.nfc.NfcAdapter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -289,7 +290,7 @@ public class AppMain extends Activity
 		request.setShouldCache(false); //이전 결과 있어도 새로 요청하여 응답을 보여준다.
 		requestQueue.add(request);
 
-//		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "요청 보냄.");
+		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + "요청 보냄.");
 
 		return true;
 
@@ -369,8 +370,12 @@ public class AppMain extends Activity
 		else if (GSConfig.CURRENT_USER.message.equals(GSConfig.LOGIN_FOREIGN_SUCESS_MESSAGE))
 		{
 
+//			// 덤프트럭 통계로 이동
+//			Intent intent = new Intent(AppMain.this, GSConfig.Activity_LIST[3]);
+//			startActivity(intent);
+
 			// 덤프트럭 통계로 이동
-			Intent intent = new Intent(AppMain.this, GSConfig.Activity_LIST[3]);
+			Intent intent = new Intent(AppMain.this, GSConfig.Activity_LIST[4]);
 			startActivity(intent);
 
 //			// 배차 정보가 없습니다.

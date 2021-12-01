@@ -47,7 +47,8 @@ public class GSConfig
             com.geurimsoft.grmsmobiledh.view.fragments.ActivityMain.class,
             com.geurimsoft.grmsmobiledh.payloader.Payloader.class,
             com.geurimsoft.grmsmobiledh.view.dump.DumpActivity.class,
-            com.geurimsoft.grmsmobiledh.view.dump.ActivityMain.class
+            com.geurimsoft.grmsmobiledh.view.dump.ActivityMain.class,
+            com.geurimsoft.grmsmobiledh.NFCActivity.class
     };
 
     public static String LOG_MSG(String className, String funcName)
