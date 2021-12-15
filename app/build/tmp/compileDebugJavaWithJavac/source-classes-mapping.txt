@@ -123,10 +123,8 @@ com/geurimsoft/grmsmobiledh/data/StAdapter.java
  com.geurimsoft.grmsmobiledh.data.StAdapter$ViewHolder
 com/geurimsoft/grmsmobiledh/data/GSUserRight.java
  com.geurimsoft.grmsmobiledh.data.GSUserRight
-com/geurimsoft/grmsmobiledh/view/fragments/FragmentDailyMain.java
- com.geurimsoft.grmsmobiledh.view.fragments.FragmentDailyMain
- com.geurimsoft.grmsmobiledh.view.fragments.FragmentDailyMain$1
- com.geurimsoft.grmsmobiledh.view.fragments.FragmentDailyMain$StatsPagerAdapter
+com/geurimsoft/grmsmobiledh/view/fragments/StatsView.java
+ com.geurimsoft.grmsmobiledh.view.fragments.StatsView
 com/geurimsoft/grmsmobiledh/apiserver/data/UserInfo.java
  com.geurimsoft.grmsmobiledh.apiserver.data.UserInfo
 com/geurimsoft/grmsmobiledh/view/dump/FragmentMonthMain.java
@@ -397,8 +395,10 @@ com/geurimsoft/grmsmobiledh/view/fragments/FragmentDailyAmount.java
  com.geurimsoft.grmsmobiledh.view.fragments.FragmentDailyAmount$1
  com.geurimsoft.grmsmobiledh.view.fragments.FragmentDailyAmount$2
  com.geurimsoft.grmsmobiledh.view.fragments.FragmentDailyAmount$3
-com/geurimsoft/grmsmobiledh/view/fragments/StatsView.java
- com.geurimsoft.grmsmobiledh.view.fragments.StatsView
+com/geurimsoft/grmsmobiledh/view/fragments/FragmentDailyMain.java
+ com.geurimsoft.grmsmobiledh.view.fragments.FragmentDailyMain
+ com.geurimsoft.grmsmobiledh.view.fragments.FragmentDailyMain$1
+ com.geurimsoft.grmsmobiledh.view.fragments.FragmentDailyMain$StatsPagerAdapter
 com/geurimsoft/grmsmobiledh/view/fragments/FragmentDailyPrice.java
  com.geurimsoft.grmsmobiledh.view.fragments.FragmentDailyPrice
  com.geurimsoft.grmsmobiledh.view.fragments.FragmentDailyPrice$1

@@ -48,9 +48,6 @@ public class FragmentDailyPrice extends Fragment
 	private LinearLayout income_empty_layout, release_empty_layout, petosa_empty_layout;
 	private TextView stats_daily_date, daily_income_title, daily_release_title, daily_petosa_title;
 
-	private LinearLayout income_empty_layout_outside, release_empty_layout_outside;
-	private TextView daily_income_title_outside, daily_release_title_outside;
-
 	private DecimalFormat df = new DecimalFormat("#,###");
 
 	private LinearLayout loading_indicator, loading_fail;
@@ -229,26 +226,59 @@ public class FragmentDailyPrice extends Fragment
 			return;
 		}
 
+		// 레이아웃 초기화
 		income_empty_layout.removeAllViews();
 		release_empty_layout.removeAllViews();
 		petosa_empty_layout.removeAllViews();
 
-		StatsView statsView = new StatsView(getActivity(), dio, 1);
+		// 제목 숨기기
+		daily_income_title.setVisibility(View.INVISIBLE);
+		daily_release_title.setVisibility(View.INVISIBLE);
+		daily_petosa_title.setVisibility(View.INVISIBLE);
 
-		statsView.makeStockStatsView(income_empty_layout);
-		GSDailyInOutGroup tempGroup = dio.findByServiceType("입고");
-		if (tempGroup != null)
-			daily_income_title.setText(tempGroup.getTitleMoney());
+		// 데이터 파싱 결과
+		GSDailyInOutGroup inputGroup = dio.findByServiceType("입고");
+		GSDailyInOutGroup outputGroup = dio.findByServiceType("출고");
+		GSDailyInOutGroup slugeGroup = dio.findByServiceType("토사");
 
-		statsView.makeReleaseStatsView(release_empty_layout);
-		tempGroup = dio.findByServiceType("출고");
-		if (tempGroup != null)
-			daily_release_title.setText(tempGroup.getTitleMoney());
+		// 1개라도 데이터가 있는지 여부 파악
+		int iCount = 0;
 
-		statsView.makePetosaStatsView(petosa_empty_layout);
-		tempGroup = dio.findByServiceType("토사");
-		if (tempGroup != null)
-			daily_petosa_title.setText(tempGroup.getTitleMoney());
+		// 통계 표를 위한 인터페이스
+		StatsView statsView = new StatsView(getActivity(), dio, 0);
+
+		// 입고 데이터가 있으면
+		if (inputGroup != null && inputGroup.headerCount > 0 && inputGroup.recordCount > 0)
+		{
+			statsView.makeStockStatsView(income_empty_layout);
+			daily_income_title.setVisibility(View.VISIBLE);
+			daily_income_title.setText(inputGroup.getTitleUnit());
+			iCount++;
+		}
+
+		// 출고 데이터가 있으면
+		if (outputGroup != null && outputGroup.headerCount > 0 && outputGroup.recordCount > 0)
+		{
+			statsView.makeReleaseStatsView(release_empty_layout);
+			daily_release_title.setVisibility(View.VISIBLE);
+			daily_release_title.setText(outputGroup.getTitleUnit());
+			iCount++;
+		}
+
+		// 토사 데이터가 있으면
+		if (slugeGroup != null && slugeGroup.headerCount > 0 && slugeGroup.recordCount > 0)
+		{
+			statsView.makePetosaStatsView(petosa_empty_layout);
+			daily_petosa_title.setVisibility(View.VISIBLE);
+			daily_petosa_title.setText(slugeGroup.getTitleUnit());
+			iCount++;
+		}
+
+		if (iCount == 0)
+		{
+			daily_income_title.setVisibility(View.VISIBLE);
+			daily_income_title.setText("서비스 내역이 없습니다.");
+		}
 
 	}
 
