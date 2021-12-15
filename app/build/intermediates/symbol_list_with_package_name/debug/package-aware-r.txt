@@ -1930,7 +1930,6 @@ id btnselcctv
 id btntopcctv
 id btntophome
 id btntopsetting
-id button
 id buttonPanel
 id button_One
 id button_TD
@@ -2013,7 +2012,6 @@ id dropdown_menu
 id easeIn
 id easeInOut
 id easeOut
-id edit_message
 id edit_query
 id edtlogin
 id edtpasswd

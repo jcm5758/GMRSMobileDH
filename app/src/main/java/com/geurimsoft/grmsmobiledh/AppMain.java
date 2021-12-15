@@ -27,13 +27,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -49,8 +46,6 @@ import com.geurimsoft.grmsmobiledh.apiserver.data.UserInfo;
 import com.geurimsoft.grmsmobiledh.apiserver.data.UserRightData;
 import com.geurimsoft.grmsmobiledh.data.GSBranch;
 import com.geurimsoft.grmsmobiledh.data.GSConfig;
-import com.geurimsoft.grmsmobiledh.data.GSUserRight;
-import com.geurimsoft.grmsmobiledh.payloader.Payloader;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -61,6 +56,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+
+import android.content.Intent;
+import android.nfc.NfcAdapter;
 
 public class AppMain extends Activity
 {
@@ -100,6 +98,7 @@ public class AppMain extends Activity
 		// 날짜 지정
 		GSConfig.setDateCurrent();
 
+		// 로그인 화면 설정
 		setUserInterface();
 
 		// 자동 로그인 체크시
@@ -108,7 +107,96 @@ public class AppMain extends Activity
 		// 앱 버전 확인
 		appVersionCheck();
 
+//		// NFC test
+//		this.testNFC();
+
 	}
+
+	/**
+	 * NFC test
+	 */
+	private void testNFC2()
+	{
+
+		String fn = "testNFC2()";
+
+		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), fn) + ": init() ");
+
+		String str = "";
+
+		// 인텐트 취득
+		Intent intent = getIntent();
+
+		// 액션 명 취득
+		String intentAction = intent.getAction();
+
+		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), fn) + ": intentAction : " + intentAction);
+
+		// NFC에서 취득한 ID 취득
+		byte[] ids = intent.getByteArrayExtra( NfcAdapter.EXTRA_ID );
+
+		if (ids != null)
+		{
+
+			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), fn) + ": Lenght of ids : " + ids.length);
+
+			for(int i = 0; i < ids.length; i++)
+			{
+				Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), fn) + ": ID : " + Integer.toHexString( ids[i] ) );
+				str += Integer.toHexString( ids[i] ) + "\n";
+			}
+
+			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), fn) + ": STR : " + str );
+
+		}
+		else
+		{
+			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), fn) + ": ids is null.");
+		}
+
+	}
+
+	/**
+	 * NFC test
+	 */
+	private void testNFC()
+	{
+
+		String fn = "testNFC()";
+
+		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), fn) + ": init() ");
+
+		String str = "";
+
+		// 인텐트 취득
+		Intent intent = getIntent();
+
+		// 액션 명 취득
+		String intentAction = intent.getAction();
+
+		Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), fn) + ": intentAction : " + intentAction);
+
+		// TAG 검출시의 인텐트인지 아닌지 여부 체크
+		if ( intentAction.equals( NfcAdapter.ACTION_TAG_DISCOVERED) )
+		{
+
+			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), fn) + ": " + NfcAdapter.ACTION_TAG_DISCOVERED);
+
+			// NFC에서 취득한 ID 취득
+			byte[] ids = intent.getByteArrayExtra( NfcAdapter.EXTRA_ID );
+
+			for(int i = 0; i < ids.length; i++)
+			{
+				Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), fn) + ": ID : " + Integer.toHexString( ids[i] ) );
+				str += Integer.toHexString( ids[i] ) + "\n";
+			}
+
+			Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), fn) + ": STR : " + str );
+
+		}
+
+	}
+
 
 	/**
 	 * 위젯 받아오기
@@ -370,23 +458,26 @@ public class AppMain extends Activity
 		else if (GSConfig.CURRENT_USER.message.equals(GSConfig.LOGIN_FOREIGN_SUCESS_MESSAGE))
 		{
 
-//			// 덤프트럭 통계로 이동
-//			Intent intent = new Intent(AppMain.this, GSConfig.Activity_LIST[3]);
-//			startActivity(intent);
+			Intent intent = null;
 
 			// 덤프트럭 통계로 이동
-			Intent intent = new Intent(AppMain.this, GSConfig.Activity_LIST[4]);
+			intent = new Intent(AppMain.this, GSConfig.Activity_LIST[3]);
 			startActivity(intent);
+
+//			// NFC로 이동
+//			intent = new Intent(AppMain.this, GSConfig.Activity_LIST[4]);
+//			startActivity(intent);
 
 //			// 배차 정보가 없습니다.
 //			if (GSConfig.CURRENT_USER.isServicePredictNull())
 //			{
+//				Log.d(GSConfig.APP_DEBUG, GSConfig.LOG_MSG(this.getClass().getName(), functionName) + ": 배차정보가 없습니다.");
 //				Toast.makeText(getApplicationContext(),"배차 정보가 없습니다.", Toast.LENGTH_SHORT).show();
 //				return;
 //			}
-
+//
 //			// 덤프트럭 배차로 이동
-//			Intent intent = new Intent(AppMain.this, GSConfig.Activity_LIST[2]);
+//			intent = new Intent(AppMain.this, GSConfig.Activity_LIST[2]);
 //			startActivity(intent);
 
 		}

@@ -8,6 +8,7 @@ public class GSDailyInOutDetail
 {
 
     public String customerName;
+    public String customerSiteName;
     public int valueSize = 0;
     private double[] values = new double[10];
 

@@ -28,7 +28,7 @@
 17-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:9:55-78
 18
 19    <application
-19-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:11:5-65:19
+19-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:11:5-61:19
 20        android:allowBackup="true"
 20-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:13:9-35
 21        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
@@ -45,7 +45,7 @@
 27        android:usesCleartextTraffic="true" >
 27-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:17:9-44
 28        <activity
-28-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:19:9-39:20
+28-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:19:9-28:20
 29            android:name="com.geurimsoft.grmsmobiledh.AppMain"
 29-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:20:13-63
 30            android:screenOrientation="portrait" >
@@ -60,68 +60,64 @@
 34-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:25:17-77
 34-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:25:27-74
 35            </intent-filter>
-36            <intent-filter>
-36-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:28:13-33:29
-37                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
-37-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:29:17-77
-37-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:29:25-74
-38
-39                <category android:name="android.intent.category.DEFAULT" />
-39-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:30:17-76
-39-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:30:27-73
-40                <!-- <data android:mimeType="text/plain" /> -->
-41                <data android:mimeType="appliation/com.geurimsoft.grmsmobiledh.nfcactivity" />
-41-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:32:17-95
-41-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:32:23-92
-42            </intent-filter>
-43
-44            <meta-data
-44-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:35:13-37:59
-45                android:name="android.nfc.action.TECH_DISCOVERED"
-45-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:36:17-66
-46                android:resource="@xml/nfc_tech_filter" />
-46-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:37:17-56
-47        </activity>
-48        <activity
-48-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:41:9-42:76
-49            android:name="com.geurimsoft.grmsmobiledh.view.fragments.ActivityMain"
-49-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:41:19-89
-50            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
-50-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:42:13-74
-51        <activity
-51-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:44:9-45:76
-52            android:name="com.geurimsoft.grmsmobiledh.payloader.Payloader"
-52-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:44:19-81
-53            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
-53-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:45:13-74
-54        <activity
-54-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:47:9-48:76
-55            android:name="com.geurimsoft.grmsmobiledh.payloader.ItemActivity"
-55-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:47:19-84
-56            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
-56-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:48:13-74
-57        <activity
-57-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:50:9-51:76
-58            android:name="com.geurimsoft.grmsmobiledh.view.dump.ActivityMain"
-58-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:50:19-84
-59            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
-59-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:51:13-74
-60        <activity
-60-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:53:9-54:76
-61            android:name="com.geurimsoft.grmsmobiledh.view.dump.DumpActivity"
-61-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:53:19-84
-62            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
-62-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:54:13-74
-63        <activity
-63-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:56:9-61:20
-64            android:name="com.geurimsoft.grmsmobiledh.NFCActivity"
-64-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:56:19-73
-65            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" >
-65-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:57:13-74
-66        </activity>
-67        <activity android:name="org.achartengine.GraphicalActivity" />
-67-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:63:9-71
-67-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:63:19-68
-68    </application>
-69
-70</manifest>
+36        </activity>
+37        <activity
+37-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:30:9-31:76
+38            android:name="com.geurimsoft.grmsmobiledh.view.fragments.ActivityMain"
+38-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:30:19-89
+39            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
+39-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:31:13-74
+40        <activity
+40-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:33:9-34:76
+41            android:name="com.geurimsoft.grmsmobiledh.payloader.Payloader"
+41-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:33:19-81
+42            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
+42-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:34:13-74
+43        <activity
+43-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:36:9-37:76
+44            android:name="com.geurimsoft.grmsmobiledh.payloader.ItemActivity"
+44-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:36:19-84
+45            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
+45-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:37:13-74
+46        <activity
+46-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:39:9-40:76
+47            android:name="com.geurimsoft.grmsmobiledh.view.dump.ActivityMain"
+47-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:39:19-84
+48            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
+48-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:40:13-74
+49        <activity
+49-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:42:9-54:20
+50            android:name="com.geurimsoft.grmsmobiledh.view.dump.DumpActivity"
+50-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:42:19-84
+51            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" >
+51-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:43:13-74
+52            <intent-filter>
+52-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:45:13-48:29
+53                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+53-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:46:17-77
+53-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:46:25-74
+54
+55                <category android:name="android.intent.category.DEFAULT" />
+55-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:47:17-76
+55-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:47:27-73
+56            </intent-filter>
+57
+58            <meta-data
+58-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:50:13-52:59
+59                android:name="android.nfc.action.TECH_DISCOVERED"
+59-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:51:17-66
+60                android:resource="@xml/nfc_tech_filter" />
+60-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:52:17-56
+61        </activity>
+62        <activity
+62-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:56:9-57:77
+63            android:name="com.geurimsoft.grmsmobiledh.NFCActivity"
+63-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:56:19-73
+64            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
+64-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:57:13-74
+65        <activity android:name="org.achartengine.GraphicalActivity" />
+65-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:59:9-71
+65-->C:\Users\jcm5758Main\source\repos\GRMSMobile\GMRSMobileDH\app\src\main\AndroidManifest.xml:59:19-68
+66    </application>
+67
+68</manifest>

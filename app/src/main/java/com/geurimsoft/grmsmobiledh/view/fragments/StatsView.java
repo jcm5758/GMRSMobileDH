@@ -175,6 +175,17 @@ public class StatsView
 			stock_row_layout.addView(stock_item_textview);
 
 			//-------------------------------------------
+			// 현장명
+			//-------------------------------------------
+
+			if(stock_index == stock_count - 1)
+				stock_item_textview = makeMenuTextView(mContext, diod.customerSiteName, "#000000", gravity);
+			else
+				stock_item_textview = makeRowTextView(mContext, diod.customerSiteName, gravity);
+
+			stock_row_layout.addView(stock_item_textview);
+
+			//-------------------------------------------
 			// 입고 데이터 값 채우기
 			//-------------------------------------------
 
@@ -263,6 +274,17 @@ public class StatsView
 			release_row_layout.addView(release_item_textview);
 
 			//-------------------------------------------
+			// 현장명
+			//-------------------------------------------
+
+			if(release_index == this.release_count - 1)
+				release_item_textview = makeMenuTextView(mContext, diod.customerSiteName, "#000000", gravity);
+			else
+				release_item_textview = makeRowTextView(mContext, diod.customerSiteName, gravity);
+
+			release_row_layout.addView(release_item_textview);
+
+			//-------------------------------------------
 			// 출고 데이터 값 채우기
 			//-------------------------------------------
 
@@ -347,6 +369,17 @@ public class StatsView
 				item_textview = makeMenuTextView(mContext, diod.customerName, "#000000", gravity);
 			else
 				item_textview = makeRowTextView(mContext, diod.customerName, gravity);
+
+			release_row_layout.addView(item_textview);
+
+			//-------------------------------------------
+			// 현장명
+			//-------------------------------------------
+
+			if(index == this.petosa_count - 1)
+				item_textview = makeMenuTextView(mContext, diod.customerSiteName, "#000000", gravity);
+			else
+				item_textview = makeRowTextView(mContext, diod.customerSiteName, gravity);
 
 			release_row_layout.addView(item_textview);
 
